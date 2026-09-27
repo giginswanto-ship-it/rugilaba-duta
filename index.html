@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplikasi Laporan Konsolidasi 3 Unit Usaha</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @media print {
+      body { background: white; padding: 0; }
+      .no-print { display: none !important; }
+      .tab-content { display: block !important; margin-bottom: 2rem; }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased p-3 sm:p-6 font-sans">
+  <div class="max-w-7xl mx-auto space-y-6">
+
+    <!-- Header & Brand -->
+    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">Sistem Multi-Unit</span>
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">Tahun Buku 2025/2026</span>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Laporan Laba Rugi Konsolidasi Multi-Unit</h1>
+        <p class="text-sm text-slate-500 mt-0.5">Shop & Drive • Snaprint Grand Wisata • Snaprint Zamrud</p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2 no-print">
+        <button onclick="resetDefaults()" class="px-3.5 py-2 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-all">
+          Reset Data Default
+        </button>
+        <button onclick="window.print()" class="px-4 py-2 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-all flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+          Cetak Laporan / PDF
+        </button>
+      </div>
+    </div>
+
+    <!-- Summary KPI Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+        <p class="text-xs font-semibold tracking-wider text-slate-400 uppercase">Total Omzet Bruto</p>
+        <h3 id="kpi-omzet" class="text-2xl font-bold text-slate-900 mt-1">Rp 0</h3>
+        <p class="text-xs text-slate-500 mt-1">Konsolidasi 3 Unit Usaha</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+        <p class="text-xs font-semibold tracking-wider text-slate-400 uppercase">Laba Kotor (Gross Profit)</p>
+        <h3 id="kpi-gross" class="text-2xl font-bold text-emerald-600 mt-1">Rp 0</h3>
+        <p id="kpi-gross-margin" class="text-xs text-emerald-600 font-medium mt-1">Margin: 0%</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+        <p class="text-xs font-semibold tracking-wider text-slate-400 uppercase">Total Beban Depresiasi</p>
+        <h3 id="kpi-depr" class="text-2xl font-bold text-amber-600 mt-1">Rp 0</h3>
+        <p class="text-xs text-slate-500 mt-1">Fiskal Kel. 1 & Kel. 2</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+        <p class="text-xs font-semibold tracking-wider text-slate-400 uppercase">Laba Bersih Sebelum Pajak (EBT)</p>
+        <h3 id="kpi-ebt" class="text-2xl font-bold text-blue-600 mt-1">Rp 0</h3>
+        <p id="kpi-net-margin" class="text-xs text-blue-600 font-medium mt-1">Net Margin: 0%</p>
+      </div>
+    </div>
+
+    <!-- Main Navigation Tabs -->
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+      <div class="flex border-b border-slate-200 px-6 pt-3 gap-6 overflow-x-auto text-sm no-print">
+        <button onclick="switchTab('konsolidasi')" id="tab-btn-konsolidasi" class="pb-3 border-b-2 border-blue-600 text-blue-600 font-semibold">📊 Laporan Laba Rugi Konsolidasi</button>
+        <button onclick="switchTab('detail-biaya')" id="tab-btn-detail-biaya" class="pb-3 text-slate-500 hover:text-slate-700">📑 Rincian Lengkap Biaya Operasional</button>
+        <button onclick="switchTab('depresiasi')" id="tab-btn-depresiasi" class="pb-3 text-slate-500 hover:text-slate-700">⚙️ Jadwal Penyusutan Aset</button>
+        <button onclick="switchTab('pajak')" id="tab-btn-pajak" class="pb-3 text-slate-500 hover:text-slate-700">⚖️ Komparasi Pajak PPh</button>
+      </div>
+
+      <!-- Tab 1: Laporan Laba Rugi Komparatif & Konsolidasi -->
+      <div id="tab-konsolidasi" class="tab-content p-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-2">
+          <div>
+            <h2 class="text-lg font-bold text-slate-800">1. Laporan Komparatif & Konsolidasi Keuangan</h2>
+            <p class="text-xs text-slate-500">Ubah nilai pada kotak input untuk mensimulasikan dampak terhadap laba kotor, EBITDA, EBIT dan Laba Bersih.</p>
+          </div>
+          <span class="text-xs bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1 rounded-md no-print">💡 Kotak input dapat langsung diisi</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200 text-xs uppercase">
+                <th class="py-3 px-4 w-1/3">Uraian Akun / Pos Keuangan</th>
+                <th class="py-3 px-4 text-right">Shop & Drive (A)</th>
+                <th class="py-3 px-4 text-right">Snaprint GW (B)</th>
+                <th class="py-3 px-4 text-right">Snaprint Zamrud (C)</th>
+                <th class="py-3 px-4 text-right bg-blue-50/70 text-blue-900">Total Konsolidasi</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700">
+              <!-- A. PENDAPATAN USAHA -->
+              <tr class="bg-slate-50 font-bold text-slate-900">
+                <td colspan="5" class="py-2.5 px-4 text-xs tracking-wider">A. PENDAPATAN USAHA (REVENUE)</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 pl-6 text-slate-800">Penjualan Kotor / Omzet Usaha</td>
+                <td class="py-2 px-4 text-right"><input type="number" id="omzet_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500" oninput="recalculate()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="omzet_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500" oninput="recalculate()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="omzet_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500" oninput="recalculate()"></td>
+                <td id="tot_omzet" class="py-2.5 px-4 text-right font-bold text-slate-900 bg-blue-50/40">Rp 0</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 pl-6 text-slate-800">Potongan Penjualan, Retur & Garansi</td>
+                <td class="py-2 px-4 text-right"><input type="number" id="potongan_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-blue-500" oninput="recalculate()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="potongan_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-blue-500" oninput="recalculate()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="potongan_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-blue-500" oninput="recalculate()"></td>
+                <td id="tot_potongan" class="py-2.5 px-4 text-right font-medium text-rose-600 bg-blue-50/40">(Rp 0)</td>
+              </tr>
+              <tr class="font-semibold bg-slate-50 text-slate-900 border-t border-b border-slate-200">
+                <td class="py-2.5 px-4 pl-6">Pendapatan Bersih (Net Revenue)</td>
+                <td id="net_rev_a" class="py-2.5 px-4 text-right">Rp 0</td>
+                <td id="net_rev_b" class="py-2.5 px-4 text-right">Rp 0</td>
+                <td id="net_rev_c" class="py-2.5 px-4 text-right">Rp 0</td>
+                <td id="tot_net_rev" class="py-2.5 px-4 text-right font-bold text-blue-900 bg-blue-50/60">Rp 0</td>
+              </tr>
+
+              <!-- B. HPP -->
+              <tr class="bg-slate-50 font-bold text-slate-900">
+                <td colspan="5" class="py-2.5 px-4 text-xs tracking-wider">B. BEBAN POKOK PENJUALAN (HPP) / BIAYA LANGSUNG</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 pl-6 text-slate-800">Bahan Baku / Suku Cadang & Media Cetak</td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_bahan_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_bahan_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_bahan_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()"></td>
+                <td id="tot_hpp_bahan" class="py-2.5 px-4 text-right font-medium text-rose-600 bg-blue-50/40">(Rp 0)</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 pl-6 text-slate-800">Upah Tenaga Kerja Langsung (Mekanik & Operator)</td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()"></td>
+                <td id="tot_hpp_upah" class="py-2.5 px-4 text-right font-medium text-rose-600 bg-blue-50/40">(Rp 0)</td>
+              </tr>
+              <tr class="font-bold bg-emerald-50 text-emerald-900 border-t border-b border-emerald-200">
+                <td class="py-2.5 px-4 pl-6">Laba Kotor (Gross Profit)</td>
+                <td id="gross_a" class="py-2.5 px-4 text-right">Rp 0</td>
+                <td id="gross_b" class="py-2.5 px-4 text-right">Rp 0</td>
+                <td id="gross_c" class="py-2.5 px-4 text-right">Rp 0</td>
+                <td id="tot_gross" class="py-2.5 px-4 text-right font-bold text-emerald-800 bg-emerald-100">Rp 0</td>
+              </tr>
+
+              <!-- C. BEBAN OPERASIONAL -->
+              <tr class="bg-slate-50 font-bold text-slate-900">
+                <td colspan="5" class="py-2.5 px-4 text-xs tracking-wider">C. BEBAN OPERASIONAL UMUM & PENJUALAN (OPEX)</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 pl-6 text-slate-800">Total Beban Operasional Unit (Detail di Tab 2)</td>
+                <td id="sum_opex_a" class="py-2.5 px-4 text-right font-medium text-rose-600">(Rp 0)</td>
+                <td id="sum_opex_b" class="py-2.5 px-4 text-right font-medium text-rose-600">(Rp 0)</td>
+                <td id="sum_opex_c" class="py-2.5 px-4 text-right font-medium text-rose-600">(Rp 0)</td>
+                <td id="tot_opex" class="py-2.5 px-4 text-right font-bold text-rose-700 bg-blue-50/40">(Rp 0)</td>
+              </tr>
+              <tr class="font-bold bg-slate-100 text-slate-900 border-t border-b border-slate-300">
+                <td class="py-2.5 px-4 pl-6">Laba Operasional Sebelum Penyusutan (EBITDA)</td>
+                <td id="ebitda_a" class="py-2.5 px-4 text-right">Rp 0</td>
+                <td id="ebitda_b" class="py-2.5 px-4 text-right">Rp 0</td>
+                <td id="ebitda_c" class="py-2.5 px-4 text-right">Rp 0</td>
+                <td id="tot_ebitda" class="py-2.5 px-4 text-right font-bold text-slate-900 bg-blue-50/60">Rp 0</td>
+              </tr>
+
+              <!-- D. PENYUSUTAN -->
+              <tr class="bg-slate-50 font-bold text-slate-900">
+                <td colspan="5" class="py-2.5 px-4 text-xs tracking-wider">D. BEBAN PENYUSUTAN PERALATAN & AMORTISASI (DEPRESIASI)</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 pl-6 text-slate-800">Penyusutan Peralatan Operasional Langsung</td>
+                <td id="depr_a" class="py-2.5 px-4 text-right text-rose-600 font-medium">(Rp 0)</td>
+                <td id="depr_b" class="py-2.5 px-4 text-right text-rose-600 font-medium">(Rp 0)</td>
+                <td id="depr_c" class="py-2.5 px-4 text-right text-rose-600 font-medium">(Rp 0)</td>
+                <td id="tot_depr_direct" class="py-2.5 px-4 text-right font-medium text-rose-600 bg-blue-50/40">(Rp 0)</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 pl-6 text-slate-800">Penyusutan Inventaris Kantor Pusat / Bersama</td>
+                <td class="py-2.5 px-4 text-right text-slate-400">—</td>
+                <td class="py-2.5 px-4 text-right text-slate-400">—</td>
+                <td class="py-2.5 px-4 text-right text-slate-400">—</td>
+                <td id="depr_hq" class="py-2.5 px-4 text-right font-medium text-rose-600 bg-blue-50/40">(Rp 0)</td>
+              </tr>
+              <tr class="font-bold bg-blue-50 text-blue-950 border-t border-b border-blue-200">
+                <td class="py-2.5 px-4 pl-6">Laba Operasional Bersih Unit (EBIT)</td>
+                <td id="ebit_a" class="py-2.5 px-4 text-right">Rp 0</td>
+                <td id="ebit_b" class="py-2.5 px-4 text-right">Rp 0</td>
+                <td id="ebit_c" class="py-2.5 px-4 text-right">Rp 0</td>
+                <td id="tot_ebit" class="py-2.5 px-4 text-right font-bold text-blue-900 bg-blue-100">Rp 0</td>
+              </tr>
+
+              <!-- E. BEBAN BERSAMA & PENDAPATAN LAIN -->
+              <tr class="bg-slate-50 font-bold text-slate-900">
+                <td colspan="5" class="py-2.5 px-4 text-xs tracking-wider">E. BEBAN BERSAMA / OVERHEAD HOLDING & PENDAPATAN LAIN</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 pl-6 text-slate-800">Alokasi Biaya Legal, Akuntansi & IT Holding</td>
+                <td class="py-2.5 px-4 text-right text-slate-400">—</td>
+                <td class="py-2.5 px-4 text-right text-slate-400">—</td>
+                <td class="py-2.5 px-4 text-right text-slate-400">—</td>
+                <td class="py-2 px-4 text-right bg-blue-50/40">
+                  <input type="number" id="overhead_holding" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()">
+                </td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 pl-6 text-slate-800">Pendapatan Jasa Giro & Bunga Bersih</td>
+                <td class="py-2.5 px-4 text-right text-slate-400">—</td>
+                <td class="py-2.5 px-4 text-right text-slate-400">—</td>
+                <td class="py-2.5 px-4 text-right text-slate-400">—</td>
+                <td class="py-2 px-4 text-right bg-blue-50/40">
+                  <input type="number" id="income_other" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-emerald-600" oninput="recalculate()">
+                </td>
+              </tr>
+              <tr class="font-extrabold bg-blue-600 text-white text-base">
+                <td class="py-3 px-4 pl-6">LABA BERSIH SEBELUM PAJAK (EBT) KONSOLIDASI</td>
+                <td id="ebt_a_final" class="py-3 px-4 text-right">Rp 0</td>
+                <td id="ebt_b_final" class="py-3 px-4 text-right">Rp 0</td>
+                <td id="ebt_c_final" class="py-3 px-4 text-right">Rp 0</td>
+                <td id="tot_ebt_final" class="py-3 px-4 text-right bg-blue-700">Rp 0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 2: Rincian Lengkap Biaya Operasional -->
+      <div id="tab-detail-biaya" class="tab-content p-6 hidden">
+        <div class="mb-4">
+          <h2 class="text-lg font-bold text-slate-800">2. Rincian Lengkap Biaya Operasional (OPEX) Sesuai Unit Bisnis</h2>
+          <p class="text-xs text-slate-500">Item biaya operasional disesuaikan dengan aktivitas operasional masing-masing unit bisnis.</p>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200 text-xs uppercase">
+                <th class="py-3 px-4 w-2/5">Pos Beban Operasional</th>
+                <th class="py-3 px-4 text-right">Shop & Drive (Otomotif)</th>
+                <th class="py-3 px-4 text-right">Snaprint GW (Outdoor)</th>
+                <th class="py-3 px-4 text-right">Snaprint Zamrud (Press/Retail)</th>
+                <th class="py-3 px-4 text-right bg-slate-200">Total OPEX</th>
+              </tr>
+            </thead>
+            <tbody id="opex-tbody" class="divide-y divide-slate-100 text-slate-700">
+              <!-- Dynamically Populated by JavaScript -->
+            </tbody>
+            <tfoot>
+              <tr class="bg-slate-800 text-white font-bold text-sm">
+                <td class="py-3 px-4">TOTAL BEBAN OPERASIONAL (OPEX)</td>
+                <td id="opex_sum_a" class="py-3 px-4 text-right">Rp 0</td>
+                <td id="opex_sum_b" class="py-3 px-4 text-right">Rp 0</td>
+                <td id="opex_sum_c" class="py-3 px-4 text-right">Rp 0</td>
+                <td id="opex_sum_tot" class="py-3 px-4 text-right bg-slate-900 text-amber-300">Rp 0</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 3: Jadwal Penyusutan Aset -->
+      <div id="tab-depresiasi" class="tab-content p-6 hidden">
+        <div class="mb-4 flex justify-between items-center">
+          <div>
+            <h2 class="text-lg font-bold text-slate-800">3. Jadwal Beban Penyusutan Peralatan (Asset Depreciation Schedule)</h2>
+            <p class="text-xs text-slate-500">Metode: Garis Lurus (Straight Line) sesuai UU HPP No. 7/2021 & PMK Perpajakan.</p>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200 text-xs uppercase">
+                <th class="py-3 px-4">Kode Aset</th>
+                <th class="py-3 px-4">Nama Peralatan & Kelompok</th>
+                <th class="py-3 px-4">Penempatan Unit</th>
+                <th class="py-3 px-4 text-right">Harga Perolehan</th>
+                <th class="py-3 px-4 text-center">Masa Fiskal</th>
+                <th class="py-3 px-4 text-center">Tarif Susut</th>
+                <th class="py-3 px-4 text-right">Beban Susut / Tahun</th>
+              </tr>
+            </thead>
+            <tbody id="depr-tbody" class="divide-y divide-slate-100 text-slate-700">
+              <!-- Dynamically Populated -->
+            </tbody>
+            <tfoot>
+              <tr class="bg-slate-800 text-white font-bold text-sm">
+                <td colspan="3" class="py-3 px-4">TOTAL PERALATAN TERCATAT & BEBAN SUSUT TAHUNAN</td>
+                <td id="tot_asset_value" class="py-3 px-4 text-right text-emerald-300">Rp 0</td>
+                <td colspan="2" class="text-center">—</td>
+                <td id="tot_depr_value" class="py-3 px-4 text-right text-amber-300">Rp 0</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 4: Komparasi Pajak PPh -->
+      <div id="tab-pajak" class="tab-content p-6 hidden">
+        <div class="mb-4">
+          <h2 class="text-lg font-bold text-slate-800">4. Rekonsiliasi & Komparasi Skema Pajak Penghasilan (PPh)</h2>
+          <p class="text-xs text-slate-500">Simulasi perbandingan antara Skema PPh Final UMKM 0,5% (PP 55/2022) vs PPh Badan Umum (Fasilitas Ps. 31E UU PPh).</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Skema 1 -->
+          <div class="border border-slate-200 rounded-xl p-5 bg-gradient-to-b from-slate-50 to-white shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-slate-900">Skema 1: PPh Final UMKM 0,5%</h3>
+              <span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold">PP 55/2022</span>
+            </div>
+            <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4">
+              <li>Syarat: Omzet konsolidasi < Rp 4,8 Miliar/tahun.</li>
+              <li>Dasar Pengenaan Pajak (DPP): Total Omzet Bruto.</li>
+              <li>WP Orang Pribadi bebas PPh pada Rp 500 Juta pertama.</li>
+            </ul>
+            <div class="border-t border-slate-200 pt-3 space-y-2 text-sm">
+              <div class="flex justify-between">
+                <span class="text-slate-600">Total Omzet Bruto:</span>
+                <span id="tax_s1_omzet" class="font-semibold text-slate-800">Rp 0</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-600">Pembebasan PTKP (OP):</span>
+                <span class="font-semibold text-slate-800">Rp 500.000.000</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-600">DPP Kena Pajak:</span>
+                <span id="tax_s1_dpp" class="font-semibold text-slate-800">Rp 0</span>
+              </div>
+              <div class="flex justify-between text-base font-bold text-blue-600 border-t border-slate-100 pt-2">
+                <span>Pajak Terutang (0,5% OP):</span>
+                <span id="tax_s1_result">Rp 0</span>
+              </div>
+              <div class="text-xs text-slate-500 italic">Bila Entitas Badan (Tanpa PTKP): <span id="tax_s1_badan" class="font-semibold text-slate-700">Rp 0</span></div>
+            </div>
+          </div>
+
+          <!-- Skema 2 -->
+          <div class="border border-slate-200 rounded-xl p-5 bg-gradient-to-b from-slate-50 to-white shadow-sm space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-slate-900">Skema 2: PPh Tarif Umum / Ps. 31E</h3>
+              <span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold">Fasilitas 50% Diskon</span>
+            </div>
+            <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4">
+              <li>Syarat: WP Badan (PT/CV) atau WP OP Pembukuan.</li>
+              <li>Fasilitas Ps. 31E: Diskon 50% tarif PPh Badan (Tarif efektif = 11%).</li>
+              <li>Dasar Pajak: Laba Bersih Sebelum Pajak (EBT).</li>
+            </ul>
+            <div class="border-t border-slate-200 pt-3 space-y-2 text-sm">
+              <div class="flex justify-between">
+                <span class="text-slate-600">Laba Sebelum Pajak (EBT):</span>
+                <span id="tax_s2_ebt" class="font-semibold text-slate-800">Rp 0</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-600">Koreksi Fiskal Positif/Negatif:</span>
+                <span class="font-semibold text-slate-800">Rp 0 (Nihil)</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-600">Tax Shield (Depresiasi):</span>
+                <span id="tax_s2_shield" class="font-semibold text-emerald-600">Rp 0</span>
+              </div>
+              <div class="flex justify-between text-base font-bold text-emerald-600 border-t border-slate-100 pt-2">
+                <span>Pajak Terutang (11% x EBT):</span>
+                <span id="tax_s2_result">Rp 0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Perbandingan Bottom Line -->
+        <div class="mt-6 border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+          <div class="bg-slate-100 px-5 py-3 border-b border-slate-200 font-bold text-slate-800 text-sm">
+            Tabel Perbandingan Laba Bersih Akhir (Bottom-Line Net Profit)
+          </div>
+          <table class="w-full text-sm text-left">
+            <thead class="bg-slate-50 text-slate-600 text-xs uppercase">
+              <tr>
+                <th class="py-2.5 px-4">Metrik Keuangan Bersih</th>
+                <th class="py-2.5 px-4 text-right">Skenario PPh Final 0,5% (OP)</th>
+                <th class="py-2.5 px-4 text-right">Skenario PPh Badan Umum (Ps. 31E)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr>
+                <td class="py-3 px-4 font-medium text-slate-800">Laba Bersih Sebelum Pajak (EBT)</td>
+                <td id="btm_ebt_s1" class="py-3 px-4 text-right font-semibold">Rp 0</td>
+                <td id="btm_ebt_s2" class="py-3 px-4 text-right font-semibold">Rp 0</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-medium text-slate-800">Estimasi Beban Pajak Penghasilan (PPh)</td>
+                <td id="btm_tax_s1" class="py-3 px-4 text-right text-rose-600 font-semibold">(Rp 0)</td>
+                <td id="btm_tax_s2" class="py-3 px-4 text-right text-rose-600 font-semibold">(Rp 0)</td>
+              </tr>
+              <tr class="bg-blue-50 font-bold text-base text-blue-900">
+                <td class="py-3.5 px-4">LABA BERSIH SETELAH PAJAK (EAT / NET PROFIT)</td>
+                <td id="btm_eat_s1" class="py-3.5 px-4 text-right">Rp 0</td>
+                <td id="btm_eat_s2" class="py-3.5 px-4 text-right text-emerald-800">Rp 0</td>
+              </tr>
+              <tr class="text-xs text-slate-600">
+                <td class="py-2 px-4 italic">Net Profit Margin Konsolidasi</td>
+                <td id="btm_npm_s1" class="py-2 px-4 text-right font-medium">0%</td>
+                <td id="btm_npm_s2" class="py-2 px-4 text-right font-medium">0%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footnote & Attribution -->
+    <div class="text-center text-xs text-slate-400 pb-6">
+      Sistem Akuntansi Terpadu Multi-Unit • Shop & Drive | Snaprint Grand Wisata | Snaprint Zamrud • Konsolidasi Fiskal & Internal
+    </div>
+
+  </div>
+
+  <script>
+    // Initial Dataset
+    const initialData = {
+      omzet_a: 1100000000,
+      omzet_b: 750000000,
+      omzet_c: 600000000,
+      potongan_a: 22000000,
+      potongan_b: 15000000,
+      potongan_c: 13000000,
+      hpp_bahan_a: 550000000,
+      hpp_bahan_b: 310000000,
+      hpp_bahan_c: 192000000,
+      hpp_upah_a: 48000000,
+      hpp_upah_b: 30000000,
+      hpp_upah_c: 22000000,
+      overhead_holding: 48000000,
+      income_other: 4000000
+    };
+
+    // OPEX Detailed Items
+    let opexItems = [
+      { id: 'gaji', name: '1. Gaji & Tunjangan Staf Toko / Kasir / Frontline', a: 72000000, b: 60000000, c: 54000000 },
+      { id: 'sewa', name: '2. Sewa Tempat / Lokasi Outlet & IPL', a: 65000000, b: 55000000, c: 45000000 },
+      { id: 'utilitas', name: '3. Listrik Daya Tinggi, Air & Internet', a: 28000000, b: 42000000, c: 26000000 },
+      { id: 'marketing', name: '4. Pemasaran, Iklan Digital & Promosi', a: 18000000, b: 16000000, c: 14000000 },
+      { id: 'perawatan', name: '5. Servis Mesin, Kalibrasi & Tooling Khusus', a: 15000000, b: 24000000, c: 16000000 },
+      { id: 'perlengkapan', name: '6. Perlengkapan Kerja, Packaging & ATK', a: 12000000, b: 10000000, c: 8000000 },
+      { id: 'limbah_k3', name: '7. Pengelolaan Limbah B3/Sampah & K3', a: 8000000, b: 5000000, c: 4000000 },
+      { id: 'software', name: '8. Lisensi POS, Adobe CC, RIP & Merchant Fee', a: 6000000, b: 8000000, c: 7000000 }
+    ];
+
+    // Assets & Depreciation Schedule
+    const assetsData = [
+      { code: 'AST-SD01', name: 'Tyre Changer, Balancer & Battery Tester', unit: 'Shop & Drive', cost: 160000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, depr: 20000000, unitCode: 'a' },
+      { code: 'AST-SD02', name: 'Hydraulic Scissor Lift & Oil Extractor', unit: 'Shop & Drive', cost: 100000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, depr: 12500000, unitCode: 'a' },
+      { code: 'AST-GW01', name: 'Large Format Outdoor 3.2m & Roll UV', unit: 'Snaprint GW', cost: 240000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, depr: 30000000, unitCode: 'b' },
+      { code: 'AST-GW02', name: 'Mesin Cutting & Banner Seaming Fast', unit: 'Snaprint GW', cost: 40000000, group: 'Kel. 1 (4 Thn)', rate: 25.0, depr: 10000000, unitCode: 'b' },
+      { code: 'AST-ZM01', name: 'Production Digital Press A3+ & Mesin Potong DQ', unit: 'Snaprint Zamrud', cost: 120000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, depr: 15000000, unitCode: 'c' },
+      { code: 'AST-ZM02', name: 'PC Workstation Desain, Laminator & Heat Press', unit: 'Snaprint Zamrud', cost: 20000000, group: 'Kel. 1 (4 Thn)', rate: 25.0, depr: 5000000, unitCode: 'c' },
+      { code: 'AST-HQ01', name: 'Server Kantor Bersama & Laptop Manajemen', unit: 'Holding / Pusat', cost: 40000000, group: 'Kel. 1 (4 Thn)', rate: 25.0, depr: 10000000, unitCode: 'hq' }
+    ];
+
+    function formatRupiah(num, prefix = 'Rp ') {
+      if (isNaN(num)) return 'Rp 0';
+      const isNeg = num < 0;
+      const absVal = Math.abs(num);
+      const str = absVal.toLocaleString('id-ID');
+      if (isNeg) return `(${prefix}${str})`;
+      return `${prefix}${str}`;
+    }
+
+    function switchTab(tabId) {
+      const tabs = ['konsolidasi', 'detail-biaya', 'depresiasi', 'pajak'];
+      tabs.forEach(t => {
+        document.getElementById(`tab-${t}`).classList.add('hidden');
+        document.getElementById(`tab-btn-${t}`).className = 'pb-3 text-slate-500 hover:text-slate-700';
+      });
+      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+      document.getElementById(`tab-btn-${tabId}`).className = 'pb-3 border-b-2 border-blue-600 text-blue-600 font-semibold';
+    }
+
+    function renderOpexTable() {
+      const tbody = document.getElementById('opex-tbody');
+      tbody.innerHTML = '';
+      opexItems.forEach((item, idx) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="py-2.5 px-4 font-medium text-slate-800">${item.name}</td>
+          <td class="py-2 px-4 text-right">
+            <input type="number" value="${item.a}" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" onchange="updateOpex(${idx}, 'a', this.value)">
+          </td>
+          <td class="py-2 px-4 text-right">
+            <input type="number" value="${item.b}" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" onchange="updateOpex(${idx}, 'b', this.value)">
+          </td>
+          <td class="py-2 px-4 text-right">
+            <input type="number" value="${item.c}" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" onchange="updateOpex(${idx}, 'c', this.value)">
+          </td>
+          <td class="py-2.5 px-4 text-right font-semibold text-rose-700 bg-slate-50">
+            ${formatRupiah(item.a + item.b + item.c)}
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function updateOpex(idx, col, val) {
+      opexItems[idx][col] = parseFloat(val) || 0;
+      renderOpexTable();
+      recalculate();
+    }
+
+    function renderDeprTable() {
+      const tbody = document.getElementById('depr-tbody');
+      tbody.innerHTML = '';
+      let totCost = 0;
+      let totDepr = 0;
+
+      assetsData.forEach(ast => {
+        totCost += ast.cost;
+        totDepr += ast.depr;
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="py-2.5 px-4 font-mono text-xs font-semibold text-blue-600">${ast.code}</td>
+          <td class="py-2.5 px-4 font-medium text-slate-800">${ast.name}</td>
+          <td class="py-2.5 px-4 text-xs"><span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">${ast.unit}</span></td>
+          <td class="py-2.5 px-4 text-right">${formatRupiah(ast.cost)}</td>
+          <td class="py-2.5 px-4 text-center text-xs text-slate-600">${ast.group}</td>
+          <td class="py-2.5 px-4 text-center text-xs font-semibold text-slate-700">${ast.rate}%</td>
+          <td class="py-2.5 px-4 text-right font-semibold text-amber-700">${formatRupiah(ast.depr)}</td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      document.getElementById('tot_asset_value').textContent = formatRupiah(totCost);
+      document.getElementById('tot_depr_value').textContent = formatRupiah(totDepr);
+    }
+
+    function getDeprByUnit(unitCode) {
+      return assetsData
+        .filter(a => a.unitCode === unitCode)
+        .reduce((sum, a) => sum + a.depr, 0);
+    }
+
+    function recalculate() {
+      // 1. Read Inputs
+      const omzet_a = parseFloat(document.getElementById('omzet_a').value) || 0;
+      const omzet_b = parseFloat(document.getElementById('omzet_b').value) || 0;
+      const omzet_c = parseFloat(document.getElementById('omzet_c').value) || 0;
+      const tot_omzet = omzet_a + omzet_b + omzet_c;
+
+      const pot_a = parseFloat(document.getElementById('potongan_a').value) || 0;
+      const pot_b = parseFloat(document.getElementById('potongan_b').value) || 0;
+      const pot_c = parseFloat(document.getElementById('potongan_c').value) || 0;
+      const tot_pot = pot_a + pot_b + pot_c;
+
+      const net_rev_a = omzet_a - pot_a;
+      const net_rev_b = omzet_b - pot_b;
+      const net_rev_c = omzet_c - pot_c;
+      const tot_net_rev = net_rev_a + net_rev_b + net_rev_c;
+
+      const hpp_mat_a = parseFloat(document.getElementById('hpp_bahan_a').value) || 0;
+      const hpp_mat_b = parseFloat(document.getElementById('hpp_bahan_b').value) || 0;
+      const hpp_mat_c = parseFloat(document.getElementById('hpp_bahan_c').value) || 0;
+      const tot_hpp_mat = hpp_mat_a + hpp_mat_b + hpp_mat_c;
+
+      const hpp_lab_a = parseFloat(document.getElementById('hpp_upah_a').value) || 0;
+      const hpp_lab_b = parseFloat(document.getElementById('hpp_upah_b').value) || 0;
+      const hpp_lab_c = parseFloat(document.getElementById('hpp_upah_c').value) || 0;
+      const tot_hpp_lab = hpp_lab_a + hpp_lab_b + hpp_lab_c;
+
+      const gross_a = net_rev_a - (hpp_mat_a + hpp_lab_a);
+      const gross_b = net_rev_b - (hpp_mat_b + hpp_lab_b);
+      const gross_c = net_rev_c - (hpp_mat_c + hpp_lab_c);
+      const tot_gross = gross_a + gross_b + gross_c;
+
+      // OPEX Sums
+      const opex_a = opexItems.reduce((acc, curr) => acc + curr.a, 0);
+      const opex_b = opexItems.reduce((acc, curr) => acc + curr.b, 0);
+      const opex_c = opexItems.reduce((acc, curr) => acc + curr.c, 0);
+      const tot_opex = opex_a + opex_b + opex_c;
+
+      const ebitda_a = gross_a - opex_a;
+      const ebitda_b = gross_b - opex_b;
+      const ebitda_c = gross_c - opex_c;
+      const tot_ebitda = ebitda_a + ebitda_b + ebitda_c;
+
+      // Depreciations
+      const depr_a = getDeprByUnit('a');
+      const depr_b = getDeprByUnit('b');
+      const depr_c = getDeprByUnit('c');
+      const depr_hq = getDeprByUnit('hq');
+      const tot_depr_all = depr_a + depr_b + depr_c + depr_hq;
+
+      const ebit_a = ebitda_a - depr_a;
+      const ebit_b = ebitda_b - depr_b;
+      const ebit_c = ebitda_c - depr_c;
+      const tot_ebit = ebit_a + ebit_b + ebit_c - depr_hq;
+
+      const holding_cost = parseFloat(document.getElementById('overhead_holding').value) || 0;
+      const other_inc = parseFloat(document.getElementById('income_other').value) || 0;
+
+      const tot_ebt = tot_ebit - holding_cost + other_inc;
+
+      // Update UI Table 1
+      document.getElementById('tot_omzet').textContent = formatRupiah(tot_omzet);
+      document.getElementById('tot_potongan').textContent = `(${formatRupiah(tot_pot)})`;
+      document.getElementById('net_rev_a').textContent = formatRupiah(net_rev_a);
+      document.getElementById('net_rev_b').textContent = formatRupiah(net_rev_b);
+      document.getElementById('net_rev_c').textContent = formatRupiah(net_rev_c);
+      document.getElementById('tot_net_rev').textContent = formatRupiah(tot_net_rev);
+
+      document.getElementById('tot_hpp_bahan').textContent = `(${formatRupiah(tot_hpp_mat)})`;
+      document.getElementById('tot_hpp_upah').textContent = `(${formatRupiah(tot_hpp_lab)})`;
+
+      document.getElementById('gross_a').textContent = formatRupiah(gross_a);
+      document.getElementById('gross_b').textContent = formatRupiah(gross_b);
+      document.getElementById('gross_c').textContent = formatRupiah(gross_c);
+      document.getElementById('tot_gross').textContent = formatRupiah(tot_gross);
+
+      document.getElementById('sum_opex_a').textContent = `(${formatRupiah(opex_a)})`;
+      document.getElementById('sum_opex_b').textContent = `(${formatRupiah(opex_b)})`;
+      document.getElementById('sum_opex_c').textContent = `(${formatRupiah(opex_c)})`;
+      document.getElementById('tot_opex').textContent = `(${formatRupiah(tot_opex)})`;
+
+      document.getElementById('ebitda_a').textContent = formatRupiah(ebitda_a);
+      document.getElementById('ebitda_b').textContent = formatRupiah(ebitda_b);
+      document.getElementById('ebitda_c').textContent = formatRupiah(ebitda_c);
+      document.getElementById('tot_ebitda').textContent = formatRupiah(tot_ebitda);
+
+      document.getElementById('depr_a').textContent = `(${formatRupiah(depr_a)})`;
+      document.getElementById('depr_b').textContent = `(${formatRupiah(depr_b)})`;
+      document.getElementById('depr_c').textContent = `(${formatRupiah(depr_c)})`;
+      document.getElementById('tot_depr_direct').textContent = `(${formatRupiah(depr_a + depr_b + depr_c)})`;
+      document.getElementById('depr_hq').textContent = `(${formatRupiah(depr_hq)})`;
+
+      document.getElementById('ebit_a').textContent = formatRupiah(ebit_a);
+      document.getElementById('ebit_b').textContent = formatRupiah(ebit_b);
+      document.getElementById('ebit_c').textContent = formatRupiah(ebit_c);
+      document.getElementById('tot_ebit').textContent = formatRupiah(tot_ebit);
+
+      document.getElementById('ebt_a_final').textContent = formatRupiah(ebit_a);
+      document.getElementById('ebt_b_final').textContent = formatRupiah(ebit_b);
+      document.getElementById('ebt_c_final').textContent = formatRupiah(ebit_c);
+      document.getElementById('tot_ebt_final').textContent = formatRupiah(tot_ebt);
+
+      // Tab 2 OPEX Totals
+      document.getElementById('opex_sum_a').textContent = formatRupiah(opex_a);
+      document.getElementById('opex_sum_b').textContent = formatRupiah(opex_b);
+      document.getElementById('opex_sum_c').textContent = formatRupiah(opex_c);
+      document.getElementById('opex_sum_tot').textContent = formatRupiah(tot_opex);
+
+      // KPI Header Cards
+      document.getElementById('kpi-omzet').textContent = formatRupiah(tot_omzet);
+      document.getElementById('kpi-gross').textContent = formatRupiah(tot_gross);
+      const grossMargin = tot_omzet > 0 ? ((tot_gross / tot_omzet) * 100).toFixed(1) : 0;
+      document.getElementById('kpi-gross-margin').textContent = `Margin: ${grossMargin}%`;
+
+      document.getElementById('kpi-depr').textContent = formatRupiah(tot_depr_all);
+      document.getElementById('kpi-ebt').textContent = formatRupiah(tot_ebt);
+      const netMargin = tot_omzet > 0 ? ((tot_ebt / tot_omzet) * 100).toFixed(1) : 0;
+      document.getElementById('kpi-net-margin').textContent = `Net Margin: ${netMargin}%`;
+
+      // Tax Calculations
+      // Skenario 1 (PPh Final 0.5%)
+      const ptkp = 500000000;
+      const dpp_s1 = Math.max(0, tot_omzet - ptkp);
+      const tax_s1_op = dpp_s1 * 0.005;
+      const tax_s1_badan = tot_omzet * 0.005;
+
+      document.getElementById('tax_s1_omzet').textContent = formatRupiah(tot_omzet);
+      document.getElementById('tax_s1_dpp').textContent = formatRupiah(dpp_s1);
+      document.getElementById('tax_s1_result').textContent = formatRupiah(tax_s1_op);
+      document.getElementById('tax_s1_badan').textContent = formatRupiah(tax_s1_badan);
+
+      // Skenario 2 (PPh Ps 31E - 11%)
+      const tax_s2 = Math.max(0, tot_ebt * 0.11);
+      const tax_shield = tot_depr_all * 0.11;
+
+      document.getElementById('tax_s2_ebt').textContent = formatRupiah(tot_ebt);
+      document.getElementById('tax_s2_shield').textContent = formatRupiah(tax_shield);
+      document.getElementById('tax_s2_result').textContent = formatRupiah(tax_s2);
+
+      // Bottom-Line Comparation
+      document.getElementById('btm_ebt_s1').textContent = formatRupiah(tot_ebt);
+      document.getElementById('btm_ebt_s2').textContent = formatRupiah(tot_ebt);
+      document.getElementById('btm_tax_s1').textContent = `(${formatRupiah(tax_s1_op)})`;
+      document.getElementById('btm_tax_s2').textContent = `(${formatRupiah(tax_s2)})`;
+
+      const eat_s1 = tot_ebt - tax_s1_op;
+      const eat_s2 = tot_ebt - tax_s2;
+      document.getElementById('btm_eat_s1').textContent = formatRupiah(eat_s1);
+      document.getElementById('btm_eat_s2').textContent = formatRupiah(eat_s2);
+
+      const npm_s1 = tot_omzet > 0 ? ((eat_s1 / tot_omzet) * 100).toFixed(2) : 0;
+      const npm_s2 = tot_omzet > 0 ? ((eat_s2 / tot_omzet) * 100).toFixed(2) : 0;
+      document.getElementById('btm_npm_s1').textContent = `${npm_s1}%`;
+      document.getElementById('btm_npm_s2').textContent = `${npm_s2}%`;
+    }
+
+    function resetDefaults() {
+      Object.keys(initialData).forEach(key => {
+        const el = document.getElementById(key);
+        if (el) el.value = initialData[key];
+      });
+      opexItems = [
+        { id: 'gaji', name: '1. Gaji & Tunjangan Staf Toko / Kasir / Frontline', a: 72000000, b: 60000000, c: 54000000 },
+        { id: 'sewa', name: '2. Sewa Tempat / Lokasi Outlet & IPL', a: 65000000, b: 55000000, c: 45000000 },
+        { id: 'utilitas', name: '3. Listrik Daya Tinggi, Air & Internet', a: 28000000, b: 42000000, c: 26000000 },
+        { id: 'marketing', name: '4. Pemasaran, Iklan Digital & Promosi', a: 18000000, b: 16000000, c: 14000000 },
+        { id: 'perawatan', name: '5. Servis Mesin, Kalibrasi & Tooling Khusus', a: 15000000, b: 24000000, c: 16000000 },
+        { id: 'perlengkapan', name: '6. Perlengkapan Kerja, Packaging & ATK', a: 12000000, b: 10000000, c: 8000000 },
+        { id: 'limbah_k3', name: '7. Pengelolaan Limbah B3/Sampah & K3', a: 8000000, b: 5000000, c: 4000000 },
+        { id: 'software', name: '8. Lisensi POS, Adobe CC, RIP & Merchant Fee', a: 6000000, b: 8000000, c: 7000000 }
+      ];
+      renderOpexTable();
+      renderDeprTable();
+      recalculate();
+    }
+
+    // Init
+    window.addEventListener('DOMContentLoaded', () => {
+      resetDefaults();
+    });
+  </script>
+</body>
+</html>
