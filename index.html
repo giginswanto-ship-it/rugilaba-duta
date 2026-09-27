@@ -21,7 +21,7 @@
       <div>
         <div class="flex items-center gap-2 mb-1">
           <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">Sistem Multi-Unit</span>
-          <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">Tahun Buku 2025/2026</span>
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">Terkonsolidasi</span>
         </div>
         <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Laporan Laba Rugi Konsolidasi Multi-Unit</h1>
         <p class="text-sm text-slate-500 mt-0.5">Shop & Drive • Snaprint Grand Wisata • Snaprint Zamrud</p>
@@ -29,12 +29,58 @@
 
       <div class="flex flex-wrap items-center gap-2 no-print">
         <button onclick="resetDefaults()" class="px-3.5 py-2 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-all">
-          Reset Data Default
+          Reset Data
         </button>
         <button onclick="window.print()" class="px-4 py-2 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-all flex items-center gap-1.5">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
           Cetak Laporan / PDF
         </button>
+      </div>
+    </div>
+
+    <!-- Filter & Rentang Waktu Periode -->
+    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+          <div class="p-2 bg-blue-50 text-blue-600 rounded-lg">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-slate-800">Rentang Waktu & Periode Laporan</h3>
+            <p class="text-xs text-slate-500">Pilih rentang tanggal atau preset periode untuk penyesuaian laporan</p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+          <!-- Preset Dropdown -->
+          <div class="flex items-center gap-2">
+            <label class="text-xs font-semibold text-slate-600">Preset:</label>
+            <select id="period-preset" onchange="applyPreset(this.value)" class="bg-slate-50 border border-slate-300 text-slate-800 text-xs rounded-lg px-3 py-2 font-medium focus:ring-1 focus:ring-blue-500 focus:outline-none">
+              <option value="year_2026" selected>Tahun Buku 2026 (Tahunan Penuh)</option>
+              <option value="year_2025">Tahun Buku 2025</option>
+              <option value="q1_2026">Kuartal 1 (Jan - Mar 2026)</option>
+              <option value="q2_2026">Kuartal 2 (Apr - Jun 2026)</option>
+              <option value="q3_2026">Kuartal 3 (Jul - Sep 2026)</option>
+              <option value="q4_2026">Kuartal 4 (Okt - Des 2026)</option>
+              <option value="month_cur">Bulan Berjalan (September 2026)</option>
+              <option value="custom">Kustom Rentang Tanggal</option>
+            </select>
+          </div>
+
+          <!-- Date Pickers -->
+          <div class="flex items-center gap-2 bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 text-xs">
+            <span class="text-slate-500">Dari:</span>
+            <input type="date" id="date-start" value="2026-01-01" onchange="updatePeriodDisplay()" class="bg-transparent border-0 font-medium text-slate-800 focus:outline-none">
+            <span class="text-slate-400">—</span>
+            <span class="text-slate-500">Sampai:</span>
+            <input type="date" id="date-end" value="2026-12-31" onchange="updatePeriodDisplay()" class="bg-transparent border-0 font-medium text-slate-800 focus:outline-none">
+          </div>
+
+          <div class="text-xs px-3 py-2 bg-blue-50 text-blue-700 font-semibold rounded-lg border border-blue-100 flex items-center gap-1">
+            <span>Status:</span>
+            <span id="active-period-label">1 Jan 2026 s/d 31 Des 2026 (12 Bulan)</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -53,7 +99,7 @@
       <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
         <p class="text-xs font-semibold tracking-wider text-slate-400 uppercase">Total Beban Depresiasi</p>
         <h3 id="kpi-depr" class="text-2xl font-bold text-amber-600 mt-1">Rp 0</h3>
-        <p class="text-xs text-slate-500 mt-1">Fiskal Kel. 1 & Kel. 2</p>
+        <p class="text-xs text-slate-500 mt-1">Proporsional Periode Terpilih</p>
       </div>
       <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
         <p class="text-xs font-semibold tracking-wider text-slate-400 uppercase">Laba Bersih Sebelum Pajak (EBT)</p>
@@ -78,7 +124,7 @@
             <h2 class="text-lg font-bold text-slate-800">1. Laporan Komparatif & Konsolidasi Keuangan</h2>
             <p class="text-xs text-slate-500">Ubah nilai pada kotak input untuk mensimulasikan dampak terhadap laba kotor, EBITDA, EBIT dan Laba Bersih.</p>
           </div>
-          <span class="text-xs bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1 rounded-md no-print">💡 Kotak input dapat langsung diisi</span>
+          <span class="text-xs bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1 rounded-md no-print">💡 Kotak input dapat langsung diubah</span>
         </div>
 
         <div class="overflow-x-auto">
@@ -263,7 +309,7 @@
         <div class="mb-4 flex justify-between items-center">
           <div>
             <h2 class="text-lg font-bold text-slate-800">3. Jadwal Beban Penyusutan Peralatan (Asset Depreciation Schedule)</h2>
-            <p class="text-xs text-slate-500">Metode: Garis Lurus (Straight Line) sesuai UU HPP No. 7/2021 & PMK Perpajakan.</p>
+            <p class="text-xs text-slate-500">Metode: Garis Lurus (Straight Line) disesuaikan secara proporsional dengan rentang waktu periode yang dipilih.</p>
           </div>
         </div>
 
@@ -277,7 +323,7 @@
                 <th class="py-3 px-4 text-right">Harga Perolehan</th>
                 <th class="py-3 px-4 text-center">Masa Fiskal</th>
                 <th class="py-3 px-4 text-center">Tarif Susut</th>
-                <th class="py-3 px-4 text-right">Beban Susut / Tahun</th>
+                <th class="py-3 px-4 text-right">Beban Susut / Periode</th>
               </tr>
             </thead>
             <tbody id="depr-tbody" class="divide-y divide-slate-100 text-slate-700">
@@ -285,7 +331,7 @@
             </tbody>
             <tfoot>
               <tr class="bg-slate-800 text-white font-bold text-sm">
-                <td colspan="3" class="py-3 px-4">TOTAL PERALATAN TERCATAT & BEBAN SUSUT TAHUNAN</td>
+                <td colspan="3" class="py-3 px-4">TOTAL PERALATAN TERCATAT & BEBAN SUSUT PERIODE</td>
                 <td id="tot_asset_value" class="py-3 px-4 text-right text-emerald-300">Rp 0</td>
                 <td colspan="2" class="text-center">—</td>
                 <td id="tot_depr_value" class="py-3 px-4 text-right text-amber-300">Rp 0</td>
@@ -311,8 +357,8 @@
             </div>
             <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4">
               <li>Syarat: Omzet konsolidasi < Rp 4,8 Miliar/tahun.</li>
-              <li>Dasar Pengenaan Pajak (DPP): Total Omzet Bruto.</li>
-              <li>WP Orang Pribadi bebas PPh pada Rp 500 Juta pertama.</li>
+              <li>Dasar Pengenaan Pajak (DPP): Total Omzet Bruto periode ini.</li>
+              <li>WP Orang Pribadi bebas PPh pada Rp 500 Juta pertama akumulatif.</li>
             </ul>
             <div class="border-t border-slate-200 pt-3 space-y-2 text-sm">
               <div class="flex justify-between">
@@ -416,7 +462,7 @@
   </div>
 
   <script>
-    // Initial Dataset
+    // Initial Dataset (Tahunan)
     const initialData = {
       omzet_a: 1100000000,
       omzet_b: 750000000,
@@ -434,7 +480,7 @@
       income_other: 4000000
     };
 
-    // OPEX Detailed Items
+    // OPEX Detailed Items (Tahunan)
     let opexItems = [
       { id: 'gaji', name: '1. Gaji & Tunjangan Staf Toko / Kasir / Frontline', a: 72000000, b: 60000000, c: 54000000 },
       { id: 'sewa', name: '2. Sewa Tempat / Lokasi Outlet & IPL', a: 65000000, b: 55000000, c: 45000000 },
@@ -446,16 +492,18 @@
       { id: 'software', name: '8. Lisensi POS, Adobe CC, RIP & Merchant Fee', a: 6000000, b: 8000000, c: 7000000 }
     ];
 
-    // Assets & Depreciation Schedule
+    // Assets & Depreciation Schedule (Tahunan)
     const assetsData = [
-      { code: 'AST-SD01', name: 'Tyre Changer, Balancer & Battery Tester', unit: 'Shop & Drive', cost: 160000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, depr: 20000000, unitCode: 'a' },
-      { code: 'AST-SD02', name: 'Hydraulic Scissor Lift & Oil Extractor', unit: 'Shop & Drive', cost: 100000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, depr: 12500000, unitCode: 'a' },
-      { code: 'AST-GW01', name: 'Large Format Outdoor 3.2m & Roll UV', unit: 'Snaprint GW', cost: 240000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, depr: 30000000, unitCode: 'b' },
-      { code: 'AST-GW02', name: 'Mesin Cutting & Banner Seaming Fast', unit: 'Snaprint GW', cost: 40000000, group: 'Kel. 1 (4 Thn)', rate: 25.0, depr: 10000000, unitCode: 'b' },
-      { code: 'AST-ZM01', name: 'Production Digital Press A3+ & Mesin Potong DQ', unit: 'Snaprint Zamrud', cost: 120000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, depr: 15000000, unitCode: 'c' },
-      { code: 'AST-ZM02', name: 'PC Workstation Desain, Laminator & Heat Press', unit: 'Snaprint Zamrud', cost: 20000000, group: 'Kel. 1 (4 Thn)', rate: 25.0, depr: 5000000, unitCode: 'c' },
-      { code: 'AST-HQ01', name: 'Server Kantor Bersama & Laptop Manajemen', unit: 'Holding / Pusat', cost: 40000000, group: 'Kel. 1 (4 Thn)', rate: 25.0, depr: 10000000, unitCode: 'hq' }
+      { code: 'AST-SD01', name: 'Tyre Changer, Balancer & Battery Tester', unit: 'Shop & Drive', cost: 160000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, annualDepr: 20000000, unitCode: 'a' },
+      { code: 'AST-SD02', name: 'Hydraulic Scissor Lift & Oil Extractor', unit: 'Shop & Drive', cost: 100000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, annualDepr: 12500000, unitCode: 'a' },
+      { code: 'AST-GW01', name: 'Large Format Outdoor 3.2m & Roll UV', unit: 'Snaprint GW', cost: 240000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, annualDepr: 30000000, unitCode: 'b' },
+      { code: 'AST-GW02', name: 'Mesin Cutting & Banner Seaming Fast', unit: 'Snaprint GW', cost: 40000000, group: 'Kel. 1 (4 Thn)', rate: 25.0, annualDepr: 10000000, unitCode: 'b' },
+      { code: 'AST-ZM01', name: 'Production Digital Press A3+ & Mesin Potong DQ', unit: 'Snaprint Zamrud', cost: 120000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, annualDepr: 15000000, unitCode: 'c' },
+      { code: 'AST-ZM02', name: 'PC Workstation Desain, Laminator & Heat Press', unit: 'Snaprint Zamrud', cost: 20000000, group: 'Kel. 1 (4 Thn)', rate: 25.0, annualDepr: 5000000, unitCode: 'c' },
+      { code: 'AST-HQ01', name: 'Server Kantor Bersama & Laptop Manajemen', unit: 'Holding / Pusat', cost: 40000000, group: 'Kel. 1 (4 Thn)', rate: 25.0, annualDepr: 10000000, unitCode: 'hq' }
     ];
+
+    let currentPeriodRatio = 1.0; // Default 1 year
 
     function formatRupiah(num, prefix = 'Rp ') {
       if (isNaN(num)) return 'Rp 0';
@@ -474,6 +522,54 @@
       });
       document.getElementById(`tab-${tabId}`).classList.remove('hidden');
       document.getElementById(`tab-btn-${tabId}`).className = 'pb-3 border-b-2 border-blue-600 text-blue-600 font-semibold';
+    }
+
+    function applyPreset(preset) {
+      const startEl = document.getElementById('date-start');
+      const endEl = document.getElementById('date-end');
+      
+      if (preset === 'year_2026') {
+        startEl.value = '2026-01-01';
+        endEl.value = '2026-12-31';
+      } else if (preset === 'year_2025') {
+        startEl.value = '2025-01-01';
+        endEl.value = '2025-12-31';
+      } else if (preset === 'q1_2026') {
+        startEl.value = '2026-01-01';
+        endEl.value = '2026-03-31';
+      } else if (preset === 'q2_2026') {
+        startEl.value = '2026-04-01';
+        endEl.value = '2026-06-30';
+      } else if (preset === 'q3_2026') {
+        startEl.value = '2026-07-01';
+        endEl.value = '2026-09-30';
+      } else if (preset === 'q4_2026') {
+        startEl.value = '2026-10-01';
+        endEl.value = '2026-12-31';
+      } else if (preset === 'month_cur') {
+        startEl.value = '2026-09-01';
+        endEl.value = '2026-09-30';
+      }
+      updatePeriodDisplay();
+    }
+
+    function updatePeriodDisplay() {
+      const s = new Date(document.getElementById('date-start').value);
+      const e = new Date(document.getElementById('date-end').value);
+      if (isNaN(s) || isNaN(e) || e < s) return;
+
+      const diffDays = Math.round((e - s) / (1000 * 60 * 60 * 24)) + 1;
+      const months = (diffDays / 30.4167).toFixed(1);
+      currentPeriodRatio = Math.max(0.01, diffDays / 365.25);
+
+      const options = { day: 'numeric', month: 'short', year: 'numeric' };
+      const sFormatted = s.toLocaleDateString('id-ID', options);
+      const eFormatted = e.toLocaleDateString('id-ID', options);
+
+      document.getElementById('active-period-label').textContent = `${sFormatted} s/d ${eFormatted} (${diffDays} Hari / ~${months} Bulan)`;
+      
+      renderDeprTable();
+      recalculate();
     }
 
     function renderOpexTable() {
@@ -513,8 +609,9 @@
       let totDepr = 0;
 
       assetsData.forEach(ast => {
+        const periodDepr = Math.round(ast.annualDepr * currentPeriodRatio);
         totCost += ast.cost;
-        totDepr += ast.depr;
+        totDepr += periodDepr;
         const row = document.createElement('tr');
         row.innerHTML = `
           <td class="py-2.5 px-4 font-mono text-xs font-semibold text-blue-600">${ast.code}</td>
@@ -523,7 +620,7 @@
           <td class="py-2.5 px-4 text-right">${formatRupiah(ast.cost)}</td>
           <td class="py-2.5 px-4 text-center text-xs text-slate-600">${ast.group}</td>
           <td class="py-2.5 px-4 text-center text-xs font-semibold text-slate-700">${ast.rate}%</td>
-          <td class="py-2.5 px-4 text-right font-semibold text-amber-700">${formatRupiah(ast.depr)}</td>
+          <td class="py-2.5 px-4 text-right font-semibold text-amber-700">${formatRupiah(periodDepr)}</td>
         `;
         tbody.appendChild(row);
       });
@@ -535,7 +632,7 @@
     function getDeprByUnit(unitCode) {
       return assetsData
         .filter(a => a.unitCode === unitCode)
-        .reduce((sum, a) => sum + a.depr, 0);
+        .reduce((sum, a) => sum + Math.round(a.annualDepr * currentPeriodRatio), 0);
     }
 
     function recalculate() {
@@ -710,8 +807,7 @@
         { id: 'software', name: '8. Lisensi POS, Adobe CC, RIP & Merchant Fee', a: 6000000, b: 8000000, c: 7000000 }
       ];
       renderOpexTable();
-      renderDeprTable();
-      recalculate();
+      updatePeriodDisplay();
     }
 
     // Init
