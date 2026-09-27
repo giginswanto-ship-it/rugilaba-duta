@@ -304,12 +304,22 @@
         </div>
       </div>
 
-      <!-- Tab 3: Jadwal Penyusutan Aset -->
+      <!-- Tab 3: Jadwal Penyusutan Aset (Dengan Tombol Tambah, Edit, Hapus & Simpan) -->
       <div id="tab-depresiasi" class="tab-content p-6 hidden">
-        <div class="mb-4 flex justify-between items-center">
+        <div class="mb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <div>
             <h2 class="text-lg font-bold text-slate-800">3. Jadwal Beban Penyusutan Peralatan (Asset Depreciation Schedule)</h2>
-            <p class="text-xs text-slate-500">Metode: Garis Lurus (Straight Line) disesuaikan secara proporsional dengan rentang waktu periode yang dipilih.</p>
+            <p class="text-xs text-slate-500">Metode: Garis Lurus (Straight Line) proporsional rentang periode. Kel. 1 (4 Thn / 25%), Kel. 2 (8 Thn / 12.5%).</p>
+          </div>
+          <div class="flex items-center gap-2 no-print">
+            <button onclick="openAddAssetModal()" class="px-3.5 py-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm transition-all flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+              Tambah Aset Baru
+            </button>
+            <button onclick="saveAssetsToStorage()" class="px-3.5 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-all flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+              Simpan Perubahan
+            </button>
           </div>
         </div>
 
@@ -324,6 +334,7 @@
                 <th class="py-3 px-4 text-center">Masa Fiskal</th>
                 <th class="py-3 px-4 text-center">Tarif Susut</th>
                 <th class="py-3 px-4 text-right">Beban Susut / Periode</th>
+                <th class="py-3 px-4 text-center no-print">Aksi</th>
               </tr>
             </thead>
             <tbody id="depr-tbody" class="divide-y divide-slate-100 text-slate-700">
@@ -335,6 +346,7 @@
                 <td id="tot_asset_value" class="py-3 px-4 text-right text-emerald-300">Rp 0</td>
                 <td colspan="2" class="text-center">—</td>
                 <td id="tot_depr_value" class="py-3 px-4 text-right text-amber-300">Rp 0</td>
+                <td class="no-print"></td>
               </tr>
             </tfoot>
           </table>
@@ -454,6 +466,60 @@
 
     </div>
 
+    <!-- Modal Form Edit / Tambah Aset -->
+    <div id="asset-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden no-print">
+      <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 shadow-xl space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+          <h3 id="modal-title" class="text-base font-bold text-slate-900">Tambah Aset Baru</h3>
+          <button onclick="closeAssetModal()" class="text-slate-400 hover:text-slate-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
+
+        <input type="hidden" id="modal-edit-index" value="-1">
+
+        <div class="space-y-3 text-xs">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Kode Aset</label>
+            <input type="text" id="modal-code" placeholder="cth: AST-SD03" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-blue-500 focus:outline-none font-mono">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Nama Peralatan & Mesin</label>
+            <input type="text" id="modal-name" placeholder="cth: Mesin Cutting Sticker Flatbed" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-blue-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Penempatan Unit Bisnis</label>
+            <select id="modal-unit" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-blue-500 focus:outline-none">
+              <option value="a">Shop & Drive (A)</option>
+              <option value="b">Snaprint Grand Wisata (B)</option>
+              <option value="c">Snaprint Zamrud (C)</option>
+              <option value="hq">Holding / Bersama (Pusat)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Harga Perolehan (Rp)</label>
+            <input type="number" id="modal-cost" placeholder="cth: 50000000" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-blue-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Kelompok Fiskal UU PPh</label>
+            <select id="modal-group" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-blue-500 focus:outline-none">
+              <option value="1">Kelompok 1 (Masa 4 Tahun - Tarif 25% / Thn)</option>
+              <option value="2">Kelompok 2 (Masa 8 Tahun - Tarif 12.5% / Thn)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-3 border-t border-slate-100">
+          <button onclick="closeAssetModal()" class="px-4 py-2 text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-all">
+            Batal
+          </button>
+          <button onclick="saveAssetModal()" class="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all">
+            Simpan Aset
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Footnote & Attribution -->
     <div class="text-center text-xs text-slate-400 pb-6">
       Sistem Akuntansi Terpadu Multi-Unit • Shop & Drive | Snaprint Grand Wisata | Snaprint Zamrud • Konsolidasi Fiskal & Internal
@@ -463,7 +529,7 @@
 
   <script>
     // Initial Dataset (Tahunan)
-    const initialData = {
+    const defaultData = {
       omzet_a: 1100000000,
       omzet_b: 750000000,
       omzet_c: 600000000,
@@ -480,7 +546,6 @@
       income_other: 4000000
     };
 
-    // OPEX Detailed Items (Tahunan)
     let opexItems = [
       { id: 'gaji', name: '1. Gaji & Tunjangan Staf Toko / Kasir / Frontline', a: 72000000, b: 60000000, c: 54000000 },
       { id: 'sewa', name: '2. Sewa Tempat / Lokasi Outlet & IPL', a: 65000000, b: 55000000, c: 45000000 },
@@ -492,8 +557,7 @@
       { id: 'software', name: '8. Lisensi POS, Adobe CC, RIP & Merchant Fee', a: 6000000, b: 8000000, c: 7000000 }
     ];
 
-    // Assets & Depreciation Schedule (Tahunan)
-    const assetsData = [
+    const defaultAssets = [
       { code: 'AST-SD01', name: 'Tyre Changer, Balancer & Battery Tester', unit: 'Shop & Drive', cost: 160000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, annualDepr: 20000000, unitCode: 'a' },
       { code: 'AST-SD02', name: 'Hydraulic Scissor Lift & Oil Extractor', unit: 'Shop & Drive', cost: 100000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, annualDepr: 12500000, unitCode: 'a' },
       { code: 'AST-GW01', name: 'Large Format Outdoor 3.2m & Roll UV', unit: 'Snaprint GW', cost: 240000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, annualDepr: 30000000, unitCode: 'b' },
@@ -502,6 +566,27 @@
       { code: 'AST-ZM02', name: 'PC Workstation Desain, Laminator & Heat Press', unit: 'Snaprint Zamrud', cost: 20000000, group: 'Kel. 1 (4 Thn)', rate: 25.0, annualDepr: 5000000, unitCode: 'c' },
       { code: 'AST-HQ01', name: 'Server Kantor Bersama & Laptop Manajemen', unit: 'Holding / Pusat', cost: 40000000, group: 'Kel. 1 (4 Thn)', rate: 25.0, annualDepr: 10000000, unitCode: 'hq' }
     ];
+
+    let assetsData = [];
+
+    // Load from LocalStorage if available
+    function loadSavedData() {
+      const savedAssets = localStorage.getItem('rugilaba_assets');
+      if (savedAssets) {
+        try {
+          assetsData = JSON.parse(savedAssets);
+        } catch(e) {
+          assetsData = JSON.parse(JSON.stringify(defaultAssets));
+        }
+      } else {
+        assetsData = JSON.parse(JSON.stringify(defaultAssets));
+      }
+    }
+
+    function saveAssetsToStorage() {
+      localStorage.setItem('rugilaba_assets', JSON.stringify(assetsData));
+      alert('✅ Data jadwal penyusutan aset berhasil disimpan ke memori lokal browser!');
+    }
 
     let currentPeriodRatio = 1.0; // Default 1 year
 
@@ -608,7 +693,7 @@
       let totCost = 0;
       let totDepr = 0;
 
-      assetsData.forEach(ast => {
+      assetsData.forEach((ast, idx) => {
         const periodDepr = Math.round(ast.annualDepr * currentPeriodRatio);
         totCost += ast.cost;
         totDepr += periodDepr;
@@ -621,12 +706,101 @@
           <td class="py-2.5 px-4 text-center text-xs text-slate-600">${ast.group}</td>
           <td class="py-2.5 px-4 text-center text-xs font-semibold text-slate-700">${ast.rate}%</td>
           <td class="py-2.5 px-4 text-right font-semibold text-amber-700">${formatRupiah(periodDepr)}</td>
+          <td class="py-2.5 px-4 text-center no-print">
+            <div class="flex items-center justify-center gap-1.5">
+              <button onclick="openEditAssetModal(${idx})" class="p-1 text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 rounded" title="Edit Aset">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+              </button>
+              <button onclick="deleteAsset(${idx})" class="p-1 text-rose-600 hover:text-rose-800 bg-rose-50 hover:bg-rose-100 rounded" title="Hapus Aset">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+              </button>
+            </div>
+          </td>
         `;
         tbody.appendChild(row);
       });
 
       document.getElementById('tot_asset_value').textContent = formatRupiah(totCost);
       document.getElementById('tot_depr_value').textContent = formatRupiah(totDepr);
+    }
+
+    function openAddAssetModal() {
+      document.getElementById('modal-title').textContent = 'Tambah Aset Baru';
+      document.getElementById('modal-edit-index').value = '-1';
+      document.getElementById('modal-code').value = 'AST-' + Math.floor(1000 + Math.random() * 9000);
+      document.getElementById('modal-name').value = '';
+      document.getElementById('modal-unit').value = 'a';
+      document.getElementById('modal-cost').value = '';
+      document.getElementById('modal-group').value = '2';
+      document.getElementById('asset-modal').classList.remove('hidden');
+    }
+
+    function openEditAssetModal(idx) {
+      const ast = assetsData[idx];
+      document.getElementById('modal-title').textContent = 'Edit Data Aset';
+      document.getElementById('modal-edit-index').value = idx;
+      document.getElementById('modal-code').value = ast.code;
+      document.getElementById('modal-name').value = ast.name;
+      document.getElementById('modal-unit').value = ast.unitCode;
+      document.getElementById('modal-cost').value = ast.cost;
+      document.getElementById('modal-group').value = ast.rate === 25.0 ? '1' : '2';
+      document.getElementById('asset-modal').classList.remove('hidden');
+    }
+
+    function closeAssetModal() {
+      document.getElementById('asset-modal').classList.add('hidden');
+    }
+
+    function saveAssetModal() {
+      const idx = parseInt(document.getElementById('modal-edit-index').value);
+      const code = document.getElementById('modal-code').value.trim();
+      const name = document.getElementById('modal-name').value.trim();
+      const unitCode = document.getElementById('modal-unit').value;
+      const cost = parseFloat(document.getElementById('modal-cost').value) || 0;
+      const groupVal = document.getElementById('modal-group').value;
+
+      if (!code || !name || cost <= 0) {
+        alert('Mohon lengkapi kode aset, nama aset, dan harga perolehan dengan benar!');
+        return;
+      }
+
+      let unitLabel = 'Shop & Drive';
+      if (unitCode === 'b') unitLabel = 'Snaprint GW';
+      else if (unitCode === 'c') unitLabel = 'Snaprint Zamrud';
+      else if (unitCode === 'hq') unitLabel = 'Holding / Pusat';
+
+      const rate = groupVal === '1' ? 25.0 : 12.5;
+      const groupLabel = groupVal === '1' ? 'Kel. 1 (4 Thn)' : 'Kel. 2 (8 Thn)';
+      const annualDepr = Math.round(cost * (rate / 100));
+
+      const newAsset = {
+        code: code,
+        name: name,
+        unit: unitLabel,
+        cost: cost,
+        group: groupLabel,
+        rate: rate,
+        annualDepr: annualDepr,
+        unitCode: unitCode
+      };
+
+      if (idx >= 0) {
+        assetsData[idx] = newAsset;
+      } else {
+        assetsData.push(newAsset);
+      }
+
+      closeAssetModal();
+      renderDeprTable();
+      recalculate();
+    }
+
+    function deleteAsset(idx) {
+      if (confirm(`Apakah Anda yakin ingin menghapus aset "${assetsData[idx].name}"?`)) {
+        assetsData.splice(idx, 1);
+        renderDeprTable();
+        recalculate();
+      }
     }
 
     function getDeprByUnit(unitCode) {
@@ -792,10 +966,14 @@
     }
 
     function resetDefaults() {
-      Object.keys(initialData).forEach(key => {
+      localStorage.removeItem('rugilaba_assets');
+      assetsData = JSON.parse(JSON.stringify(defaultAssets));
+      
+      Object.keys(defaultData).forEach(key => {
         const el = document.getElementById(key);
-        if (el) el.value = initialData[key];
+        if (el) el.value = defaultData[key];
       });
+
       opexItems = [
         { id: 'gaji', name: '1. Gaji & Tunjangan Staf Toko / Kasir / Frontline', a: 72000000, b: 60000000, c: 54000000 },
         { id: 'sewa', name: '2. Sewa Tempat / Lokasi Outlet & IPL', a: 65000000, b: 55000000, c: 45000000 },
@@ -806,13 +984,20 @@
         { id: 'limbah_k3', name: '7. Pengelolaan Limbah B3/Sampah & K3', a: 8000000, b: 5000000, c: 4000000 },
         { id: 'software', name: '8. Lisensi POS, Adobe CC, RIP & Merchant Fee', a: 6000000, b: 8000000, c: 7000000 }
       ];
+
       renderOpexTable();
       updatePeriodDisplay();
     }
 
     // Init
     window.addEventListener('DOMContentLoaded', () => {
-      resetDefaults();
+      loadSavedData();
+      Object.keys(defaultData).forEach(key => {
+        const el = document.getElementById(key);
+        if (el) el.value = defaultData[key];
+      });
+      renderOpexTable();
+      updatePeriodDisplay();
     });
   </script>
 </body>
