@@ -160,7 +160,7 @@
               <tr>
                 <td class="py-2.5 px-4 pl-6 text-slate-800 flex items-center justify-between">
                   <span>Potongan Management Fee (3% Omzet S&D)</span>
-                  <span class="text-[10px] bg-rose-50 text-rose-600 px-1.5 py-0.5 rounded border border-rose-200">Khusus Shop & Drive</span>
+                  <span class="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-medium no-print">Otomatis 3%</span>
                 </td>
                 <td id="mgmt_fee_a" class="py-2.5 px-4 text-right font-medium text-rose-600">(Rp 0)</td>
                 <td class="py-2.5 px-4 text-right text-slate-400">—</td>
@@ -831,7 +831,7 @@
       const pot_c = parseFloat(document.getElementById('potongan_c').value) || 0;
       const tot_pot = pot_a + pot_b + pot_c;
 
-      // Management Fee 3% khusus Shop & Drive dari Penjualan Kotor
+      // Management Fee 3% khusus Shop & Drive
       const mgmt_fee_a = Math.round(omzet_a * 0.03);
       const tot_mgmt_fee = mgmt_fee_a;
 
