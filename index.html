@@ -158,16 +158,14 @@
                 <td id="tot_potongan" class="py-2.5 px-4 text-right font-medium text-rose-600 bg-blue-50/40">(Rp 0)</td>
               </tr>
               <tr>
-                <td class="py-2.5 px-4 pl-6 text-slate-800">
-                  <div class="flex items-center gap-1.5">
-                    <span>Potongan Management Fee (3%)</span>
-                    <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-semibold">3% Omzet</span>
-                  </div>
+                <td class="py-2.5 px-4 pl-6 text-slate-800 flex items-center justify-between">
+                  <span>Potongan Management Fee (3% Omzet S&D)</span>
+                  <span class="text-[10px] bg-rose-50 text-rose-600 px-1.5 py-0.5 rounded border border-rose-200">Khusus Shop & Drive</span>
                 </td>
-                <td id="fee_a" class="py-2.5 px-4 text-right text-rose-600 font-medium">(Rp 0)</td>
-                <td id="fee_b" class="py-2.5 px-4 text-right text-rose-600 font-medium">(Rp 0)</td>
-                <td id="fee_c" class="py-2.5 px-4 text-right text-rose-600 font-medium">(Rp 0)</td>
-                <td id="tot_fee" class="py-2.5 px-4 text-right font-medium text-rose-600 bg-blue-50/40">(Rp 0)</td>
+                <td id="mgmt_fee_a" class="py-2.5 px-4 text-right font-medium text-rose-600">(Rp 0)</td>
+                <td class="py-2.5 px-4 text-right text-slate-400">—</td>
+                <td class="py-2.5 px-4 text-right text-slate-400">—</td>
+                <td id="tot_mgmt_fee" class="py-2.5 px-4 text-right font-medium text-rose-600 bg-blue-50/40">(Rp 0)</td>
               </tr>
               <tr class="font-semibold bg-slate-50 text-slate-900 border-t border-b border-slate-200">
                 <td class="py-2.5 px-4 pl-6">Pendapatan Bersih (Net Revenue)</td>
@@ -833,15 +831,13 @@
       const pot_c = parseFloat(document.getElementById('potongan_c').value) || 0;
       const tot_pot = pot_a + pot_b + pot_c;
 
-      // Management Fee 3% dari Penjualan Kotor / Omzet Usaha
-      const fee_a = Math.round(omzet_a * 0.03);
-      const fee_b = Math.round(omzet_b * 0.03);
-      const fee_c = Math.round(omzet_c * 0.03);
-      const tot_fee = fee_a + fee_b + fee_c;
+      // Management Fee 3% khusus Shop & Drive dari Penjualan Kotor
+      const mgmt_fee_a = Math.round(omzet_a * 0.03);
+      const tot_mgmt_fee = mgmt_fee_a;
 
-      const net_rev_a = omzet_a - pot_a - fee_a;
-      const net_rev_b = omzet_b - pot_b - fee_b;
-      const net_rev_c = omzet_c - pot_c - fee_c;
+      const net_rev_a = omzet_a - pot_a - mgmt_fee_a;
+      const net_rev_b = omzet_b - pot_b;
+      const net_rev_c = omzet_c - pot_c;
       const tot_net_rev = net_rev_a + net_rev_b + net_rev_c;
 
       const hpp_mat_a = parseFloat(document.getElementById('hpp_bahan_a').value) || 0;
@@ -890,10 +886,8 @@
       // Update UI Table 1
       document.getElementById('tot_omzet').textContent = formatRupiah(tot_omzet);
       document.getElementById('tot_potongan').textContent = `(${formatRupiah(tot_pot)})`;
-      document.getElementById('fee_a').textContent = `(${formatRupiah(fee_a)})`;
-      document.getElementById('fee_b').textContent = `(${formatRupiah(fee_b)})`;
-      document.getElementById('fee_c').textContent = `(${formatRupiah(fee_c)})`;
-      document.getElementById('tot_fee').textContent = `(${formatRupiah(tot_fee)})`;
+      document.getElementById('mgmt_fee_a').textContent = `(${formatRupiah(mgmt_fee_a)})`;
+      document.getElementById('tot_mgmt_fee').textContent = `(${formatRupiah(tot_mgmt_fee)})`;
       document.getElementById('net_rev_a').textContent = formatRupiah(net_rev_a);
       document.getElementById('net_rev_b').textContent = formatRupiah(net_rev_b);
       document.getElementById('net_rev_c').textContent = formatRupiah(net_rev_c);
