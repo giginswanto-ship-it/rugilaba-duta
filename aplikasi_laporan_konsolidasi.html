@@ -232,17 +232,20 @@
               </tr>
               <tr>
                 <td class="py-2.5 px-4 pl-6 text-slate-800 flex items-center justify-between">
-                  <span>Upah Tenaga Kerja Langsung (Mekanik & Operator)</span>
-                  <span class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-medium no-print">Tenaga Kerja Ops</span>
+                  <div class="flex items-center gap-2">
+                    <span>Upah Tenaga Kerja Langsung (Mekanik & Operator)</span>
+                    <span class="text-[10px] bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded font-medium no-print">Pos OPEX 1</span>
+                  </div>
+                  <button type="button" onclick="switchTab('detail-biaya')" class="text-[11px] text-blue-600 hover:text-blue-800 font-semibold underline no-print cursor-pointer">Rincian OPEX &rarr;</button>
                 </td>
-                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-rose-500" oninput="recalculate()" onfocus="this.select()"></td>
-                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-rose-500" oninput="recalculate()" onfocus="this.select()"></td>
-                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-rose-500" oninput="recalculate()" onfocus="this.select()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-rose-500" oninput="onTab1UpahInput()" onfocus="this.select()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-rose-500" oninput="onTab1UpahInput()" onfocus="this.select()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-rose-500" oninput="onTab1UpahInput()" onfocus="this.select()"></td>
                 <td id="tot_hpp_upah" class="py-2.5 px-4 text-right font-medium text-rose-600 bg-blue-50/40">(Rp 0)</td>
               </tr>
               <tr>
                 <td class="py-2.5 px-4 pl-6 text-slate-800 flex items-center justify-between">
-                  <span id="opex-row-label">Beban Operasional Toko & Kantor (Sesuai Rincian OPEX)</span>
+                  <span id="opex-row-label">Beban Operasional Toko & Kantor Lainnya (Sesuai Rincian OPEX)</span>
                   <button type="button" onclick="switchTab('detail-biaya')" class="text-[11px] bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300 px-2 py-0.5 rounded-md font-medium no-print flex items-center gap-1 transition-all cursor-pointer" title="Buka Rincian Biaya Operasional di Tab 3">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
                     <span>Rincian OPEX</span>
@@ -1009,14 +1012,15 @@
     };
 
     let opexItems = [
-      { id: 'gaji', name: '1. Gaji & Tunjangan Staf Toko / Kasir / Frontline', a: 0, b: 0, c: 0 },
-      { id: 'sewa', name: '2. Sewa Tempat / Lokasi Outlet & IPL', a: 0, b: 0, c: 0 },
-      { id: 'utilitas', name: '3. Listrik Daya Tinggi, Air & Internet', a: 0, b: 0, c: 0 },
-      { id: 'marketing', name: '4. Pemasaran, Iklan Digital & Promosi', a: 0, b: 0, c: 0 },
-      { id: 'perawatan', name: '5. Servis Mesin, Kalibrasi & Tooling Khusus', a: 0, b: 0, c: 0 },
-      { id: 'perlengkapan', name: '6. Perlengkapan Kerja, Packaging & ATK', a: 0, b: 0, c: 0 },
-      { id: 'limbah_k3', name: '7. Pengelolaan Limbah B3/Sampah & K3', a: 0, b: 0, c: 0 },
-      { id: 'software', name: '8. Lisensi POS, Adobe CC, RIP & Merchant Fee', a: 0, b: 0, c: 0 }
+      { id: 'upah_langsung', name: '1. Upah Tenaga Kerja Langsung (Mekanik & Operator)', a: 0, b: 0, c: 0 },
+      { id: 'gaji', name: '2. Gaji & Tunjangan Staf Toko / Kasir / Frontline', a: 0, b: 0, c: 0 },
+      { id: 'sewa', name: '3. Sewa Tempat / Lokasi Outlet & IPL', a: 0, b: 0, c: 0 },
+      { id: 'utilitas', name: '4. Listrik Daya Tinggi, Air & Internet', a: 0, b: 0, c: 0 },
+      { id: 'marketing', name: '5. Pemasaran, Iklan Digital & Promosi', a: 0, b: 0, c: 0 },
+      { id: 'perawatan', name: '6. Servis Mesin, Kalibrasi & Tooling Khusus', a: 0, b: 0, c: 0 },
+      { id: 'perlengkapan', name: '7. Perlengkapan Kerja, Packaging & ATK', a: 0, b: 0, c: 0 },
+      { id: 'limbah_k3', name: '8. Pengelolaan Limbah B3/Sampah & K3', a: 0, b: 0, c: 0 },
+      { id: 'software', name: '9. Lisensi POS, Adobe CC, RIP & Merchant Fee', a: 0, b: 0, c: 0 }
     ];
 
     const defaultAssets = [];
@@ -1044,13 +1048,25 @@
 
     // Load from LocalStorage if available
     function loadSavedData() {
-      // Pembersihan otomatis data dummy lama dari cache browser
-      const STORAGE_VERSION = 'v2_clean_zero';
+      // Pembersihan otomatis angka hantu / phantom lama dari cache browser
+      const STORAGE_VERSION = 'v4_pure_hpp_clean';
       if (localStorage.getItem('rugilaba_data_version') !== STORAGE_VERSION) {
-        localStorage.removeItem('rugilaba_assets');
-        localStorage.removeItem('rugilaba_monthly_revenue');
-        localStorage.removeItem('rugilaba_opex');
-        localStorage.removeItem('rugilaba_form_data');
+        try {
+          const savedForm = localStorage.getItem('rugilaba_form_data');
+          if (savedForm) {
+            const formData = JSON.parse(savedForm);
+            if (formData['hpp_upah_a'] === 22073579 || formData['hpp_upah_a'] === 22073578 || formData['hpp_upah_a'] === 22073580) {
+              formData['hpp_upah_a'] = 0;
+            }
+            if (formData['hpp_upah_b'] === 4200000) {
+              formData['hpp_upah_b'] = 0;
+            }
+            if (formData['hpp_upah_c'] === 2518692 || formData['hpp_upah_c'] === 2518691 || formData['hpp_upah_c'] === 2518693) {
+              formData['hpp_upah_c'] = 0;
+            }
+            localStorage.setItem('rugilaba_form_data', JSON.stringify(formData));
+          }
+        } catch(e) {}
         localStorage.setItem('rugilaba_data_version', STORAGE_VERSION);
       }
 
@@ -1112,6 +1128,37 @@
         try {
           const parsedOpex = JSON.parse(savedOpex);
           if (Array.isArray(parsedOpex) && parsedOpex.length > 0) {
+            // Cek apakah item upah_langsung sudah ada di opex
+            const hasUpah = parsedOpex.some(item => item.id === 'upah_langsung');
+            if (!hasUpah) {
+              parsedOpex.unshift({
+                id: 'upah_langsung',
+                name: '1. Upah Tenaga Kerja Langsung (Mekanik & Operator)',
+                a: 0,
+                b: 0,
+                c: 0
+              });
+            }
+            // Pastikan label penomoran 1..9
+            const itemNames = [
+              '1. Upah Tenaga Kerja Langsung (Mekanik & Operator)',
+              '2. Gaji & Tunjangan Staf Toko / Kasir / Frontline',
+              '3. Sewa Tempat / Lokasi Outlet & IPL',
+              '4. Listrik Daya Tinggi, Air & Internet',
+              '5. Pemasaran, Iklan Digital & Promosi',
+              '6. Servis Mesin, Kalibrasi & Tooling Khusus',
+              '7. Perlengkapan Kerja, Packaging & ATK',
+              '8. Pengelolaan Limbah B3/Sampah & K3',
+              '9. Lisensi POS, Adobe CC, RIP & Merchant Fee'
+            ];
+            parsedOpex.forEach((it, i) => {
+              if (itemNames[i]) it.name = itemNames[i];
+              if (it.id === 'upah_langsung') {
+                if (it.a === 22073579 || it.a === 22073578 || it.a === 22073580) it.a = 0;
+                if (it.b === 4200000) it.b = 0;
+                if (it.c === 2518692 || it.c === 2518691 || it.c === 2518693) it.c = 0;
+              }
+            });
             opexItems = parsedOpex;
           }
         } catch(e) {}
@@ -1122,6 +1169,38 @@
       if (savedForm) {
         try {
           const formData = JSON.parse(savedForm);
+          // Hapus sisa nilai hantu rasio lama
+          if (formData['hpp_upah_a'] === 22073579 || formData['hpp_upah_a'] === 22073578 || formData['hpp_upah_a'] === 22073580) {
+            formData['hpp_upah_a'] = 0;
+          }
+          if (formData['hpp_upah_b'] === 4200000) {
+            formData['hpp_upah_b'] = 0;
+          }
+          if (formData['hpp_upah_c'] === 2518692 || formData['hpp_upah_c'] === 2518691 || formData['hpp_upah_c'] === 2518693) {
+            formData['hpp_upah_c'] = 0;
+          }
+
+          // Sinkronkan dua arah antara opexItems[0] dengan formData hpp_upah
+          if (opexItems.length > 0 && opexItems[0].id === 'upah_langsung') {
+            if (opexItems[0].a > 0 && (!formData['hpp_upah_a'] || formData['hpp_upah_a'] === 0)) {
+              formData['hpp_upah_a'] = opexItems[0].a;
+            } else if (typeof formData['hpp_upah_a'] === 'number' && formData['hpp_upah_a'] > 0 && opexItems[0].a === 0) {
+              opexItems[0].a = formData['hpp_upah_a'];
+            }
+
+            if (opexItems[0].b > 0 && (!formData['hpp_upah_b'] || formData['hpp_upah_b'] === 0)) {
+              formData['hpp_upah_b'] = opexItems[0].b;
+            } else if (typeof formData['hpp_upah_b'] === 'number' && formData['hpp_upah_b'] > 0 && opexItems[0].b === 0) {
+              opexItems[0].b = formData['hpp_upah_b'];
+            }
+
+            if (opexItems[0].c > 0 && (!formData['hpp_upah_c'] || formData['hpp_upah_c'] === 0)) {
+              formData['hpp_upah_c'] = opexItems[0].c;
+            } else if (typeof formData['hpp_upah_c'] === 'number' && formData['hpp_upah_c'] > 0 && opexItems[0].c === 0) {
+              opexItems[0].c = formData['hpp_upah_c'];
+            }
+          }
+
           Object.keys(formData).forEach(key => {
             const el = document.getElementById(key);
             if (el && typeof formData[key] === 'number') el.value = formData[key];
@@ -1139,6 +1218,19 @@
           if (p.end && document.getElementById('date-end')) document.getElementById('date-end').value = p.end;
         } catch(e) {}
       }
+
+      // Pastikan nilai upah di input Tab 1 terisi sesuai data bersih opexItems[0]
+      if (opexItems.length > 0 && opexItems[0].id === 'upah_langsung') {
+        const elUpahA = document.getElementById('hpp_upah_a');
+        const elUpahB = document.getElementById('hpp_upah_b');
+        const elUpahC = document.getElementById('hpp_upah_c');
+        if (elUpahA) elUpahA.value = opexItems[0].a;
+        if (elUpahB) elUpahB.value = opexItems[0].b;
+        if (elUpahC) elUpahC.value = opexItems[0].c;
+      }
+
+      // Simpan pembersihan langsung ke localStorage agar tidak ada sisa cache
+      saveAllToStorage(false);
     }
 
     function saveAllToStorage(showAlert = true) {
@@ -1830,6 +1922,16 @@
 
       document.getElementById('active-period-label').textContent = `${sFormatted} s/d ${eFormatted} (${diffDays} Hari / ~${months} Bulan)`;
       
+      // Update Tab 1 Upah berdasarkan Pos 1 opexItems yang diproratakan
+      if (opexItems.length > 0 && opexItems[0].id === 'upah_langsung') {
+        const elUpahA = document.getElementById('hpp_upah_a');
+        const elUpahB = document.getElementById('hpp_upah_b');
+        const elUpahC = document.getElementById('hpp_upah_c');
+        if (elUpahA) elUpahA.value = Math.round(opexItems[0].a * currentPeriodRatio);
+        if (elUpahB) elUpahB.value = Math.round(opexItems[0].b * currentPeriodRatio);
+        if (elUpahC) elUpahC.value = Math.round(opexItems[0].c * currentPeriodRatio);
+      }
+
       renderDeprTable();
       renderMonthlyTable();
       if (syncMonthlyToReport) {
@@ -1871,6 +1973,45 @@
       if (rowTotalEl) {
         rowTotalEl.textContent = formatRupiah((opexItems[idx].a || 0) + (opexItems[idx].b || 0) + (opexItems[idx].c || 0));
       }
+
+      // Jika Pos 1 (Upah Langsung) diubah di Tab 3, sinkronkan ke Tab 1
+      if (opexItems[idx].id === 'upah_langsung') {
+        const elUpahA = document.getElementById('hpp_upah_a');
+        const elUpahB = document.getElementById('hpp_upah_b');
+        const elUpahC = document.getElementById('hpp_upah_c');
+        if (elUpahA) elUpahA.value = Math.round(opexItems[idx].a * currentPeriodRatio);
+        if (elUpahB) elUpahB.value = Math.round(opexItems[idx].b * currentPeriodRatio);
+        if (elUpahC) elUpahC.value = Math.round(opexItems[idx].c * currentPeriodRatio);
+      }
+
+      recalculate();
+      queueSave();
+    }
+
+    function onTab1UpahInput() {
+      const valA = parseFloat(document.getElementById('hpp_upah_a').value) || 0;
+      const valB = parseFloat(document.getElementById('hpp_upah_b').value) || 0;
+      const valC = parseFloat(document.getElementById('hpp_upah_c').value) || 0;
+
+      let upahItem = opexItems.find(item => item.id === 'upah_langsung');
+      if (!upahItem) {
+        upahItem = { id: 'upah_langsung', name: '1. Upah Tenaga Kerja Langsung (Mekanik & Operator)', a: 0, b: 0, c: 0 };
+        opexItems.unshift(upahItem);
+      }
+
+      upahItem.a = currentPeriodRatio > 0 ? Math.round(valA / currentPeriodRatio) : valA;
+      upahItem.b = currentPeriodRatio > 0 ? Math.round(valB / currentPeriodRatio) : valB;
+      upahItem.c = currentPeriodRatio > 0 ? Math.round(valC / currentPeriodRatio) : valC;
+
+      const inA = document.getElementById('opex-in-a-0');
+      const inB = document.getElementById('opex-in-b-0');
+      const inC = document.getElementById('opex-in-c-0');
+      if (inA) inA.value = upahItem.a;
+      if (inB) inB.value = upahItem.b;
+      if (inC) inC.value = upahItem.c;
+      const rowTot = document.getElementById('opex-row-total-0');
+      if (rowTot) rowTot.textContent = formatRupiah(upahItem.a + upahItem.b + upahItem.c);
+
       recalculate();
       queueSave();
     }
@@ -2047,9 +2188,23 @@
       const tot_gross = gross_a + gross_b + gross_c;
 
       // OPEX Sums (Tahunan & Prorata Periode)
-      const annual_opex_a = opexItems.reduce((acc, curr) => acc + curr.a, 0);
-      const annual_opex_b = opexItems.reduce((acc, curr) => acc + curr.b, 0);
-      const annual_opex_c = opexItems.reduce((acc, curr) => acc + curr.c, 0);
+      // Pos 1 (upah_langsung) adalah Upah Tenaga Kerja Langsung
+      // Pos 2..n (other items) adalah Beban Toko & Kantor Lainnya
+      const otherOpexItems = opexItems.filter(item => item.id !== 'upah_langsung');
+      const annual_other_opex_a = otherOpexItems.reduce((acc, curr) => acc + (curr.a || 0), 0);
+      const annual_other_opex_b = otherOpexItems.reduce((acc, curr) => acc + (curr.b || 0), 0);
+      const annual_other_opex_c = otherOpexItems.reduce((acc, curr) => acc + (curr.c || 0), 0);
+      const annual_tot_other_opex = annual_other_opex_a + annual_other_opex_b + annual_other_opex_c;
+
+      const period_other_opex_a = Math.round(annual_other_opex_a * currentPeriodRatio);
+      const period_other_opex_b = Math.round(annual_other_opex_b * currentPeriodRatio);
+      const period_other_opex_c = Math.round(annual_other_opex_c * currentPeriodRatio);
+      const tot_period_other_opex = period_other_opex_a + period_other_opex_b + period_other_opex_c;
+
+      // Total OPEX Lengkap (Tahunan & Periode)
+      const annual_opex_a = opexItems.reduce((acc, curr) => acc + (curr.a || 0), 0);
+      const annual_opex_b = opexItems.reduce((acc, curr) => acc + (curr.b || 0), 0);
+      const annual_opex_c = opexItems.reduce((acc, curr) => acc + (curr.c || 0), 0);
       const annual_tot_opex = annual_opex_a + annual_opex_b + annual_opex_c;
 
       const period_opex_a = Math.round(annual_opex_a * currentPeriodRatio);
@@ -2057,11 +2212,11 @@
       const period_opex_c = Math.round(annual_opex_c * currentPeriodRatio);
       const tot_period_opex = period_opex_a + period_opex_b + period_opex_c;
 
-      // Point C: Beban Operasional Unit (OPEX Toko/Kantor + Upah Mekanik & Operator)
-      const tot_opex_unit_a = period_opex_a + hpp_lab_a;
-      const tot_opex_unit_b = period_opex_b + hpp_lab_b;
-      const tot_opex_unit_c = period_opex_c + hpp_lab_c;
-      const tot_combined_opex = tot_period_opex + tot_hpp_lab;
+      // Point C: Beban Operasional Unit (Upah Mekanik & Operator + Beban Toko & Kantor Lainnya)
+      const tot_opex_unit_a = hpp_lab_a + period_other_opex_a;
+      const tot_opex_unit_b = hpp_lab_b + period_other_opex_b;
+      const tot_opex_unit_c = hpp_lab_c + period_other_opex_c;
+      const tot_combined_opex = tot_hpp_lab + tot_period_other_opex;
 
       const ebitda_a = gross_a - tot_opex_unit_a;
       const ebitda_b = gross_b - tot_opex_unit_b;
@@ -2108,15 +2263,15 @@
       const opexLabelEl = document.getElementById('opex-row-label');
       if (opexLabelEl) {
         if (activeMonths.length === 12) {
-          opexLabelEl.textContent = 'Beban Operasional Toko & Kantor (Tahunan Penuh)';
+          opexLabelEl.textContent = 'Beban Operasional Toko & Kantor Lainnya (Tahunan Penuh)';
         } else {
-          opexLabelEl.textContent = `Beban Operasional Toko & Kantor (Proporsional ${activeMonths.length} Bulan)`;
+          opexLabelEl.textContent = `Beban Operasional Toko & Kantor Lainnya (Proporsional ${activeMonths.length} Bulan)`;
         }
       }
-      document.getElementById('sum_opex_a').textContent = `(${formatRupiah(period_opex_a)})`;
-      document.getElementById('sum_opex_b').textContent = `(${formatRupiah(period_opex_b)})`;
-      document.getElementById('sum_opex_c').textContent = `(${formatRupiah(period_opex_c)})`;
-      document.getElementById('tot_opex').textContent = `(${formatRupiah(tot_period_opex)})`;
+      document.getElementById('sum_opex_a').textContent = `(${formatRupiah(period_other_opex_a)})`;
+      document.getElementById('sum_opex_b').textContent = `(${formatRupiah(period_other_opex_b)})`;
+      document.getElementById('sum_opex_c').textContent = `(${formatRupiah(period_other_opex_c)})`;
+      document.getElementById('tot_opex').textContent = `(${formatRupiah(tot_period_other_opex)})`;
 
       const elTotOpA = document.getElementById('tot_opex_unit_a');
       const elTotOpB = document.getElementById('tot_opex_unit_b');
@@ -2306,14 +2461,15 @@
       });
 
       opexItems = [
-        { id: 'gaji', name: '1. Gaji & Tunjangan Staf Toko / Kasir / Frontline', a: 0, b: 0, c: 0 },
-        { id: 'sewa', name: '2. Sewa Tempat / Lokasi Outlet & IPL', a: 0, b: 0, c: 0 },
-        { id: 'utilitas', name: '3. Listrik Daya Tinggi, Air & Internet', a: 0, b: 0, c: 0 },
-        { id: 'marketing', name: '4. Pemasaran, Iklan Digital & Promosi', a: 0, b: 0, c: 0 },
-        { id: 'perawatan', name: '5. Servis Mesin, Kalibrasi & Tooling Khusus', a: 0, b: 0, c: 0 },
-        { id: 'perlengkapan', name: '6. Perlengkapan Kerja, Packaging & ATK', a: 0, b: 0, c: 0 },
-        { id: 'limbah_k3', name: '7. Pengelolaan Limbah B3/Sampah & K3', a: 0, b: 0, c: 0 },
-        { id: 'software', name: '8. Lisensi POS, Adobe CC, RIP & Merchant Fee', a: 0, b: 0, c: 0 }
+        { id: 'upah_langsung', name: '1. Upah Tenaga Kerja Langsung (Mekanik & Operator)', a: 0, b: 0, c: 0 },
+        { id: 'gaji', name: '2. Gaji & Tunjangan Staf Toko / Kasir / Frontline', a: 0, b: 0, c: 0 },
+        { id: 'sewa', name: '3. Sewa Tempat / Lokasi Outlet & IPL', a: 0, b: 0, c: 0 },
+        { id: 'utilitas', name: '4. Listrik Daya Tinggi, Air & Internet', a: 0, b: 0, c: 0 },
+        { id: 'marketing', name: '5. Pemasaran, Iklan Digital & Promosi', a: 0, b: 0, c: 0 },
+        { id: 'perawatan', name: '6. Servis Mesin, Kalibrasi & Tooling Khusus', a: 0, b: 0, c: 0 },
+        { id: 'perlengkapan', name: '7. Perlengkapan Kerja, Packaging & ATK', a: 0, b: 0, c: 0 },
+        { id: 'limbah_k3', name: '8. Pengelolaan Limbah B3/Sampah & K3', a: 0, b: 0, c: 0 },
+        { id: 'software', name: '9. Lisensi POS, Adobe CC, RIP & Merchant Fee', a: 0, b: 0, c: 0 }
       ];
 
       const presetEl = document.getElementById('period-preset');
@@ -2417,9 +2573,9 @@
       sql += `) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;\n\n`;
 
       sql += `INSERT INTO \`pemasukan_bulanan\` (\`tahun\`, \`bulan\`, \`nama_bulan\`, \`kuartal\`, \`id_unit\`, \`omzet_kotor\`, \`hpp\`, \`potongan_retur\`, \`management_fee\`, \`pendapatan_bersih\`, \`laba_kotor\`) VALUES\n`;
-      const totPotA = parseFloat(document.getElementById('potongan_a')?.value || 22000000);
-      const totPotB = parseFloat(document.getElementById('potongan_b')?.value || 15000000);
-      const totPotC = parseFloat(document.getElementById('potongan_c')?.value || 13000000);
+      const totPotA = parseFloat(document.getElementById('potongan_a')?.value || 0);
+      const totPotB = parseFloat(document.getElementById('potongan_b')?.value || 0);
+      const totPotC = parseFloat(document.getElementById('potongan_c')?.value || 0);
       const potA = totPotA / 12;
       const potB = totPotB / 12;
       const potC = totPotC / 12;
@@ -2461,12 +2617,12 @@
       sql += `  FOREIGN KEY (\`id_unit\`) REFERENCES \`unit_usaha\`(\`id_unit\`) ON DELETE CASCADE\n`;
       sql += `) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;\n\n`;
 
-      const hppBahanA = parseFloat(document.getElementById('hpp_bahan_a')?.value || 550000000);
-      const hppBahanB = parseFloat(document.getElementById('hpp_bahan_b')?.value || 310000000);
-      const hppBahanC = parseFloat(document.getElementById('hpp_bahan_c')?.value || 192000000);
-      const hppUpahA = parseFloat(document.getElementById('hpp_upah_a')?.value || 48000000);
-      const hppUpahB = parseFloat(document.getElementById('hpp_upah_b')?.value || 30000000);
-      const hppUpahC = parseFloat(document.getElementById('hpp_upah_c')?.value || 22000000);
+      const hppBahanA = parseFloat(document.getElementById('hpp_bahan_a')?.value || 0);
+      const hppBahanB = parseFloat(document.getElementById('hpp_bahan_b')?.value || 0);
+      const hppBahanC = parseFloat(document.getElementById('hpp_bahan_c')?.value || 0);
+      const hppUpahA = parseFloat(document.getElementById('hpp_upah_a')?.value || 0);
+      const hppUpahB = parseFloat(document.getElementById('hpp_upah_b')?.value || 0);
+      const hppUpahC = parseFloat(document.getElementById('hpp_upah_c')?.value || 0);
 
       sql += `INSERT INTO \`harga_pokok_penjualan\` (\`tahun\`, \`id_unit\`, \`bahan_baku_sukucadang\`, \`upah_tenaga_kerja_langsung\`) VALUES\n`;
       sql += `(2026, 'unit_a', ${hppBahanA.toFixed(2)}, ${hppUpahA.toFixed(2)}),\n`;

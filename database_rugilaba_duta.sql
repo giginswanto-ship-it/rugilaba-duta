@@ -131,14 +131,15 @@ CREATE TABLE `biaya_operasional` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `biaya_operasional` (`kode_kategori`, `nama_kategori`, `tahun`, `nominal_a`, `nominal_b`, `nominal_c`) VALUES
-('gaji', '1. Gaji & Tunjangan Staf Toko / Kasir / Frontline', 2026, 0.00, 0.00, 0.00),
-('sewa', '2. Sewa Tempat / Lokasi Outlet & IPL', 2026, 0.00, 0.00, 0.00),
-('utilitas', '3. Listrik Daya Tinggi, Air & Internet', 2026, 0.00, 0.00, 0.00),
-('marketing', '4. Pemasaran, Iklan Digital & Promosi', 2026, 0.00, 0.00, 0.00),
-('perawatan', '5. Servis Mesin, Kalibrasi & Tooling Khusus', 2026, 0.00, 0.00, 0.00),
-('perlengkapan', '6. Perlengkapan Kerja, Packaging & ATK', 2026, 0.00, 0.00, 0.00),
-('limbah_k3', '7. Pengelolaan Limbah B3/Sampah & K3', 2026, 0.00, 0.00, 0.00),
-('software', '8. Lisensi POS, Adobe CC, RIP & Merchant Fee', 2026, 0.00, 0.00, 0.00);
+('upah_langsung', '1. Upah Tenaga Kerja Langsung (Mekanik & Operator)', 2026, 0.00, 0.00, 0.00),
+('gaji', '2. Gaji & Tunjangan Staf Toko / Kasir / Frontline', 2026, 0.00, 0.00, 0.00),
+('sewa', '3. Sewa Tempat / Lokasi Outlet & IPL', 2026, 0.00, 0.00, 0.00),
+('utilitas', '4. Listrik Daya Tinggi, Air & Internet', 2026, 0.00, 0.00, 0.00),
+('marketing', '5. Pemasaran, Iklan Digital & Promosi', 2026, 0.00, 0.00, 0.00),
+('perawatan', '6. Servis Mesin, Kalibrasi & Tooling Khusus', 2026, 0.00, 0.00, 0.00),
+('perlengkapan', '7. Perlengkapan Kerja, Packaging & ATK', 2026, 0.00, 0.00, 0.00),
+('limbah_k3', '8. Pengelolaan Limbah B3/Sampah & K3', 2026, 0.00, 0.00, 0.00),
+('software', '9. Lisensi POS, Adobe CC, RIP & Merchant Fee', 2026, 0.00, 0.00, 0.00);
 
 -- ------------------------------------------------------------------------
 -- 5. TABEL JADWAL PENYUSUTAN ASET TETAP (DEPRESIASI FISKAL)
