@@ -127,9 +127,15 @@
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-2">
           <div>
             <h2 class="text-lg font-bold text-slate-800">1. Laporan Komparatif & Konsolidasi Keuangan</h2>
-            <p class="text-xs text-slate-500">Ubah nilai pada kotak input untuk mensimulasikan dampak terhadap laba kotor, EBITDA, EBIT dan Laba Bersih.</p>
+            <p class="text-xs text-slate-500">Nilai Omzet, HPP, OPEX, Depresiasi dan Pajak terintegrasi secara dinamis sesuai periode aktif yang dipilih.</p>
           </div>
-          <span class="text-xs bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1 rounded-md no-print">💡 Kotak input dapat langsung diubah</span>
+          <div class="flex flex-wrap items-center gap-2 no-print">
+            <button type="button" onclick="distributeReportToMonthly()" class="text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer" title="Distribusikan Omzet & HPP dari Laporan Konsolidasi ke 12 Bulan di Keranjang Bulanan">
+              <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+              <span>Sinkronkan ke Keranjang Bulanan</span>
+            </button>
+            <span class="text-xs bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1.5 rounded-lg font-medium">💡 Input dapat diubah langsung</span>
+          </div>
         </div>
 
         <div class="overflow-x-auto">
@@ -212,6 +218,20 @@
                 <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()"></td>
                 <td id="tot_hpp_upah" class="py-2.5 px-4 text-right font-medium text-rose-600 bg-blue-50/40">(Rp 0)</td>
               </tr>
+              <!-- Subtotal Total HPP -->
+              <tr class="font-bold bg-rose-50/50 text-rose-950 border-t border-slate-200">
+                <td class="py-2.5 px-4 pl-6 flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span>Total Beban Pokok Penjualan (HPP)</span>
+                    <span class="text-[10px] bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded font-semibold no-print">Tersinkron Bulanan</span>
+                  </div>
+                  <button type="button" onclick="switchTab('pemasukan-bulanan')" class="text-[11px] text-blue-600 hover:text-blue-800 font-semibold underline no-print cursor-pointer">Rincian Bulanan &rarr;</button>
+                </td>
+                <td id="tot_hpp_a" class="py-2.5 px-4 text-right text-rose-700 font-bold">(Rp 0)</td>
+                <td id="tot_hpp_b" class="py-2.5 px-4 text-right text-rose-700 font-bold">(Rp 0)</td>
+                <td id="tot_hpp_c" class="py-2.5 px-4 text-right text-rose-700 font-bold">(Rp 0)</td>
+                <td id="tot_hpp_all" class="py-2.5 px-4 text-right font-extrabold text-rose-800 bg-blue-50/60">(Rp 0)</td>
+              </tr>
               <tr class="font-bold bg-emerald-50 text-emerald-900 border-t border-b border-emerald-200">
                 <td class="py-2.5 px-4 pl-6">Laba Kotor (Gross Profit)</td>
                 <td id="gross_a" class="py-2.5 px-4 text-right">Rp 0</td>
@@ -225,7 +245,13 @@
                 <td colspan="5" class="py-2.5 px-4 text-xs tracking-wider">C. BEBAN OPERASIONAL UMUM & PENJUALAN (OPEX)</td>
               </tr>
               <tr>
-                <td class="py-2.5 px-4 pl-6 text-slate-800">Total Beban Operasional Unit (Detail di Tab 3)</td>
+                <td class="py-2.5 px-4 pl-6 text-slate-800 flex items-center justify-between">
+                  <span id="opex-row-label">Total Beban Operasional Unit (Proporsional Periode Aktif)</span>
+                  <button type="button" onclick="switchTab('detail-biaya')" class="text-[11px] bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300 px-2 py-0.5 rounded-md font-medium no-print flex items-center gap-1 transition-all cursor-pointer" title="Buka Rincian Biaya Operasional di Tab 3">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                    <span>Rincian OPEX</span>
+                  </button>
+                </td>
                 <td id="sum_opex_a" class="py-2.5 px-4 text-right font-medium text-rose-600">(Rp 0)</td>
                 <td id="sum_opex_b" class="py-2.5 px-4 text-right font-medium text-rose-600">(Rp 0)</td>
                 <td id="sum_opex_c" class="py-2.5 px-4 text-right font-medium text-rose-600">(Rp 0)</td>
@@ -321,7 +347,11 @@
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
               <span>Terapkan ke Laporan</span>
             </button>
-            <button type="button" onclick="saveMonthlyToStorage()" class="px-3.5 py-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm transition-all flex items-center gap-1.5 cursor-pointer" title="Simpan data bulanan ke memori lokal browser">
+            <button type="button" onclick="distributeReportToMonthly()" class="px-3.5 py-2 text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg shadow-sm transition-all flex items-center gap-1.5 cursor-pointer" title="Tarik dan distribusikan nilai saat ini dari Laporan Konsolidasi ke 12 Bulan">
+              <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+              <span>Tarik dari Laporan</span>
+            </button>
+            <button type="button" onclick="saveAllToStorage(true)" class="px-3.5 py-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm transition-all flex items-center gap-1.5 cursor-pointer" title="Simpan data bulanan ke memori lokal browser">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
               <span>Simpan Data</span>
             </button>
@@ -447,6 +477,19 @@
           <span id="monthly-active-badge" class="px-2.5 py-1 rounded bg-amber-200 text-amber-900 font-bold shrink-0">Semua 12 Bulan Aktif</span>
         </div>
 
+        <!-- View Mode Selector & Legend -->
+        <div class="mb-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 no-print">
+          <div class="flex items-center gap-1.5 text-xs bg-slate-100 p-1 rounded-lg border border-slate-200">
+            <span class="text-slate-500 font-semibold px-2">Tampilan Kolom:</span>
+            <button type="button" onclick="setBasketView('all')" id="btn-view-all" class="px-2.5 py-1 rounded-md font-semibold bg-white text-blue-700 shadow-sm transition-all cursor-pointer">📋 Semua (Omzet & HPP)</button>
+            <button type="button" onclick="setBasketView('omzet')" id="btn-view-omzet" class="px-2.5 py-1 rounded-md font-medium text-slate-600 hover:text-slate-900 transition-all cursor-pointer">💰 Hanya Omzet</button>
+            <button type="button" onclick="setBasketView('hpp')" id="btn-view-hpp" class="px-2.5 py-1 rounded-md font-medium text-slate-600 hover:text-slate-900 transition-all cursor-pointer">📦 Hanya HPP</button>
+          </div>
+          <div class="text-[11px] text-slate-500 flex items-center gap-2">
+            <span>💡 <em>Laba Kotor Bulanan = Omzet Kotor − HPP Unit</em></span>
+          </div>
+        </div>
+
         <!-- Monthly Table with Omzet and HPP Columns -->
         <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
           <table class="w-full text-sm text-left border-collapse">
@@ -550,8 +593,20 @@
               <!-- Dynamically Populated by JavaScript -->
             </tbody>
             <tfoot>
+              <tr class="bg-blue-50/80 text-blue-950 font-bold text-xs border-t-2 border-blue-200">
+                <td class="py-3 px-4 uppercase">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                    <span>BEBAN OPERASIONAL PERIODE AKTIF (<span id="opex-active-count">12</span> BULAN)</span>
+                  </div>
+                </td>
+                <td id="opex_period_a" class="py-3 px-4 text-right text-blue-900 font-bold">Rp 0</td>
+                <td id="opex_period_b" class="py-3 px-4 text-right text-blue-900 font-bold">Rp 0</td>
+                <td id="opex_period_c" class="py-3 px-4 text-right text-blue-900 font-bold">Rp 0</td>
+                <td id="opex_period_tot" class="py-3 px-4 text-right bg-blue-100 font-extrabold text-blue-950">Rp 0</td>
+              </tr>
               <tr class="bg-slate-800 text-white font-bold text-sm">
-                <td class="py-3 px-4">TOTAL BEBAN OPERASIONAL (OPEX)</td>
+                <td class="py-3 px-4">TOTAL BEBAN OPERASIONAL TAHUNAN (12 BULAN)</td>
                 <td id="opex_sum_a" class="py-3 px-4 text-right">Rp 0</td>
                 <td id="opex_sum_b" class="py-3 px-4 text-right">Rp 0</td>
                 <td id="opex_sum_c" class="py-3 px-4 text-right">Rp 0</td>
@@ -988,17 +1043,73 @@
       }
       const syncCheckEl = document.getElementById('sync-monthly-check');
       if (syncCheckEl) syncCheckEl.checked = syncMonthlyToReport;
+
+      // 4. OPEX Items
+      const savedOpex = localStorage.getItem('rugilaba_opex');
+      if (savedOpex) {
+        try {
+          const parsedOpex = JSON.parse(savedOpex);
+          if (Array.isArray(parsedOpex) && parsedOpex.length > 0) {
+            opexItems = parsedOpex;
+          }
+        } catch(e) {}
+      }
+
+      // 5. Form Data (Holding, Potongan, etc.)
+      const savedForm = localStorage.getItem('rugilaba_form_data');
+      if (savedForm) {
+        try {
+          const formData = JSON.parse(savedForm);
+          Object.keys(formData).forEach(key => {
+            const el = document.getElementById(key);
+            if (el && typeof formData[key] === 'number') el.value = formData[key];
+          });
+        } catch(e) {}
+      }
+
+      // 6. Period Data
+      const savedPeriod = localStorage.getItem('rugilaba_period');
+      if (savedPeriod) {
+        try {
+          const p = JSON.parse(savedPeriod);
+          if (p.preset && document.getElementById('period-preset')) document.getElementById('period-preset').value = p.preset;
+          if (p.start && document.getElementById('date-start')) document.getElementById('date-start').value = p.start;
+          if (p.end && document.getElementById('date-end')) document.getElementById('date-end').value = p.end;
+        } catch(e) {}
+      }
+    }
+
+    function saveAllToStorage(showAlert = true) {
+      localStorage.setItem('rugilaba_monthly_revenue', JSON.stringify(monthlyRevenueData));
+      localStorage.setItem('rugilaba_monthly_sync', JSON.stringify(syncMonthlyToReport));
+      localStorage.setItem('rugilaba_assets', JSON.stringify(assetsData));
+      localStorage.setItem('rugilaba_opex', JSON.stringify(opexItems));
+
+      const formData = {};
+      ['omzet_a','omzet_b','omzet_c','potongan_a','potongan_b','potongan_c','hpp_bahan_a','hpp_bahan_b','hpp_bahan_c','hpp_upah_a','hpp_upah_b','hpp_upah_c','overhead_holding','income_other'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) formData[id] = parseFloat(el.value) || 0;
+      });
+      localStorage.setItem('rugilaba_form_data', JSON.stringify(formData));
+
+      const periodData = {
+        preset: document.getElementById('period-preset')?.value || 'year_2026',
+        start: document.getElementById('date-start')?.value || '2026-01-01',
+        end: document.getElementById('date-end')?.value || '2026-12-31'
+      };
+      localStorage.setItem('rugilaba_period', JSON.stringify(periodData));
+
+      if (showAlert) {
+        alert('✅ Seluruh data (Keranjang Omzet & HPP Bulanan, Jadwal Aset Depresiasi, Beban Operasional, dan Laporan Konsolidasi) berhasil disimpan ke memori lokal browser!');
+      }
     }
 
     function saveAssetsToStorage() {
-      localStorage.setItem('rugilaba_assets', JSON.stringify(assetsData));
-      alert('✅ Data jadwal penyusutan aset berhasil disimpan ke memori lokal browser!');
+      saveAllToStorage(true);
     }
 
     function saveMonthlyToStorage() {
-      localStorage.setItem('rugilaba_monthly_revenue', JSON.stringify(monthlyRevenueData));
-      localStorage.setItem('rugilaba_monthly_sync', JSON.stringify(syncMonthlyToReport));
-      alert('✅ Data keranjang pemasukan & HPP bulanan berhasil disimpan ke memori lokal browser!');
+      saveAllToStorage(true);
     }
 
     function resetMonthlyToDefault() {
@@ -1042,12 +1153,72 @@
       return active.length > 0 ? active : [1,2,3,4,5,6,7,8,9,10,11,12];
     }
 
+    let currentPeriodRatio = 1.0; // Default 1 year
+    let currentBasketView = 'all'; // 'all', 'omzet', 'hpp'
+
+    function setBasketView(mode) {
+      currentBasketView = mode;
+      ['all', 'omzet', 'hpp'].forEach(m => {
+        const btn = document.getElementById(`btn-view-${m}`);
+        if (btn) {
+          if (m === mode) {
+            btn.className = 'px-2.5 py-1 rounded-md font-semibold bg-white text-blue-700 shadow-sm transition-all cursor-pointer';
+          } else {
+            btn.className = 'px-2.5 py-1 rounded-md font-medium text-slate-600 hover:text-slate-900 transition-all cursor-pointer';
+          }
+        }
+      });
+      renderMonthlyTableHeaders();
+      renderMonthlyTable();
+    }
+
+    function renderMonthlyTableHeaders() {
+      const showOmzet = currentBasketView === 'all' || currentBasketView === 'omzet';
+      const showHpp = currentBasketView === 'all' || currentBasketView === 'hpp';
+
+      const unitColspan = (showOmzet && showHpp) ? 2 : 1;
+      const totColspan = (showOmzet && showHpp) ? 3 : 2;
+
+      const thead = document.querySelector('#tab-pemasukan-bulanan table thead');
+      if (!thead) return;
+
+      let subheadersHtml = '';
+      if (showOmzet) subheadersHtml += `<th class="py-1.5 px-2 text-right bg-blue-50/40 text-blue-800">Omzet</th>`;
+      if (showHpp) subheadersHtml += `<th class="py-1.5 px-2 text-right bg-blue-50/40 text-rose-700 border-r border-blue-200">HPP</th>`;
+
+      if (showOmzet) subheadersHtml += `<th class="py-1.5 px-2 text-right bg-emerald-50/40 text-emerald-800">Omzet</th>`;
+      if (showHpp) subheadersHtml += `<th class="py-1.5 px-2 text-right bg-emerald-50/40 text-rose-700 border-r border-emerald-200">HPP</th>`;
+
+      if (showOmzet) subheadersHtml += `<th class="py-1.5 px-2 text-right bg-purple-50/40 text-purple-800">Omzet</th>`;
+      if (showHpp) subheadersHtml += `<th class="py-1.5 px-2 text-right bg-purple-50/40 text-rose-700 border-r border-purple-200">HPP</th>`;
+
+      if (showOmzet) subheadersHtml += `<th class="py-1.5 px-2 text-right text-slate-700">Tot. Omzet</th>`;
+      if (showHpp) subheadersHtml += `<th class="py-1.5 px-2 text-right text-rose-700">Tot. HPP</th>`;
+      subheadersHtml += `<th class="py-1.5 px-2 text-right text-emerald-800 bg-emerald-50/60 font-bold">Laba Kotor</th>`;
+
+      thead.innerHTML = `
+        <tr class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200 text-xs uppercase">
+          <th rowspan="2" class="py-3 px-3 text-left w-36 align-middle border-r border-slate-200">Periode Bulan</th>
+          <th rowspan="2" class="py-3 px-2 text-center w-24 align-middle border-r border-slate-200">Status</th>
+          <th colspan="${unitColspan}" class="py-2 px-3 text-center bg-blue-50 text-blue-900 border-r border-blue-200">Shop & Drive (A)</th>
+          <th colspan="${unitColspan}" class="py-2 px-3 text-center bg-emerald-50 text-emerald-900 border-r border-emerald-200">Snaprint GW (B)</th>
+          <th colspan="${unitColspan}" class="py-2 px-3 text-center bg-purple-50 text-purple-900 border-r border-purple-200">Snaprint Zamrud (C)</th>
+          <th colspan="${totColspan}" class="py-2 px-3 text-center bg-slate-200 text-slate-800">Konsolidasi Bulanan</th>
+        </tr>
+        <tr class="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200 text-[11px] uppercase">
+          ${subheadersHtml}
+        </tr>
+      `;
+    }
+
     function renderMonthlyTable() {
       const tbody = document.getElementById('monthly-tbody');
       if (!tbody) return;
       tbody.innerHTML = '';
 
       const activeMonths = getActiveMonths();
+      const showOmzet = currentBasketView === 'all' || currentBasketView === 'omzet';
+      const showHpp = currentBasketView === 'all' || currentBasketView === 'hpp';
 
       let yearTotA = 0, yearTotHppA = 0;
       let yearTotB = 0, yearTotHppB = 0;
@@ -1099,7 +1270,7 @@
           ? 'bg-blue-50/40 hover:bg-blue-50/70 transition-colors' 
           : 'hover:bg-slate-50/80 transition-colors text-slate-500 opacity-80';
 
-        row.innerHTML = `
+        let cellsHtml = `
           <td class="py-2.5 px-3 font-medium border-r border-slate-200 ${isActive ? 'text-blue-950 font-bold' : 'text-slate-700'}">
             <div class="flex items-center gap-1.5">
               <span class="w-5 text-center font-mono text-xs ${isActive ? 'text-blue-600 font-bold' : 'text-slate-400'}">${String(item.month).padStart(2, '0')}</span>
@@ -1112,39 +1283,70 @@
               ? '<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800">● Aktif</span>' 
               : '<span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-400">Non-Aktif</span>'}
           </td>
-          <!-- Unit A -->
-          <td class="py-2 px-2 text-right bg-blue-50/20">
-            <input type="number" value="${omzetA}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-blue-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'a', this.value)" title="Omzet Shop & Drive">
-          </td>
-          <td class="py-2 px-2 text-right bg-blue-50/20 border-r border-blue-200">
-            <input type="number" value="${hppA}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-rose-300 bg-white font-medium text-rose-700' : 'border-slate-200 bg-slate-50 text-rose-400'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-rose-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'hpp_a', this.value)" title="HPP Shop & Drive">
-          </td>
-          <!-- Unit B -->
-          <td class="py-2 px-2 text-right bg-emerald-50/20">
-            <input type="number" value="${omzetB}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-emerald-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'b', this.value)" title="Omzet Snaprint GW">
-          </td>
-          <td class="py-2 px-2 text-right bg-emerald-50/20 border-r border-emerald-200">
-            <input type="number" value="${hppB}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-rose-300 bg-white font-medium text-rose-700' : 'border-slate-200 bg-slate-50 text-rose-400'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-rose-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'hpp_b', this.value)" title="HPP Snaprint GW">
-          </td>
-          <!-- Unit C -->
-          <td class="py-2 px-2 text-right bg-purple-50/20">
-            <input type="number" value="${omzetC}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-purple-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-purple-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'c', this.value)" title="Omzet Snaprint Zamrud">
-          </td>
-          <td class="py-2 px-2 text-right bg-purple-50/20 border-r border-purple-200">
-            <input type="number" value="${hppC}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-rose-300 bg-white font-medium text-rose-700' : 'border-slate-200 bg-slate-50 text-rose-400'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-rose-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'hpp_c', this.value)" title="HPP Snaprint Zamrud">
-          </td>
-          <!-- Konsolidasi Bulanan -->
-          <td class="py-2 px-2 text-right font-bold text-xs ${isActive ? 'text-blue-900 bg-blue-50/50' : 'text-slate-700 bg-slate-50'}">
-            ${formatRupiah(rowOmzet)}
-          </td>
-          <td class="py-2 px-2 text-right font-semibold text-xs text-rose-600 ${isActive ? 'bg-blue-50/50' : 'bg-slate-50'}">
-            (${formatRupiah(rowHpp)})
-          </td>
+        `;
+
+        // Unit A
+        if (showOmzet) {
+          cellsHtml += `
+            <td class="py-2 px-2 text-right bg-blue-50/20">
+              <input type="number" value="${omzetA}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-blue-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'a', this.value)" title="Omzet Shop & Drive">
+            </td>`;
+        }
+        if (showHpp) {
+          cellsHtml += `
+            <td class="py-2 px-2 text-right bg-blue-50/20 border-r border-blue-200">
+              <input type="number" value="${hppA}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-rose-300 bg-white font-medium text-rose-700' : 'border-slate-200 bg-slate-50 text-rose-400'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-rose-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'hpp_a', this.value)" title="HPP Shop & Drive">
+            </td>`;
+        }
+
+        // Unit B
+        if (showOmzet) {
+          cellsHtml += `
+            <td class="py-2 px-2 text-right bg-emerald-50/20">
+              <input type="number" value="${omzetB}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-emerald-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'b', this.value)" title="Omzet Snaprint GW">
+            </td>`;
+        }
+        if (showHpp) {
+          cellsHtml += `
+            <td class="py-2 px-2 text-right bg-emerald-50/20 border-r border-emerald-200">
+              <input type="number" value="${hppB}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-rose-300 bg-white font-medium text-rose-700' : 'border-slate-200 bg-slate-50 text-rose-400'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-rose-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'hpp_b', this.value)" title="HPP Snaprint GW">
+            </td>`;
+        }
+
+        // Unit C
+        if (showOmzet) {
+          cellsHtml += `
+            <td class="py-2 px-2 text-right bg-purple-50/20">
+              <input type="number" value="${omzetC}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-purple-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-purple-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'c', this.value)" title="Omzet Snaprint Zamrud">
+            </td>`;
+        }
+        if (showHpp) {
+          cellsHtml += `
+            <td class="py-2 px-2 text-right bg-purple-50/20 border-r border-purple-200">
+              <input type="number" value="${hppC}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-rose-300 bg-white font-medium text-rose-700' : 'border-slate-200 bg-slate-50 text-rose-400'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-rose-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'hpp_c', this.value)" title="HPP Snaprint Zamrud">
+            </td>`;
+        }
+
+        // Konsolidasi
+        if (showOmzet) {
+          cellsHtml += `
+            <td class="py-2 px-2 text-right font-bold text-xs ${isActive ? 'text-blue-900 bg-blue-50/50' : 'text-slate-700 bg-slate-50'}">
+              ${formatRupiah(rowOmzet)}
+            </td>`;
+        }
+        if (showHpp) {
+          cellsHtml += `
+            <td class="py-2 px-2 text-right font-semibold text-xs text-rose-600 ${isActive ? 'bg-blue-50/50' : 'bg-slate-50'}">
+              (${formatRupiah(rowHpp)})
+            </td>`;
+        }
+        cellsHtml += `
           <td class="py-2 px-2 text-right font-bold text-xs bg-emerald-50/50 text-emerald-800">
             <div>${formatRupiah(rowGross)}</div>
             <div class="text-[10px] text-emerald-600 font-semibold">${grossMarginPct}%</div>
-          </td>
-        `;
+          </td>`;
+
+        row.innerHTML = cellsHtml;
         tbody.appendChild(row);
       });
 
@@ -1214,6 +1416,10 @@
       const countEl = document.getElementById('foot-active-count');
       if (countEl) countEl.textContent = activeMonths.length;
 
+      const setDisplay = (el, show) => {
+        if (el) el.style.display = show ? '' : 'none';
+      };
+
       // 1. Akumulasi Aktif
       const faA = document.getElementById('foot-active-a');
       const faHppA = document.getElementById('foot-active-hpp-a');
@@ -1236,6 +1442,15 @@
       const activeMargin = activeGrandOmzet > 0 ? ((activeGrandGross / activeGrandOmzet) * 100).toFixed(1) : 0;
       if (faTotGross) faTotGross.innerHTML = `<div>${formatRupiah(activeGrandGross)}</div><div class="text-[10px] text-emerald-700 font-semibold">${activeMargin}%</div>`;
 
+      setDisplay(faA, showOmzet);
+      setDisplay(faHppA, showHpp);
+      setDisplay(faB, showOmzet);
+      setDisplay(faHppB, showHpp);
+      setDisplay(faC, showOmzet);
+      setDisplay(faHppC, showHpp);
+      setDisplay(faTotOmzet, showOmzet);
+      setDisplay(faTotHpp, showHpp);
+
       // 2. Total Tahunan 12 Bulan
       const fyA = document.getElementById('foot-year-a');
       const fyHppA = document.getElementById('foot-year-hpp-a');
@@ -1257,6 +1472,15 @@
       if (fyTotHpp) fyTotHpp.textContent = `(${formatRupiah(yearGrandHpp)})`;
       if (fyTotGross) fyTotGross.innerHTML = `<div>${formatRupiah(yearGrandGross)}</div><div class="text-[10px] text-emerald-300 font-semibold">${marginTot}%</div>`;
 
+      setDisplay(fyA, showOmzet);
+      setDisplay(fyHppA, showHpp);
+      setDisplay(fyB, showOmzet);
+      setDisplay(fyHppB, showHpp);
+      setDisplay(fyC, showOmzet);
+      setDisplay(fyHppC, showHpp);
+      setDisplay(fyTotOmzet, showOmzet);
+      setDisplay(fyTotHpp, showHpp);
+
       // 3. Rata-Rata per Bulan
       const fvA = document.getElementById('foot-avg-a');
       const fvHppA = document.getElementById('foot-avg-hpp-a');
@@ -1277,12 +1501,22 @@
       if (fvTotOmzet) fvTotOmzet.textContent = formatRupiah(Math.round(yearGrandOmzet / 12));
       if (fvTotHpp) fvTotHpp.textContent = `(${formatRupiah(Math.round(yearGrandHpp / 12))})`;
       if (fvTotGross) fvTotGross.textContent = formatRupiah(Math.round(yearGrandGross / 12));
+
+      setDisplay(fvA, showOmzet);
+      setDisplay(fvHppA, showHpp);
+      setDisplay(fvB, showOmzet);
+      setDisplay(fvHppB, showHpp);
+      setDisplay(fvC, showOmzet);
+      setDisplay(fvHppC, showHpp);
+      setDisplay(fvTotOmzet, showOmzet);
+      setDisplay(fvTotHpp, showHpp);
     }
 
     function updateMonthlyItem(idx, col, val) {
       if (!monthlyRevenueData[idx]) return;
       monthlyRevenueData[idx][col] = parseFloat(val) || 0;
       renderMonthlyTable();
+      saveAllToStorage(false);
       if (syncMonthlyToReport) {
         applyMonthlyToReport(false);
       }
@@ -1311,6 +1545,20 @@
       if (elA) elA.value = activeOmzetA;
       if (elB) elB.value = activeOmzetB;
       if (elC) elC.value = activeOmzetC;
+
+      // Update Potongan Penjualan proporsional periode aktif
+      const elPotA = document.getElementById('potongan_a');
+      const elPotB = document.getElementById('potongan_b');
+      const elPotC = document.getElementById('potongan_c');
+      if (elPotA) elPotA.value = Math.round(defaultData.potongan_a * currentPeriodRatio);
+      if (elPotB) elPotB.value = Math.round(defaultData.potongan_b * currentPeriodRatio);
+      if (elPotC) elPotC.value = Math.round(defaultData.potongan_c * currentPeriodRatio);
+
+      // Update Overhead Holding & Income Other proporsional periode aktif
+      const elOverhead = document.getElementById('overhead_holding');
+      const elIncomeOther = document.getElementById('income_other');
+      if (elOverhead) elOverhead.value = Math.round(defaultData.overhead_holding * currentPeriodRatio);
+      if (elIncomeOther) elIncomeOther.value = Math.round(defaultData.income_other * currentPeriodRatio);
 
       // Update HPP in Tab 1 (Bahan Baku & Upah Langsung secara proporsional sesuai rasio baseline)
       // Unit A: Bahan 550jt / 598jt, Upah 48jt / 598jt
@@ -1357,7 +1605,53 @@
       }
     }
 
-    let currentPeriodRatio = 1.0; // Default 1 year
+    function distributeReportToMonthly() {
+      const omzetA = parseFloat(document.getElementById('omzet_a')?.value) || 0;
+      const omzetB = parseFloat(document.getElementById('omzet_b')?.value) || 0;
+      const omzetC = parseFloat(document.getElementById('omzet_c')?.value) || 0;
+
+      const hppA = (parseFloat(document.getElementById('hpp_bahan_a')?.value) || 0) + (parseFloat(document.getElementById('hpp_upah_a')?.value) || 0);
+      const hppB = (parseFloat(document.getElementById('hpp_bahan_b')?.value) || 0) + (parseFloat(document.getElementById('hpp_upah_b')?.value) || 0);
+      const hppC = (parseFloat(document.getElementById('hpp_bahan_c')?.value) || 0) + (parseFloat(document.getElementById('hpp_upah_c')?.value) || 0);
+
+      const activeMonths = getActiveMonths();
+      const isFullYear = activeMonths.length === 12;
+
+      const promptMsg = isFullYear
+        ? `Apakah Anda ingin mendistribusikan total Omzet & HPP dari Laporan Konsolidasi ke 12 Bulan di Keranjang Bulanan secara proporsional?\n\n` +
+          `• Shop & Drive: Omzet ${formatRupiah(omzetA)} | HPP ${formatRupiah(hppA)}\n` +
+          `• Snaprint GW: Omzet ${formatRupiah(omzetB)} | HPP ${formatRupiah(hppB)}\n` +
+          `• Snaprint Zamrud: Omzet ${formatRupiah(omzetC)} | HPP ${formatRupiah(hppC)}`
+        : `Apakah Anda ingin mendistribusikan nilai dari Laporan Konsolidasi ke ${activeMonths.length} bulan periode aktif di Keranjang Bulanan secara proporsional?`;
+
+      if (!confirm(promptMsg)) return;
+
+      const baseTotOmzetA = defaultMonthlyRevenue.reduce((s, m) => s + (activeMonths.includes(m.month) ? m.a : 0), 0) || 1;
+      const baseTotOmzetB = defaultMonthlyRevenue.reduce((s, m) => s + (activeMonths.includes(m.month) ? m.b : 0), 0) || 1;
+      const baseTotOmzetC = defaultMonthlyRevenue.reduce((s, m) => s + (activeMonths.includes(m.month) ? m.c : 0), 0) || 1;
+
+      const baseTotHppA = defaultMonthlyRevenue.reduce((s, m) => s + (activeMonths.includes(m.month) ? m.hpp_a : 0), 0) || 1;
+      const baseTotHppB = defaultMonthlyRevenue.reduce((s, m) => s + (activeMonths.includes(m.month) ? m.hpp_b : 0), 0) || 1;
+      const baseTotHppC = defaultMonthlyRevenue.reduce((s, m) => s + (activeMonths.includes(m.month) ? m.hpp_c : 0), 0) || 1;
+
+      monthlyRevenueData.forEach((row, i) => {
+        if (activeMonths.includes(row.month)) {
+          const def = defaultMonthlyRevenue[i] || row;
+          row.a = Math.round(omzetA * (def.a / baseTotOmzetA));
+          row.hpp_a = Math.round(hppA * (def.hpp_a / baseTotHppA));
+
+          row.b = Math.round(omzetB * (def.b / baseTotOmzetB));
+          row.hpp_b = Math.round(hppB * (def.hpp_b / baseTotHppB));
+
+          row.c = Math.round(omzetC * (def.c / baseTotOmzetC));
+          row.hpp_c = Math.round(hppC * (def.hpp_c / baseTotHppC));
+        }
+      });
+
+      renderMonthlyTable();
+      saveAllToStorage(false);
+      alert('✅ Sukses! Nilai dari Laporan Konsolidasi telah didistribusikan ke Keranjang Bulanan dan disinkronkan.');
+    }
 
     function formatRupiah(num, prefix = 'Rp ') {
       if (isNaN(num)) return 'Rp 0';
@@ -1618,20 +1912,30 @@
       const hpp_lab_c = parseFloat(document.getElementById('hpp_upah_c').value) || 0;
       const tot_hpp_lab = hpp_lab_a + hpp_lab_b + hpp_lab_c;
 
-      const gross_a = net_rev_a - (hpp_mat_a + hpp_lab_a);
-      const gross_b = net_rev_b - (hpp_mat_b + hpp_lab_b);
-      const gross_c = net_rev_c - (hpp_mat_c + hpp_lab_c);
+      const tot_hpp_a = hpp_mat_a + hpp_lab_a;
+      const tot_hpp_b = hpp_mat_b + hpp_lab_b;
+      const tot_hpp_c = hpp_mat_c + hpp_lab_c;
+      const tot_hpp_all = tot_hpp_mat + tot_hpp_lab;
+
+      const gross_a = net_rev_a - tot_hpp_a;
+      const gross_b = net_rev_b - tot_hpp_b;
+      const gross_c = net_rev_c - tot_hpp_c;
       const tot_gross = gross_a + gross_b + gross_c;
 
-      // OPEX Sums
-      const opex_a = opexItems.reduce((acc, curr) => acc + curr.a, 0);
-      const opex_b = opexItems.reduce((acc, curr) => acc + curr.b, 0);
-      const opex_c = opexItems.reduce((acc, curr) => acc + curr.c, 0);
-      const tot_opex = opex_a + opex_b + opex_c;
+      // OPEX Sums (Tahunan & Prorata Periode)
+      const annual_opex_a = opexItems.reduce((acc, curr) => acc + curr.a, 0);
+      const annual_opex_b = opexItems.reduce((acc, curr) => acc + curr.b, 0);
+      const annual_opex_c = opexItems.reduce((acc, curr) => acc + curr.c, 0);
+      const annual_tot_opex = annual_opex_a + annual_opex_b + annual_opex_c;
 
-      const ebitda_a = gross_a - opex_a;
-      const ebitda_b = gross_b - opex_b;
-      const ebitda_c = gross_c - opex_c;
+      const period_opex_a = Math.round(annual_opex_a * currentPeriodRatio);
+      const period_opex_b = Math.round(annual_opex_b * currentPeriodRatio);
+      const period_opex_c = Math.round(annual_opex_c * currentPeriodRatio);
+      const tot_period_opex = period_opex_a + period_opex_b + period_opex_c;
+
+      const ebitda_a = gross_a - period_opex_a;
+      const ebitda_b = gross_b - period_opex_b;
+      const ebitda_c = gross_c - period_opex_c;
       const tot_ebitda = ebitda_a + ebitda_b + ebitda_c;
 
       // Depreciations
@@ -1664,15 +1968,34 @@
       document.getElementById('tot_hpp_bahan').textContent = `(${formatRupiah(tot_hpp_mat)})`;
       document.getElementById('tot_hpp_upah').textContent = `(${formatRupiah(tot_hpp_lab)})`;
 
+      const elTotHppA = document.getElementById('tot_hpp_a');
+      const elTotHppB = document.getElementById('tot_hpp_b');
+      const elTotHppC = document.getElementById('tot_hpp_c');
+      const elTotHppAll = document.getElementById('tot_hpp_all');
+      if (elTotHppA) elTotHppA.textContent = `(${formatRupiah(tot_hpp_a)})`;
+      if (elTotHppB) elTotHppB.textContent = `(${formatRupiah(tot_hpp_b)})`;
+      if (elTotHppC) elTotHppC.textContent = `(${formatRupiah(tot_hpp_c)})`;
+      if (elTotHppAll) elTotHppAll.textContent = `(${formatRupiah(tot_hpp_all)})`;
+
       document.getElementById('gross_a').textContent = formatRupiah(gross_a);
       document.getElementById('gross_b').textContent = formatRupiah(gross_b);
       document.getElementById('gross_c').textContent = formatRupiah(gross_c);
       document.getElementById('tot_gross').textContent = formatRupiah(tot_gross);
 
-      document.getElementById('sum_opex_a').textContent = `(${formatRupiah(opex_a)})`;
-      document.getElementById('sum_opex_b').textContent = `(${formatRupiah(opex_b)})`;
-      document.getElementById('sum_opex_c').textContent = `(${formatRupiah(opex_c)})`;
-      document.getElementById('tot_opex').textContent = `(${formatRupiah(tot_opex)})`;
+      // OPEX in Tab 1
+      const activeMonths = getActiveMonths();
+      const opexLabelEl = document.getElementById('opex-row-label');
+      if (opexLabelEl) {
+        if (activeMonths.length === 12) {
+          opexLabelEl.textContent = 'Total Beban Operasional Unit (Tahunan Penuh)';
+        } else {
+          opexLabelEl.textContent = `Total Beban Operasional Unit (Proporsional ${activeMonths.length} Bulan)`;
+        }
+      }
+      document.getElementById('sum_opex_a').textContent = `(${formatRupiah(period_opex_a)})`;
+      document.getElementById('sum_opex_b').textContent = `(${formatRupiah(period_opex_b)})`;
+      document.getElementById('sum_opex_c').textContent = `(${formatRupiah(period_opex_c)})`;
+      document.getElementById('tot_opex').textContent = `(${formatRupiah(tot_period_opex)})`;
 
       document.getElementById('ebitda_a').textContent = formatRupiah(ebitda_a);
       document.getElementById('ebitda_b').textContent = formatRupiah(ebitda_b);
@@ -1695,11 +2018,22 @@
       document.getElementById('ebt_c_final').textContent = formatRupiah(ebit_c);
       document.getElementById('tot_ebt_final').textContent = formatRupiah(tot_ebt);
 
-      // Tab 2 OPEX Totals
-      document.getElementById('opex_sum_a').textContent = formatRupiah(opex_a);
-      document.getElementById('opex_sum_b').textContent = formatRupiah(opex_b);
-      document.getElementById('opex_sum_c').textContent = formatRupiah(opex_c);
-      document.getElementById('opex_sum_tot').textContent = formatRupiah(tot_opex);
+      // Tab 3 OPEX Totals
+      const opexCntEl = document.getElementById('opex-active-count');
+      if (opexCntEl) opexCntEl.textContent = activeMonths.length;
+      const elOpPerA = document.getElementById('opex_period_a');
+      const elOpPerB = document.getElementById('opex_period_b');
+      const elOpPerC = document.getElementById('opex_period_c');
+      const elOpPerTot = document.getElementById('opex_period_tot');
+      if (elOpPerA) elOpPerA.textContent = formatRupiah(period_opex_a);
+      if (elOpPerB) elOpPerB.textContent = formatRupiah(period_opex_b);
+      if (elOpPerC) elOpPerC.textContent = formatRupiah(period_opex_c);
+      if (elOpPerTot) elOpPerTot.textContent = formatRupiah(tot_period_opex);
+
+      document.getElementById('opex_sum_a').textContent = formatRupiah(annual_opex_a);
+      document.getElementById('opex_sum_b').textContent = formatRupiah(annual_opex_b);
+      document.getElementById('opex_sum_c').textContent = formatRupiah(annual_opex_c);
+      document.getElementById('opex_sum_tot').textContent = formatRupiah(annual_tot_opex);
 
       // KPI Header Cards
       document.getElementById('kpi-omzet').textContent = formatRupiah(tot_omzet);
@@ -1714,7 +2048,7 @@
 
       // Tax Calculations
       // Skenario 1 (PPh Final 0.5%)
-      const ptkp = 500000000;
+      const ptkp = Math.round(500000000 * currentPeriodRatio);
       const dpp_s1 = Math.max(0, tot_omzet - ptkp);
       const tax_s1_op = dpp_s1 * 0.005;
       const tax_s1_badan = tot_omzet * 0.005;
