@@ -111,10 +111,11 @@
     <!-- Main Navigation Tabs -->
     <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
       <div class="flex border-b border-slate-200 px-6 pt-3 gap-6 overflow-x-auto text-sm no-print">
-        <button onclick="switchTab('konsolidasi')" id="tab-btn-konsolidasi" class="pb-3 border-b-2 border-blue-600 text-blue-600 font-semibold">📊 Laporan Laba Rugi Konsolidasi</button>
-        <button onclick="switchTab('detail-biaya')" id="tab-btn-detail-biaya" class="pb-3 text-slate-500 hover:text-slate-700">📑 Rincian Lengkap Biaya Operasional</button>
-        <button onclick="switchTab('depresiasi')" id="tab-btn-depresiasi" class="pb-3 text-slate-500 hover:text-slate-700">⚙️ Jadwal Penyusutan Aset</button>
-        <button onclick="switchTab('pajak')" id="tab-btn-pajak" class="pb-3 text-slate-500 hover:text-slate-700">⚖️ Komparasi Pajak PPh</button>
+        <button onclick="switchTab('konsolidasi')" id="tab-btn-konsolidasi" class="pb-3 border-b-2 border-blue-600 text-blue-600 font-semibold whitespace-nowrap">📊 Laporan Laba Rugi Konsolidasi</button>
+        <button onclick="switchTab('pemasukan-bulanan')" id="tab-btn-pemasukan-bulanan" class="pb-3 text-slate-500 hover:text-slate-700 whitespace-nowrap">🛒 Keranjang Pemasukan Bulanan</button>
+        <button onclick="switchTab('detail-biaya')" id="tab-btn-detail-biaya" class="pb-3 text-slate-500 hover:text-slate-700 whitespace-nowrap">📑 Rincian Lengkap Biaya Operasional</button>
+        <button onclick="switchTab('depresiasi')" id="tab-btn-depresiasi" class="pb-3 text-slate-500 hover:text-slate-700 whitespace-nowrap">⚙️ Jadwal Penyusutan Aset</button>
+        <button onclick="switchTab('pajak')" id="tab-btn-pajak" class="pb-3 text-slate-500 hover:text-slate-700 whitespace-nowrap">⚖️ Komparasi Pajak PPh</button>
       </div>
 
       <!-- Tab 1: Laporan Laba Rugi Komparatif & Konsolidasi -->
@@ -144,7 +145,13 @@
                 <td colspan="5" class="py-2.5 px-4 text-xs tracking-wider">A. PENDAPATAN USAHA (REVENUE)</td>
               </tr>
               <tr>
-                <td class="py-2.5 px-4 pl-6 text-slate-800">Penjualan Kotor / Omzet Usaha</td>
+                <td class="py-2.5 px-4 pl-6 text-slate-800 flex items-center justify-between">
+                  <span>Penjualan Kotor / Omzet Usaha</span>
+                  <button type="button" onclick="switchTab('pemasukan-bulanan')" class="text-[11px] bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 px-2 py-0.5 rounded-md font-medium no-print flex items-center gap-1 transition-all" title="Buka Keranjang Inputan Pemasukan Bulanan">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span>Keranjang Bulanan</span>
+                  </button>
+                </td>
                 <td class="py-2 px-4 text-right"><input type="number" id="omzet_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500" oninput="recalculate()"></td>
                 <td class="py-2 px-4 text-right"><input type="number" id="omzet_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500" oninput="recalculate()"></td>
                 <td class="py-2 px-4 text-right"><input type="number" id="omzet_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500" oninput="recalculate()"></td>
@@ -206,7 +213,7 @@
                 <td colspan="5" class="py-2.5 px-4 text-xs tracking-wider">C. BEBAN OPERASIONAL UMUM & PENJUALAN (OPEX)</td>
               </tr>
               <tr>
-                <td class="py-2.5 px-4 pl-6 text-slate-800">Total Beban Operasional Unit (Detail di Tab 2)</td>
+                <td class="py-2.5 px-4 pl-6 text-slate-800">Total Beban Operasional Unit (Detail di Tab 3)</td>
                 <td id="sum_opex_a" class="py-2.5 px-4 text-right font-medium text-rose-600">(Rp 0)</td>
                 <td id="sum_opex_b" class="py-2.5 px-4 text-right font-medium text-rose-600">(Rp 0)</td>
                 <td id="sum_opex_c" class="py-2.5 px-4 text-right font-medium text-rose-600">(Rp 0)</td>
@@ -280,10 +287,142 @@
         </div>
       </div>
 
-      <!-- Tab 2: Rincian Lengkap Biaya Operasional -->
+      <!-- Tab 2: Keranjang Inputan Pemasukan Bulanan -->
+      <div id="tab-pemasukan-bulanan" class="tab-content p-6 hidden">
+        <div class="mb-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100 pb-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-lg font-bold text-slate-800">2. Keranjang Inputan Pemasukan Bulanan per Unit Usaha</h2>
+              <span class="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-semibold">12 Bulan</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">
+              Kelola rincian pemasukan omzet per bulan untuk masing-masing unit bisnis. Akumulasi bulan yang sesuai rentang periode aktif dapat otomatis disinkronkan ke Laporan Laba Rugi.
+            </p>
+          </div>
+          
+          <div class="flex flex-wrap items-center gap-2 no-print">
+            <label class="flex items-center gap-2 cursor-pointer text-xs font-semibold text-blue-900 bg-blue-50 hover:bg-blue-100 px-3 py-2 rounded-lg border border-blue-200 transition-all select-none">
+              <input type="checkbox" id="sync-monthly-check" checked onchange="toggleSyncMonthly(this.checked)" class="rounded text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer">
+              <span>Sinkronkan Otomatis ke Laporan</span>
+            </label>
+            <button type="button" onclick="applyMonthlyToReport(true)" class="px-3.5 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-all flex items-center gap-1.5" title="Salin total omzet bulan aktif ke Laporan Konsolidasi">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              Terapkan ke Laporan
+            </button>
+            <button type="button" onclick="saveMonthlyToStorage()" class="px-3.5 py-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm transition-all flex items-center gap-1.5" title="Simpan data bulanan ke browser">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+              Simpan Data
+            </button>
+            <button type="button" onclick="resetMonthlyToDefault()" class="px-3 py-2 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-all" title="Reset nilai bulanan ke bawaan sistem">
+              Reset Bulanan
+            </button>
+          </div>
+        </div>
+
+        <!-- Mini KPI Summary Cards for Monthly Basket -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+          <div class="bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-xl p-4 shadow-sm">
+            <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+              <span>Shop & Drive</span>
+              <span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 text-[10px] font-bold">Unit A</span>
+            </div>
+            <h4 id="kpi-monthly-a" class="text-xl font-bold text-slate-900 mt-1.5">Rp 0</h4>
+            <p id="kpi-monthly-sub-a" class="text-[11px] text-slate-500 mt-1">Periode Aktif: Rp 0</p>
+          </div>
+          
+          <div class="bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-xl p-4 shadow-sm">
+            <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+              <span>Snaprint Grand Wisata</span>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">Unit B</span>
+            </div>
+            <h4 id="kpi-monthly-b" class="text-xl font-bold text-slate-900 mt-1.5">Rp 0</h4>
+            <p id="kpi-monthly-sub-b" class="text-[11px] text-slate-500 mt-1">Periode Aktif: Rp 0</p>
+          </div>
+
+          <div class="bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-xl p-4 shadow-sm">
+            <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+              <span>Snaprint Zamrud</span>
+              <span class="px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 text-[10px] font-bold">Unit C</span>
+            </div>
+            <h4 id="kpi-monthly-c" class="text-xl font-bold text-slate-900 mt-1.5">Rp 0</h4>
+            <p id="kpi-monthly-sub-c" class="text-[11px] text-slate-500 mt-1">Periode Aktif: Rp 0</p>
+          </div>
+
+          <div class="bg-gradient-to-br from-blue-50/80 to-white border border-blue-200 rounded-xl p-4 shadow-sm">
+            <div class="flex items-center justify-between text-xs text-blue-700 font-semibold">
+              <span>Total Konsolidasi</span>
+              <span class="px-2 py-0.5 rounded-full bg-blue-600 text-white text-[10px] font-bold">3 Unit</span>
+            </div>
+            <h4 id="kpi-monthly-tot" class="text-xl font-bold text-blue-900 mt-1.5">Rp 0</h4>
+            <p id="kpi-monthly-sub-tot" class="text-[11px] text-blue-700 mt-1">Periode Aktif: Rp 0</p>
+          </div>
+        </div>
+
+        <!-- Filter Info Alert -->
+        <div class="mb-4 bg-amber-50/70 border border-amber-200 rounded-xl p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs">
+          <div class="flex items-center gap-2 text-amber-900">
+            <svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span>Baris yang diberi tanda highlight biru merupakan <strong>bulan yang masuk dalam rentang periode aktif</strong> di bagian atas.</span>
+          </div>
+          <span id="monthly-active-badge" class="px-2.5 py-1 rounded bg-amber-200 text-amber-900 font-bold shrink-0">Semua 12 Bulan Aktif</span>
+        </div>
+
+        <!-- Monthly Table -->
+        <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+          <table class="w-full text-sm text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200 text-xs uppercase">
+                <th class="py-3 px-4 w-44">Periode Bulan</th>
+                <th class="py-3 px-3 text-center w-28">Status Periode</th>
+                <th class="py-3 px-4 text-right">Shop & Drive (A)</th>
+                <th class="py-3 px-4 text-right">Snaprint GW (B)</th>
+                <th class="py-3 px-4 text-right">Snaprint Zamrud (C)</th>
+                <th class="py-3 px-4 text-right bg-blue-50/70 text-blue-900">Total Bulanan</th>
+                <th class="py-3 px-3 text-center w-24">Kontribusi</th>
+              </tr>
+            </thead>
+            <tbody id="monthly-tbody" class="divide-y divide-slate-100 text-slate-700 bg-white">
+              <!-- Dynamically populated by JavaScript -->
+            </tbody>
+            <tfoot class="border-t-2 border-slate-300 font-bold text-xs uppercase">
+              <tr class="bg-blue-50/70 text-blue-900 border-b border-blue-200">
+                <td colspan="2" class="py-3 px-4">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+                    <span>AKUMULASI PERIODE AKTIF (<span id="foot-active-count">12</span> BULAN)</span>
+                  </div>
+                </td>
+                <td id="foot-active-a" class="py-3 px-4 text-right text-blue-900">Rp 0</td>
+                <td id="foot-active-b" class="py-3 px-4 text-right text-blue-900">Rp 0</td>
+                <td id="foot-active-c" class="py-3 px-4 text-right text-blue-900">Rp 0</td>
+                <td id="foot-active-tot" class="py-3 px-4 text-right bg-blue-100/80 font-extrabold text-blue-950">Rp 0</td>
+                <td id="foot-active-pct" class="py-3 px-3 text-center text-blue-900">100%</td>
+              </tr>
+              <tr class="bg-slate-800 text-white">
+                <td colspan="2" class="py-3 px-4">TOTAL TAHUNAN (12 BULAN PENUH)</td>
+                <td id="foot-year-a" class="py-3 px-4 text-right">Rp 0</td>
+                <td id="foot-year-b" class="py-3 px-4 text-right">Rp 0</td>
+                <td id="foot-year-c" class="py-3 px-4 text-right">Rp 0</td>
+                <td id="foot-year-tot" class="py-3 px-4 text-right bg-slate-900 text-amber-300 font-extrabold">Rp 0</td>
+                <td class="py-3 px-3 text-center text-slate-300">100%</td>
+              </tr>
+              <tr class="bg-slate-100 text-slate-600 text-[11px] font-semibold">
+                <td colspan="2" class="py-2.5 px-4 italic">RATA-RATA PEMASUKAN PER BULAN</td>
+                <td id="foot-avg-a" class="py-2.5 px-4 text-right">Rp 0</td>
+                <td id="foot-avg-b" class="py-2.5 px-4 text-right">Rp 0</td>
+                <td id="foot-avg-c" class="py-2.5 px-4 text-right">Rp 0</td>
+                <td id="foot-avg-tot" class="py-2.5 px-4 text-right bg-slate-200 text-slate-800">Rp 0</td>
+                <td class="py-2.5 px-3 text-center text-slate-400">—</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 3: Rincian Lengkap Biaya Operasional -->
       <div id="tab-detail-biaya" class="tab-content p-6 hidden">
         <div class="mb-4">
-          <h2 class="text-lg font-bold text-slate-800">2. Rincian Lengkap Biaya Operasional (OPEX) Sesuai Unit Bisnis</h2>
+          <h2 class="text-lg font-bold text-slate-800">3. Rincian Lengkap Biaya Operasional (OPEX) Sesuai Unit Bisnis</h2>
           <p class="text-xs text-slate-500">Item biaya operasional disesuaikan dengan aktivitas operasional masing-masing unit bisnis.</p>
         </div>
 
@@ -314,11 +453,11 @@
         </div>
       </div>
 
-      <!-- Tab 3: Jadwal Penyusutan Aset (Dengan Tombol Tambah, Edit, Hapus & Simpan) -->
+      <!-- Tab 4: Jadwal Penyusutan Aset (Dengan Tombol Tambah, Edit, Hapus & Simpan) -->
       <div id="tab-depresiasi" class="tab-content p-6 hidden">
         <div class="mb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <div>
-            <h2 class="text-lg font-bold text-slate-800">3. Jadwal Beban Penyusutan Peralatan (Asset Depreciation Schedule)</h2>
+            <h2 class="text-lg font-bold text-slate-800">4. Jadwal Beban Penyusutan Peralatan (Asset Depreciation Schedule)</h2>
             <p class="text-xs text-slate-500">Metode: Garis Lurus (Straight Line) proporsional rentang periode. Kel. 1 (4 Thn / 25%), Kel. 2 (8 Thn / 12.5%).</p>
           </div>
           <div class="flex items-center gap-2 no-print">
@@ -363,10 +502,10 @@
         </div>
       </div>
 
-      <!-- Tab 4: Komparasi Pajak PPh -->
+      <!-- Tab 5: Komparasi Pajak PPh -->
       <div id="tab-pajak" class="tab-content p-6 hidden">
         <div class="mb-4">
-          <h2 class="text-lg font-bold text-slate-800">4. Rekonsiliasi & Komparasi Skema Pajak Penghasilan (PPh)</h2>
+          <h2 class="text-lg font-bold text-slate-800">5. Rekonsiliasi & Komparasi Skema Pajak Penghasilan (PPh)</h2>
           <p class="text-xs text-slate-500">Simulasi perbandingan antara Skema PPh Final UMKM 0,5% (PP 55/2022) vs PPh Badan Umum (Fasilitas Ps. 31E UU PPh).</p>
         </div>
 
@@ -579,8 +718,28 @@
 
     let assetsData = [];
 
+    // Dataset Pemasukan Bulanan Default (12 Bulan)
+    const defaultMonthlyRevenue = [
+      { month: 1, name: 'Januari', quarter: 'Q1', a: 85000000, b: 55000000, c: 45000000 },
+      { month: 2, name: 'Februari', quarter: 'Q1', a: 82000000, b: 50000000, c: 42000000 },
+      { month: 3, name: 'Maret', quarter: 'Q1', a: 92000000, b: 60000000, c: 48000000 },
+      { month: 4, name: 'April', quarter: 'Q2', a: 105000000, b: 65000000, c: 52000000 },
+      { month: 5, name: 'Mei', quarter: 'Q2', a: 95000000, b: 62000000, c: 50000000 },
+      { month: 6, name: 'Juni', quarter: 'Q2', a: 88000000, b: 60000000, c: 53000000 },
+      { month: 7, name: 'Juli', quarter: 'Q3', a: 90000000, b: 63000000, c: 55000000 },
+      { month: 8, name: 'Agustus', quarter: 'Q3', a: 88000000, b: 75000000, c: 52000000 },
+      { month: 9, name: 'September', quarter: 'Q3', a: 85000000, b: 65000000, c: 48000000 },
+      { month: 10, name: 'Oktober', quarter: 'Q4', a: 90000000, b: 65000000, c: 47000000 },
+      { month: 11, name: 'November', quarter: 'Q4', a: 95000000, b: 65000000, c: 50000000 },
+      { month: 12, name: 'Desember', quarter: 'Q4', a: 105000000, b: 65000000, c: 58000000 }
+    ];
+
+    let monthlyRevenueData = [];
+    let syncMonthlyToReport = true;
+
     // Load from LocalStorage if available
     function loadSavedData() {
+      // 1. Assets Data
       const savedAssets = localStorage.getItem('rugilaba_assets');
       if (savedAssets) {
         try {
@@ -591,11 +750,255 @@
       } else {
         assetsData = JSON.parse(JSON.stringify(defaultAssets));
       }
+
+      // 2. Monthly Revenue Data
+      const savedMonthly = localStorage.getItem('rugilaba_monthly_revenue');
+      if (savedMonthly) {
+        try {
+          monthlyRevenueData = JSON.parse(savedMonthly);
+        } catch(e) {
+          monthlyRevenueData = JSON.parse(JSON.stringify(defaultMonthlyRevenue));
+        }
+      } else {
+        monthlyRevenueData = JSON.parse(JSON.stringify(defaultMonthlyRevenue));
+      }
+
+      // 3. Monthly Sync Preference
+      const savedSync = localStorage.getItem('rugilaba_monthly_sync');
+      if (savedSync !== null) {
+        try {
+          syncMonthlyToReport = JSON.parse(savedSync);
+        } catch(e) {
+          syncMonthlyToReport = true;
+        }
+      } else {
+        syncMonthlyToReport = true;
+      }
+      const syncCheckEl = document.getElementById('sync-monthly-check');
+      if (syncCheckEl) syncCheckEl.checked = syncMonthlyToReport;
     }
 
     function saveAssetsToStorage() {
       localStorage.setItem('rugilaba_assets', JSON.stringify(assetsData));
       alert('✅ Data jadwal penyusutan aset berhasil disimpan ke memori lokal browser!');
+    }
+
+    function saveMonthlyToStorage() {
+      localStorage.setItem('rugilaba_monthly_revenue', JSON.stringify(monthlyRevenueData));
+      localStorage.setItem('rugilaba_monthly_sync', JSON.stringify(syncMonthlyToReport));
+      alert('✅ Data keranjang pemasukan bulanan berhasil disimpan ke memori lokal browser!');
+    }
+
+    function resetMonthlyToDefault() {
+      if (confirm('Apakah Anda yakin ingin mengembalikan data keranjang pemasukan ke nilai default bawaan?')) {
+        monthlyRevenueData = JSON.parse(JSON.stringify(defaultMonthlyRevenue));
+        localStorage.removeItem('rugilaba_monthly_revenue');
+        renderMonthlyTable();
+        if (syncMonthlyToReport) {
+          applyMonthlyToReport(false);
+        }
+      }
+    }
+
+    function toggleSyncMonthly(isChecked) {
+      syncMonthlyToReport = isChecked;
+      localStorage.setItem('rugilaba_monthly_sync', JSON.stringify(syncMonthlyToReport));
+      if (syncMonthlyToReport) {
+        applyMonthlyToReport(false);
+      }
+    }
+
+    function getActiveMonths() {
+      const s = new Date(document.getElementById('date-start').value);
+      const e = new Date(document.getElementById('date-end').value);
+      if (isNaN(s) || isNaN(e) || e < s) return [1,2,3,4,5,6,7,8,9,10,11,12];
+
+      const startYear = s.getFullYear();
+      const endYear = e.getFullYear();
+      const startMonth = s.getMonth() + 1;
+      const endMonth = e.getMonth() + 1;
+
+      if (endYear > startYear) {
+        return [1,2,3,4,5,6,7,8,9,10,11,12];
+      }
+      const active = [];
+      for (let m = 1; m <= 12; m++) {
+        if (m >= startMonth && m <= endMonth) {
+          active.push(m);
+        }
+      }
+      return active.length > 0 ? active : [1,2,3,4,5,6,7,8,9,10,11,12];
+    }
+
+    function renderMonthlyTable() {
+      const tbody = document.getElementById('monthly-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      const activeMonths = getActiveMonths();
+
+      let yearTotA = 0, yearTotB = 0, yearTotC = 0, yearGrandTot = 0;
+      let activeTotA = 0, activeTotB = 0, activeTotC = 0, activeGrandTot = 0;
+
+      // Hitung total setahun terlebih dahulu untuk persentase kontribusi
+      monthlyRevenueData.forEach(item => {
+        yearTotA += item.a;
+        yearTotB += item.b;
+        yearTotC += item.c;
+      });
+      yearGrandTot = yearTotA + yearTotB + yearTotC;
+
+      monthlyRevenueData.forEach((item, idx) => {
+        const rowTot = item.a + item.b + item.c;
+        const isActive = activeMonths.includes(item.month);
+        if (isActive) {
+          activeTotA += item.a;
+          activeTotB += item.b;
+          activeTotC += item.c;
+        }
+
+        const pct = yearGrandTot > 0 ? ((rowTot / yearGrandTot) * 100).toFixed(1) : 0;
+
+        const row = document.createElement('tr');
+        row.className = isActive 
+          ? 'bg-blue-50/50 hover:bg-blue-50/80 transition-colors' 
+          : 'hover:bg-slate-50/80 transition-colors text-slate-500';
+
+        row.innerHTML = `
+          <td class="py-2.5 px-4 font-medium ${isActive ? 'text-blue-950 font-bold' : 'text-slate-700'}">
+            <div class="flex items-center gap-2">
+              <span class="w-6 text-center font-mono text-xs ${isActive ? 'text-blue-600 font-bold' : 'text-slate-400'}">${String(item.month).padStart(2, '0')}</span>
+              <span>${item.name}</span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-600">${item.quarter}</span>
+            </div>
+          </td>
+          <td class="py-2.5 px-3 text-center">
+            ${isActive 
+              ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800">● Aktif</span>' 
+              : '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-400">Non-Aktif</span>'}
+          </td>
+          <td class="py-2 px-4 text-right">
+            <input type="number" value="${item.a}" class="w-32 text-right border ${isActive ? 'border-blue-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'a', this.value)">
+          </td>
+          <td class="py-2 px-4 text-right">
+            <input type="number" value="${item.b}" class="w-32 text-right border ${isActive ? 'border-blue-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'b', this.value)">
+          </td>
+          <td class="py-2 px-4 text-right">
+            <input type="number" value="${item.c}" class="w-32 text-right border ${isActive ? 'border-blue-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'c', this.value)">
+          </td>
+          <td class="py-2.5 px-4 text-right font-bold ${isActive ? 'text-blue-900 bg-blue-50/70' : 'text-slate-700 bg-slate-50'}">
+            ${formatRupiah(rowTot)}
+          </td>
+          <td class="py-2.5 px-3 text-center text-xs font-semibold ${isActive ? 'text-blue-700' : 'text-slate-400'}">
+            ${pct}%
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      activeGrandTot = activeTotA + activeTotB + activeTotC;
+
+      // Update KPI Cards in Tab 2
+      const elKa = document.getElementById('kpi-monthly-a');
+      const elKb = document.getElementById('kpi-monthly-b');
+      const elKc = document.getElementById('kpi-monthly-c');
+      const elKt = document.getElementById('kpi-monthly-tot');
+
+      if (elKa) elKa.textContent = formatRupiah(yearTotA);
+      if (elKb) elKb.textContent = formatRupiah(yearTotB);
+      if (elKc) elKc.textContent = formatRupiah(yearTotC);
+      if (elKt) elKt.textContent = formatRupiah(yearGrandTot);
+
+      const elSubA = document.getElementById('kpi-monthly-sub-a');
+      const elSubB = document.getElementById('kpi-monthly-sub-b');
+      const elSubC = document.getElementById('kpi-monthly-sub-c');
+      const elSubT = document.getElementById('kpi-monthly-sub-tot');
+
+      if (elSubA) elSubA.textContent = `Periode Aktif: ${formatRupiah(activeTotA)}`;
+      if (elSubB) elSubB.textContent = `Periode Aktif: ${formatRupiah(activeTotB)}`;
+      if (elSubC) elSubC.textContent = `Periode Aktif: ${formatRupiah(activeTotC)}`;
+      if (elSubT) elSubT.textContent = `Periode Aktif: ${formatRupiah(activeGrandTot)}`;
+
+      // Update Badge
+      const badgeEl = document.getElementById('monthly-active-badge');
+      if (badgeEl) {
+        if (activeMonths.length === 12) {
+          badgeEl.textContent = 'Semua 12 Bulan Aktif';
+        } else {
+          badgeEl.textContent = `${activeMonths.length} Bulan Aktif Terpilih`;
+        }
+      }
+
+      // Update Footers
+      const countEl = document.getElementById('foot-active-count');
+      if (countEl) countEl.textContent = activeMonths.length;
+
+      const faA = document.getElementById('foot-active-a');
+      const faB = document.getElementById('foot-active-b');
+      const faC = document.getElementById('foot-active-c');
+      const faT = document.getElementById('foot-active-tot');
+      const faP = document.getElementById('foot-active-pct');
+
+      if (faA) faA.textContent = formatRupiah(activeTotA);
+      if (faB) faB.textContent = formatRupiah(activeTotB);
+      if (faC) faC.textContent = formatRupiah(activeTotC);
+      if (faT) faT.textContent = formatRupiah(activeGrandTot);
+      const activePct = yearGrandTot > 0 ? ((activeGrandTot / yearGrandTot) * 100).toFixed(1) : 0;
+      if (faP) faP.textContent = `${activePct}%`;
+
+      const fyA = document.getElementById('foot-year-a');
+      const fyB = document.getElementById('foot-year-b');
+      const fyC = document.getElementById('foot-year-c');
+      const fyT = document.getElementById('foot-year-tot');
+
+      if (fyA) fyA.textContent = formatRupiah(yearTotA);
+      if (fyB) fyB.textContent = formatRupiah(yearTotB);
+      if (fyC) fyC.textContent = formatRupiah(yearTotC);
+      if (fyT) fyT.textContent = formatRupiah(yearGrandTot);
+
+      const fvA = document.getElementById('foot-avg-a');
+      const fvB = document.getElementById('foot-avg-b');
+      const fvC = document.getElementById('foot-avg-c');
+      const fvT = document.getElementById('foot-avg-tot');
+
+      if (fvA) fvA.textContent = formatRupiah(Math.round(yearTotA / 12));
+      if (fvB) fvB.textContent = formatRupiah(Math.round(yearTotB / 12));
+      if (fvC) fvC.textContent = formatRupiah(Math.round(yearTotC / 12));
+      if (fvT) fvT.textContent = formatRupiah(Math.round(yearGrandTot / 12));
+    }
+
+    function updateMonthlyItem(idx, col, val) {
+      monthlyRevenueData[idx][col] = parseFloat(val) || 0;
+      renderMonthlyTable();
+      if (syncMonthlyToReport) {
+        applyMonthlyToReport(false);
+      }
+    }
+
+    function applyMonthlyToReport(showToast = false) {
+      const activeMonths = getActiveMonths();
+      let activeA = 0, activeB = 0, activeC = 0;
+      monthlyRevenueData.forEach(item => {
+        if (activeMonths.includes(item.month)) {
+          activeA += item.a;
+          activeB += item.b;
+          activeC += item.c;
+        }
+      });
+
+      const elA = document.getElementById('omzet_a');
+      const elB = document.getElementById('omzet_b');
+      const elC = document.getElementById('omzet_c');
+
+      if (elA) elA.value = activeA;
+      if (elB) elB.value = activeB;
+      if (elC) elC.value = activeC;
+
+      recalculate();
+
+      if (showToast) {
+        alert(`✅ Akumulasi pemasukan ${activeMonths.length} bulan periode aktif berhasil diterapkan ke Laporan Konsolidasi:\n- Shop & Drive: ${formatRupiah(activeA)}\n- Snaprint GW: ${formatRupiah(activeB)}\n- Snaprint Zamrud: ${formatRupiah(activeC)}\nTotal Konsolidasi: ${formatRupiah(activeA + activeB + activeC)}`);
+      }
     }
 
     let currentPeriodRatio = 1.0; // Default 1 year
@@ -610,13 +1013,17 @@
     }
 
     function switchTab(tabId) {
-      const tabs = ['konsolidasi', 'detail-biaya', 'depresiasi', 'pajak'];
+      const tabs = ['konsolidasi', 'pemasukan-bulanan', 'detail-biaya', 'depresiasi', 'pajak'];
       tabs.forEach(t => {
-        document.getElementById(`tab-${t}`).classList.add('hidden');
-        document.getElementById(`tab-btn-${t}`).className = 'pb-3 text-slate-500 hover:text-slate-700';
+        const tabEl = document.getElementById(`tab-${t}`);
+        const btnEl = document.getElementById(`tab-btn-${t}`);
+        if (tabEl) tabEl.classList.add('hidden');
+        if (btnEl) btnEl.className = 'pb-3 text-slate-500 hover:text-slate-700 whitespace-nowrap';
       });
-      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-      document.getElementById(`tab-btn-${tabId}`).className = 'pb-3 border-b-2 border-blue-600 text-blue-600 font-semibold';
+      const targetTab = document.getElementById(`tab-${tabId}`);
+      const targetBtn = document.getElementById(`tab-btn-${tabId}`);
+      if (targetTab) targetTab.classList.remove('hidden');
+      if (targetBtn) targetBtn.className = 'pb-3 border-b-2 border-blue-600 text-blue-600 font-semibold whitespace-nowrap';
     }
 
     function applyPreset(preset) {
@@ -664,7 +1071,12 @@
       document.getElementById('active-period-label').textContent = `${sFormatted} s/d ${eFormatted} (${diffDays} Hari / ~${months} Bulan)`;
       
       renderDeprTable();
-      recalculate();
+      renderMonthlyTable();
+      if (syncMonthlyToReport) {
+        applyMonthlyToReport(false);
+      } else {
+        recalculate();
+      }
     }
 
     function renderOpexTable() {
@@ -983,7 +1395,13 @@
 
     function resetDefaults() {
       localStorage.removeItem('rugilaba_assets');
+      localStorage.removeItem('rugilaba_monthly_revenue');
+      localStorage.removeItem('rugilaba_monthly_sync');
       assetsData = JSON.parse(JSON.stringify(defaultAssets));
+      monthlyRevenueData = JSON.parse(JSON.stringify(defaultMonthlyRevenue));
+      syncMonthlyToReport = true;
+      const syncCheckEl = document.getElementById('sync-monthly-check');
+      if (syncCheckEl) syncCheckEl.checked = true;
       
       Object.keys(defaultData).forEach(key => {
         const el = document.getElementById(key);
@@ -1002,7 +1420,11 @@
       ];
 
       renderOpexTable();
+      renderMonthlyTable();
       updatePeriodDisplay();
+      if (syncMonthlyToReport) {
+        applyMonthlyToReport(false);
+      }
     }
 
     // Init
@@ -1013,7 +1435,11 @@
         if (el) el.value = defaultData[key];
       });
       renderOpexTable();
+      renderMonthlyTable();
       updatePeriodDisplay();
+      if (syncMonthlyToReport) {
+        applyMonthlyToReport(false);
+      }
     });
   </script>
 </body>
