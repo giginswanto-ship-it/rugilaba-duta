@@ -599,20 +599,8 @@
               <!-- Dynamically Populated by JavaScript -->
             </tbody>
             <tfoot>
-              <tr class="bg-blue-50/80 text-blue-950 font-bold text-xs border-t-2 border-blue-200">
-                <td class="py-3 px-4 uppercase">
-                  <div class="flex items-center gap-1.5">
-                    <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
-                    <span>BEBAN OPERASIONAL PERIODE AKTIF (<span id="opex-active-count">12</span> BULAN)</span>
-                  </div>
-                </td>
-                <td id="opex_period_a" class="py-3 px-4 text-right text-blue-900 font-bold">Rp 0</td>
-                <td id="opex_period_b" class="py-3 px-4 text-right text-blue-900 font-bold">Rp 0</td>
-                <td id="opex_period_c" class="py-3 px-4 text-right text-blue-900 font-bold">Rp 0</td>
-                <td id="opex_period_tot" class="py-3 px-4 text-right bg-blue-100 font-extrabold text-blue-950">Rp 0</td>
-              </tr>
               <tr class="bg-slate-800 text-white font-bold text-sm">
-                <td class="py-3 px-4">TOTAL BEBAN OPERASIONAL TAHUNAN (12 BULAN)</td>
+                <td class="py-3 px-4 uppercase">TOTAL BEBAN OPERASIONAL (OPEX)</td>
                 <td id="opex_sum_a" class="py-3 px-4 text-right">Rp 0</td>
                 <td id="opex_sum_b" class="py-3 px-4 text-right">Rp 0</td>
                 <td id="opex_sum_c" class="py-3 px-4 text-right">Rp 0</td>
@@ -1914,7 +1902,11 @@
 
       const diffDays = Math.round((e - s) / (1000 * 60 * 60 * 24)) + 1;
       const months = (diffDays / 30.4167).toFixed(1);
-      currentPeriodRatio = Math.max(0.01, diffDays / 365.25);
+      if (diffDays >= 365 && diffDays <= 366) {
+        currentPeriodRatio = 1.0;
+      } else {
+        currentPeriodRatio = Math.max(0.01, diffDays / 365);
+      }
 
       const options = { day: 'numeric', month: 'short', year: 'numeric' };
       const sFormatted = s.toLocaleDateString('id-ID', options);
@@ -2304,21 +2296,14 @@
       document.getElementById('tot_ebt_final').textContent = formatRupiah(tot_ebt);
 
       // Tab 3 OPEX Totals
-      const opexCntEl = document.getElementById('opex-active-count');
-      if (opexCntEl) opexCntEl.textContent = activeMonths.length;
-      const elOpPerA = document.getElementById('opex_period_a');
-      const elOpPerB = document.getElementById('opex_period_b');
-      const elOpPerC = document.getElementById('opex_period_c');
-      const elOpPerTot = document.getElementById('opex_period_tot');
-      if (elOpPerA) elOpPerA.textContent = formatRupiah(period_opex_a);
-      if (elOpPerB) elOpPerB.textContent = formatRupiah(period_opex_b);
-      if (elOpPerC) elOpPerC.textContent = formatRupiah(period_opex_c);
-      if (elOpPerTot) elOpPerTot.textContent = formatRupiah(tot_period_opex);
-
-      document.getElementById('opex_sum_a').textContent = formatRupiah(annual_opex_a);
-      document.getElementById('opex_sum_b').textContent = formatRupiah(annual_opex_b);
-      document.getElementById('opex_sum_c').textContent = formatRupiah(annual_opex_c);
-      document.getElementById('opex_sum_tot').textContent = formatRupiah(annual_tot_opex);
+      const elOpSumA = document.getElementById('opex_sum_a');
+      const elOpSumB = document.getElementById('opex_sum_b');
+      const elOpSumC = document.getElementById('opex_sum_c');
+      const elOpSumTot = document.getElementById('opex_sum_tot');
+      if (elOpSumA) elOpSumA.textContent = formatRupiah(annual_opex_a);
+      if (elOpSumB) elOpSumB.textContent = formatRupiah(annual_opex_b);
+      if (elOpSumC) elOpSumC.textContent = formatRupiah(annual_opex_c);
+      if (elOpSumTot) elOpSumTot.textContent = formatRupiah(annual_tot_opex);
 
       // KPI Header Cards
       document.getElementById('kpi-omzet').textContent = formatRupiah(tot_omzet);
