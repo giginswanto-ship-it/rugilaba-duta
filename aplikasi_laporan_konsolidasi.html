@@ -116,7 +116,7 @@
     <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
       <div class="flex border-b border-slate-200 px-6 pt-3 gap-6 overflow-x-auto text-sm no-print">
         <button onclick="switchTab('konsolidasi')" id="tab-btn-konsolidasi" class="pb-3 border-b-2 border-blue-600 text-blue-600 font-semibold whitespace-nowrap">📊 Laporan Laba Rugi Konsolidasi</button>
-        <button onclick="switchTab('pemasukan-bulanan')" id="tab-btn-pemasukan-bulanan" class="pb-3 text-slate-500 hover:text-slate-700 whitespace-nowrap">🛒 Keranjang Pemasukan Bulanan</button>
+        <button onclick="switchTab('pemasukan-bulanan')" id="tab-btn-pemasukan-bulanan" class="pb-3 text-slate-500 hover:text-slate-700 whitespace-nowrap">🛒 Keranjang Pemasukan & HPP Bulanan</button>
         <button onclick="switchTab('detail-biaya')" id="tab-btn-detail-biaya" class="pb-3 text-slate-500 hover:text-slate-700 whitespace-nowrap">📑 Rincian Lengkap Biaya Operasional</button>
         <button onclick="switchTab('depresiasi')" id="tab-btn-depresiasi" class="pb-3 text-slate-500 hover:text-slate-700 whitespace-nowrap">⚙️ Jadwal Penyusutan Aset</button>
         <button onclick="switchTab('pajak')" id="tab-btn-pajak" class="pb-3 text-slate-500 hover:text-slate-700 whitespace-nowrap">⚖️ Komparasi Pajak PPh</button>
@@ -188,7 +188,15 @@
 
               <!-- B. HPP -->
               <tr class="bg-slate-50 font-bold text-slate-900">
-                <td colspan="5" class="py-2.5 px-4 text-xs tracking-wider">B. BEBAN POKOK PENJUALAN (HPP) / BIAYA LANGSUNG</td>
+                <td colspan="5" class="py-2.5 px-4 text-xs tracking-wider">
+                  <div class="flex items-center justify-between">
+                    <span>B. BEBAN POKOK PENJUALAN (HPP) / BIAYA LANGSUNG</span>
+                    <button type="button" onclick="switchTab('pemasukan-bulanan')" class="text-[11px] bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 px-2 py-0.5 rounded-md font-medium no-print flex items-center gap-1 transition-all" title="Buka Keranjang Inputan Pemasukan & HPP Bulanan">
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                      <span>Keranjang HPP Bulanan</span>
+                    </button>
+                  </div>
+                </td>
               </tr>
               <tr>
                 <td class="py-2.5 px-4 pl-6 text-slate-800">Bahan Baku / Suku Cadang & Media Cetak</td>
@@ -291,16 +299,16 @@
         </div>
       </div>
 
-      <!-- Tab 2: Keranjang Inputan Pemasukan Bulanan -->
+      <!-- Tab 2: Keranjang Inputan Pemasukan & HPP Bulanan -->
       <div id="tab-pemasukan-bulanan" class="tab-content p-6 hidden">
         <div class="mb-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100 pb-4">
           <div>
             <div class="flex items-center gap-2">
-              <h2 class="text-lg font-bold text-slate-800">2. Keranjang Inputan Pemasukan Bulanan per Unit Usaha</h2>
-              <span class="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-semibold">12 Bulan</span>
+              <h2 class="text-lg font-bold text-slate-800">2. Keranjang Pemasukan & Beban Pokok Penjualan (HPP) Bulanan</h2>
+              <span class="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-semibold">12 Bulan Dinamis</span>
             </div>
             <p class="text-xs text-slate-500 mt-1">
-              Kelola rincian pemasukan omzet per bulan untuk masing-masing unit bisnis. Akumulasi bulan yang sesuai rentang periode aktif dapat otomatis disinkronkan ke Laporan Laba Rugi.
+              Input rincian Penjualan Kotor (Omzet) dan Beban Pokok Penjualan (HPP) per bulan untuk masing-masing unit bisnis. Akumulasi periode aktif otomatis disinkronkan ke Laporan Laba Rugi Konsolidasi.
             </p>
           </div>
           
@@ -309,56 +317,124 @@
               <input type="checkbox" id="sync-monthly-check" checked onchange="toggleSyncMonthly(this.checked)" class="rounded text-blue-600 focus:ring-blue-500 w-4 h-4 cursor-pointer">
               <span>Sinkronkan Otomatis ke Laporan</span>
             </label>
-            <button type="button" onclick="applyMonthlyToReport(true)" class="px-3.5 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-all flex items-center gap-1.5" title="Salin total omzet bulan aktif ke Laporan Konsolidasi">
+            <button type="button" onclick="applyMonthlyToReport(true)" class="px-3.5 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-all flex items-center gap-1.5 cursor-pointer" title="Salin total omzet & HPP bulan aktif ke Laporan Konsolidasi">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-              Terapkan ke Laporan
+              <span>Terapkan ke Laporan</span>
             </button>
-            <button type="button" onclick="saveMonthlyToStorage()" class="px-3.5 py-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm transition-all flex items-center gap-1.5" title="Simpan data bulanan ke browser">
+            <button type="button" onclick="saveMonthlyToStorage()" class="px-3.5 py-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm transition-all flex items-center gap-1.5 cursor-pointer" title="Simpan data bulanan ke memori lokal browser">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
-              Simpan Data
+              <span>Simpan Data</span>
             </button>
-            <button type="button" onclick="resetMonthlyToDefault()" class="px-3 py-2 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-all" title="Reset nilai bulanan ke bawaan sistem">
+            <button type="button" onclick="resetMonthlyToDefault()" class="px-3 py-2 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-all cursor-pointer" title="Reset nilai bulanan ke bawaan sistem">
               Reset Bulanan
             </button>
           </div>
         </div>
 
-        <!-- Mini KPI Summary Cards for Monthly Basket -->
+        <!-- Mini KPI Summary Cards for Monthly Basket (Omzet, HPP, & Laba Kotor) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+          <!-- Card 1: Shop & Drive -->
           <div class="bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-xl p-4 shadow-sm">
             <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
               <span>Shop & Drive</span>
               <span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 text-[10px] font-bold">Unit A</span>
             </div>
-            <h4 id="kpi-monthly-a" class="text-xl font-bold text-slate-900 mt-1.5">Rp 0</h4>
-            <p id="kpi-monthly-sub-a" class="text-[11px] text-slate-500 mt-1">Periode Aktif: Rp 0</p>
+            <div class="mt-2 space-y-1">
+              <div class="flex items-baseline justify-between">
+                <span class="text-xs text-slate-500">Omzet 1 Thn:</span>
+                <span id="kpi-monthly-a" class="text-base font-bold text-slate-900">Rp 0</span>
+              </div>
+              <div class="flex items-baseline justify-between text-xs">
+                <span class="text-slate-500">HPP 1 Thn:</span>
+                <span id="kpi-monthly-hpp-a" class="font-semibold text-rose-600">Rp 0</span>
+              </div>
+              <div class="flex items-baseline justify-between text-xs pt-1 border-t border-slate-100">
+                <span class="text-emerald-700 font-medium">Laba Kotor:</span>
+                <span id="kpi-monthly-gross-a" class="font-bold text-emerald-700">Rp 0</span>
+              </div>
+            </div>
+            <div id="kpi-monthly-sub-a" class="text-[11px] text-slate-500 mt-2 pt-1 border-t border-slate-100 flex items-center justify-between">
+              <span>Periode Aktif:</span>
+              <span class="font-semibold text-blue-700">Rp 0</span>
+            </div>
           </div>
           
+          <!-- Card 2: Snaprint GW -->
           <div class="bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-xl p-4 shadow-sm">
             <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
               <span>Snaprint Grand Wisata</span>
               <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">Unit B</span>
             </div>
-            <h4 id="kpi-monthly-b" class="text-xl font-bold text-slate-900 mt-1.5">Rp 0</h4>
-            <p id="kpi-monthly-sub-b" class="text-[11px] text-slate-500 mt-1">Periode Aktif: Rp 0</p>
+            <div class="mt-2 space-y-1">
+              <div class="flex items-baseline justify-between">
+                <span class="text-xs text-slate-500">Omzet 1 Thn:</span>
+                <span id="kpi-monthly-b" class="text-base font-bold text-slate-900">Rp 0</span>
+              </div>
+              <div class="flex items-baseline justify-between text-xs">
+                <span class="text-slate-500">HPP 1 Thn:</span>
+                <span id="kpi-monthly-hpp-b" class="font-semibold text-rose-600">Rp 0</span>
+              </div>
+              <div class="flex items-baseline justify-between text-xs pt-1 border-t border-slate-100">
+                <span class="text-emerald-700 font-medium">Laba Kotor:</span>
+                <span id="kpi-monthly-gross-b" class="font-bold text-emerald-700">Rp 0</span>
+              </div>
+            </div>
+            <div id="kpi-monthly-sub-b" class="text-[11px] text-slate-500 mt-2 pt-1 border-t border-slate-100 flex items-center justify-between">
+              <span>Periode Aktif:</span>
+              <span class="font-semibold text-emerald-700">Rp 0</span>
+            </div>
           </div>
 
+          <!-- Card 3: Snaprint Zamrud -->
           <div class="bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-xl p-4 shadow-sm">
             <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
               <span>Snaprint Zamrud</span>
               <span class="px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 text-[10px] font-bold">Unit C</span>
             </div>
-            <h4 id="kpi-monthly-c" class="text-xl font-bold text-slate-900 mt-1.5">Rp 0</h4>
-            <p id="kpi-monthly-sub-c" class="text-[11px] text-slate-500 mt-1">Periode Aktif: Rp 0</p>
+            <div class="mt-2 space-y-1">
+              <div class="flex items-baseline justify-between">
+                <span class="text-xs text-slate-500">Omzet 1 Thn:</span>
+                <span id="kpi-monthly-c" class="text-base font-bold text-slate-900">Rp 0</span>
+              </div>
+              <div class="flex items-baseline justify-between text-xs">
+                <span class="text-slate-500">HPP 1 Thn:</span>
+                <span id="kpi-monthly-hpp-c" class="font-semibold text-rose-600">Rp 0</span>
+              </div>
+              <div class="flex items-baseline justify-between text-xs pt-1 border-t border-slate-100">
+                <span class="text-emerald-700 font-medium">Laba Kotor:</span>
+                <span id="kpi-monthly-gross-c" class="font-bold text-emerald-700">Rp 0</span>
+              </div>
+            </div>
+            <div id="kpi-monthly-sub-c" class="text-[11px] text-slate-500 mt-2 pt-1 border-t border-slate-100 flex items-center justify-between">
+              <span>Periode Aktif:</span>
+              <span class="font-semibold text-purple-700">Rp 0</span>
+            </div>
           </div>
 
+          <!-- Card 4: Total Konsolidasi -->
           <div class="bg-gradient-to-br from-blue-50/80 to-white border border-blue-200 rounded-xl p-4 shadow-sm">
             <div class="flex items-center justify-between text-xs text-blue-700 font-semibold">
               <span>Total Konsolidasi</span>
               <span class="px-2 py-0.5 rounded-full bg-blue-600 text-white text-[10px] font-bold">3 Unit</span>
             </div>
-            <h4 id="kpi-monthly-tot" class="text-xl font-bold text-blue-900 mt-1.5">Rp 0</h4>
-            <p id="kpi-monthly-sub-tot" class="text-[11px] text-blue-700 mt-1">Periode Aktif: Rp 0</p>
+            <div class="mt-2 space-y-1">
+              <div class="flex items-baseline justify-between">
+                <span class="text-xs text-blue-800">Tot. Omzet:</span>
+                <span id="kpi-monthly-tot" class="text-base font-bold text-blue-950">Rp 0</span>
+              </div>
+              <div class="flex items-baseline justify-between text-xs">
+                <span class="text-blue-800">Tot. HPP:</span>
+                <span id="kpi-monthly-hpp-tot" class="font-semibold text-rose-600">Rp 0</span>
+              </div>
+              <div class="flex items-baseline justify-between text-xs pt-1 border-t border-blue-200/60">
+                <span class="text-emerald-800 font-bold">Laba Kotor:</span>
+                <span id="kpi-monthly-gross-tot" class="font-bold text-emerald-800">Rp 0</span>
+              </div>
+            </div>
+            <div id="kpi-monthly-sub-tot" class="text-[11px] text-blue-700 mt-2 pt-1 border-t border-blue-200/60 flex items-center justify-between">
+              <span>Periode Aktif:</span>
+              <span class="font-bold text-blue-900">Rp 0</span>
+            </div>
           </div>
         </div>
 
@@ -366,57 +442,86 @@
         <div class="mb-4 bg-amber-50/70 border border-amber-200 rounded-xl p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs">
           <div class="flex items-center gap-2 text-amber-900">
             <svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span>Baris yang diberi tanda highlight biru merupakan <strong>bulan yang masuk dalam rentang periode aktif</strong> di bagian atas.</span>
+            <span>Baris dengan sorotan warna merupakan <strong>bulan yang masuk dalam rentang periode aktif</strong>. Nilai Omzet dan HPP otomatis mengakumulasi ke Laporan Konsolidasi.</span>
           </div>
           <span id="monthly-active-badge" class="px-2.5 py-1 rounded bg-amber-200 text-amber-900 font-bold shrink-0">Semua 12 Bulan Aktif</span>
         </div>
 
-        <!-- Monthly Table -->
+        <!-- Monthly Table with Omzet and HPP Columns -->
         <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
           <table class="w-full text-sm text-left border-collapse">
             <thead>
               <tr class="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200 text-xs uppercase">
-                <th class="py-3 px-4 w-44">Periode Bulan</th>
-                <th class="py-3 px-3 text-center w-28">Status Periode</th>
-                <th class="py-3 px-4 text-right">Shop & Drive (A)</th>
-                <th class="py-3 px-4 text-right">Snaprint GW (B)</th>
-                <th class="py-3 px-4 text-right">Snaprint Zamrud (C)</th>
-                <th class="py-3 px-4 text-right bg-blue-50/70 text-blue-900">Total Bulanan</th>
-                <th class="py-3 px-3 text-center w-24">Kontribusi</th>
+                <th rowspan="2" class="py-3 px-3 text-left w-36 align-middle border-r border-slate-200">Periode Bulan</th>
+                <th rowspan="2" class="py-3 px-2 text-center w-24 align-middle border-r border-slate-200">Status</th>
+                <th colspan="2" class="py-2 px-3 text-center bg-blue-50 text-blue-900 border-r border-blue-200">Shop & Drive (A)</th>
+                <th colspan="2" class="py-2 px-3 text-center bg-emerald-50 text-emerald-900 border-r border-emerald-200">Snaprint GW (B)</th>
+                <th colspan="2" class="py-2 px-3 text-center bg-purple-50 text-purple-900 border-r border-purple-200">Snaprint Zamrud (C)</th>
+                <th colspan="3" class="py-2 px-3 text-center bg-slate-200 text-slate-800">Konsolidasi Bulanan</th>
+              </tr>
+              <tr class="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200 text-[11px] uppercase">
+                <!-- Unit A -->
+                <th class="py-1.5 px-2 text-right bg-blue-50/40 text-blue-800">Omzet</th>
+                <th class="py-1.5 px-2 text-right bg-blue-50/40 text-rose-700 border-r border-blue-200">HPP</th>
+                <!-- Unit B -->
+                <th class="py-1.5 px-2 text-right bg-emerald-50/40 text-emerald-800">Omzet</th>
+                <th class="py-1.5 px-2 text-right bg-emerald-50/40 text-rose-700 border-r border-emerald-200">HPP</th>
+                <!-- Unit C -->
+                <th class="py-1.5 px-2 text-right bg-purple-50/40 text-purple-800">Omzet</th>
+                <th class="py-1.5 px-2 text-right bg-purple-50/40 text-rose-700 border-r border-purple-200">HPP</th>
+                <!-- Konsolidasi -->
+                <th class="py-1.5 px-2 text-right text-slate-700">Tot. Omzet</th>
+                <th class="py-1.5 px-2 text-right text-rose-700">Tot. HPP</th>
+                <th class="py-1.5 px-2 text-right text-emerald-800 bg-emerald-50/60 font-bold">Laba Kotor</th>
               </tr>
             </thead>
             <tbody id="monthly-tbody" class="divide-y divide-slate-100 text-slate-700 bg-white">
               <!-- Dynamically populated by JavaScript -->
             </tbody>
-            <tfoot class="border-t-2 border-slate-300 font-bold text-xs uppercase">
-              <tr class="bg-blue-50/70 text-blue-900 border-b border-blue-200">
-                <td colspan="2" class="py-3 px-4">
+            <tfoot class="border-t-2 border-slate-300 font-bold text-xs">
+              <!-- Akumulasi Aktif -->
+              <tr class="bg-blue-50/80 text-blue-950 border-b border-blue-200">
+                <td colspan="2" class="py-3 px-3 uppercase border-r border-blue-200">
                   <div class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-blue-600"></span>
-                    <span>AKUMULASI PERIODE AKTIF (<span id="foot-active-count">12</span> BULAN)</span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+                    <span>AKUMULASI AKTIF (<span id="foot-active-count">12</span> BULAN)</span>
                   </div>
                 </td>
-                <td id="foot-active-a" class="py-3 px-4 text-right text-blue-900">Rp 0</td>
-                <td id="foot-active-b" class="py-3 px-4 text-right text-blue-900">Rp 0</td>
-                <td id="foot-active-c" class="py-3 px-4 text-right text-blue-900">Rp 0</td>
-                <td id="foot-active-tot" class="py-3 px-4 text-right bg-blue-100/80 font-extrabold text-blue-950">Rp 0</td>
-                <td id="foot-active-pct" class="py-3 px-3 text-center text-blue-900">100%</td>
+                <td id="foot-active-a" class="py-2.5 px-2 text-right">Rp 0</td>
+                <td id="foot-active-hpp-a" class="py-2.5 px-2 text-right text-rose-700 border-r border-blue-200">Rp 0</td>
+                <td id="foot-active-b" class="py-2.5 px-2 text-right">Rp 0</td>
+                <td id="foot-active-hpp-b" class="py-2.5 px-2 text-right text-rose-700 border-r border-blue-200">Rp 0</td>
+                <td id="foot-active-c" class="py-2.5 px-2 text-right">Rp 0</td>
+                <td id="foot-active-hpp-c" class="py-2.5 px-2 text-right text-rose-700 border-r border-blue-200">Rp 0</td>
+                <td id="foot-active-tot-omzet" class="py-2.5 px-2 text-right font-extrabold text-blue-900 bg-blue-100/60">Rp 0</td>
+                <td id="foot-active-tot-hpp" class="py-2.5 px-2 text-right font-bold text-rose-700 bg-blue-100/60">Rp 0</td>
+                <td id="foot-active-tot-gross" class="py-2.5 px-2 text-right font-extrabold text-emerald-800 bg-emerald-100/80">Rp 0</td>
               </tr>
+              <!-- Total 12 Bulan -->
               <tr class="bg-slate-800 text-white">
-                <td colspan="2" class="py-3 px-4">TOTAL TAHUNAN (12 BULAN PENUH)</td>
-                <td id="foot-year-a" class="py-3 px-4 text-right">Rp 0</td>
-                <td id="foot-year-b" class="py-3 px-4 text-right">Rp 0</td>
-                <td id="foot-year-c" class="py-3 px-4 text-right">Rp 0</td>
-                <td id="foot-year-tot" class="py-3 px-4 text-right bg-slate-900 text-amber-300 font-extrabold">Rp 0</td>
-                <td class="py-3 px-3 text-center text-slate-300">100%</td>
+                <td colspan="2" class="py-3 px-3 uppercase border-r border-slate-700">TOTAL TAHUNAN (12 BULAN)</td>
+                <td id="foot-year-a" class="py-2.5 px-2 text-right">Rp 0</td>
+                <td id="foot-year-hpp-a" class="py-2.5 px-2 text-right text-rose-300 border-r border-slate-700">Rp 0</td>
+                <td id="foot-year-b" class="py-2.5 px-2 text-right">Rp 0</td>
+                <td id="foot-year-hpp-b" class="py-2.5 px-2 text-right text-rose-300 border-r border-slate-700">Rp 0</td>
+                <td id="foot-year-c" class="py-2.5 px-2 text-right">Rp 0</td>
+                <td id="foot-year-hpp-c" class="py-2.5 px-2 text-right text-rose-300 border-r border-slate-700">Rp 0</td>
+                <td id="foot-year-tot-omzet" class="py-2.5 px-2 text-right bg-slate-900 text-amber-300 font-extrabold">Rp 0</td>
+                <td id="foot-year-tot-hpp" class="py-2.5 px-2 text-right bg-slate-900 text-rose-300 font-bold">Rp 0</td>
+                <td id="foot-year-tot-gross" class="py-2.5 px-2 text-right bg-slate-900 text-emerald-400 font-extrabold">Rp 0</td>
               </tr>
+              <!-- Rata-rata -->
               <tr class="bg-slate-100 text-slate-600 text-[11px] font-semibold">
-                <td colspan="2" class="py-2.5 px-4 italic">RATA-RATA PEMASUKAN PER BULAN</td>
-                <td id="foot-avg-a" class="py-2.5 px-4 text-right">Rp 0</td>
-                <td id="foot-avg-b" class="py-2.5 px-4 text-right">Rp 0</td>
-                <td id="foot-avg-c" class="py-2.5 px-4 text-right">Rp 0</td>
-                <td id="foot-avg-tot" class="py-2.5 px-4 text-right bg-slate-200 text-slate-800">Rp 0</td>
-                <td class="py-2.5 px-3 text-center text-slate-400">—</td>
+                <td colspan="2" class="py-2 px-3 italic border-r border-slate-200">RATA-RATA PER BULAN</td>
+                <td id="foot-avg-a" class="py-2 px-2 text-right">Rp 0</td>
+                <td id="foot-avg-hpp-a" class="py-2 px-2 text-right text-rose-600 border-r border-slate-200">Rp 0</td>
+                <td id="foot-avg-b" class="py-2 px-2 text-right">Rp 0</td>
+                <td id="foot-avg-hpp-b" class="py-2 px-2 text-right text-rose-600 border-r border-slate-200">Rp 0</td>
+                <td id="foot-avg-c" class="py-2 px-2 text-right">Rp 0</td>
+                <td id="foot-avg-hpp-c" class="py-2 px-2 text-right text-rose-600 border-r border-slate-200">Rp 0</td>
+                <td id="foot-avg-tot-omzet" class="py-2 px-2 text-right bg-slate-200 text-slate-800">Rp 0</td>
+                <td id="foot-avg-tot-hpp" class="py-2 px-2 text-right bg-slate-200 text-rose-700">Rp 0</td>
+                <td id="foot-avg-tot-gross" class="py-2 px-2 text-right bg-slate-200 text-emerald-800 font-bold">Rp 0</td>
               </tr>
             </tfoot>
           </table>
@@ -811,20 +916,20 @@
 
     let assetsData = [];
 
-    // Dataset Pemasukan Bulanan Default (12 Bulan)
+    // Dataset Pemasukan & HPP Bulanan Default (12 Bulan)
     const defaultMonthlyRevenue = [
-      { month: 1, name: 'Januari', quarter: 'Q1', a: 85000000, b: 55000000, c: 45000000 },
-      { month: 2, name: 'Februari', quarter: 'Q1', a: 82000000, b: 50000000, c: 42000000 },
-      { month: 3, name: 'Maret', quarter: 'Q1', a: 92000000, b: 60000000, c: 48000000 },
-      { month: 4, name: 'April', quarter: 'Q2', a: 105000000, b: 65000000, c: 52000000 },
-      { month: 5, name: 'Mei', quarter: 'Q2', a: 95000000, b: 62000000, c: 50000000 },
-      { month: 6, name: 'Juni', quarter: 'Q2', a: 88000000, b: 60000000, c: 53000000 },
-      { month: 7, name: 'Juli', quarter: 'Q3', a: 90000000, b: 63000000, c: 55000000 },
-      { month: 8, name: 'Agustus', quarter: 'Q3', a: 88000000, b: 75000000, c: 52000000 },
-      { month: 9, name: 'September', quarter: 'Q3', a: 85000000, b: 65000000, c: 48000000 },
-      { month: 10, name: 'Oktober', quarter: 'Q4', a: 90000000, b: 65000000, c: 47000000 },
-      { month: 11, name: 'November', quarter: 'Q4', a: 95000000, b: 65000000, c: 50000000 },
-      { month: 12, name: 'Desember', quarter: 'Q4', a: 105000000, b: 65000000, c: 58000000 }
+      { month: 1, name: 'Januari', quarter: 'Q1', a: 85000000, hpp_a: 46000000, b: 55000000, hpp_b: 25000000, c: 45000000, hpp_c: 16000000 },
+      { month: 2, name: 'Februari', quarter: 'Q1', a: 82000000, hpp_a: 44500000, b: 50000000, hpp_b: 22500000, c: 42000000, hpp_c: 15000000 },
+      { month: 3, name: 'Maret', quarter: 'Q1', a: 92000000, hpp_a: 50000000, b: 60000000, hpp_b: 27000000, c: 48000000, hpp_c: 17000000 },
+      { month: 4, name: 'April', quarter: 'Q2', a: 105000000, hpp_a: 57500000, b: 65000000, hpp_b: 29500000, c: 52000000, hpp_c: 18500000 },
+      { month: 5, name: 'Mei', quarter: 'Q2', a: 95000000, hpp_a: 51500000, b: 62000000, hpp_b: 28000000, c: 50000000, hpp_c: 17500000 },
+      { month: 6, name: 'Juni', quarter: 'Q2', a: 88000000, hpp_a: 48000000, b: 60000000, hpp_b: 27000000, c: 53000000, hpp_c: 19000000 },
+      { month: 7, name: 'Juli', quarter: 'Q3', a: 90000000, hpp_a: 49000000, b: 63000000, hpp_b: 28500000, c: 55000000, hpp_c: 19500000 },
+      { month: 8, name: 'Agustus', quarter: 'Q3', a: 88000000, hpp_a: 48000000, b: 75000000, hpp_b: 34500000, c: 52000000, hpp_c: 18500000 },
+      { month: 9, name: 'September', quarter: 'Q3', a: 85000000, hpp_a: 46000000, b: 65000000, hpp_b: 29500000, c: 48000000, hpp_c: 17000000 },
+      { month: 10, name: 'Oktober', quarter: 'Q4', a: 90000000, hpp_a: 49000000, b: 65000000, hpp_b: 29500000, c: 47000000, hpp_c: 17000000 },
+      { month: 11, name: 'November', quarter: 'Q4', a: 95000000, hpp_a: 51500000, b: 65000000, hpp_b: 29500000, c: 50000000, hpp_c: 18000000 },
+      { month: 12, name: 'Desember', quarter: 'Q4', a: 105000000, hpp_a: 57000000, b: 65000000, hpp_b: 29500000, c: 58000000, hpp_c: 21000000 }
     ];
 
     let monthlyRevenueData = [];
@@ -844,11 +949,25 @@
         assetsData = JSON.parse(JSON.stringify(defaultAssets));
       }
 
-      // 2. Monthly Revenue Data
+      // 2. Monthly Revenue & HPP Data
       const savedMonthly = localStorage.getItem('rugilaba_monthly_revenue');
       if (savedMonthly) {
         try {
-          monthlyRevenueData = JSON.parse(savedMonthly);
+          const parsed = JSON.parse(savedMonthly);
+          monthlyRevenueData = defaultMonthlyRevenue.map((def, idx) => {
+            const item = parsed[idx] || {};
+            return {
+              month: def.month,
+              name: def.name,
+              quarter: def.quarter,
+              a: typeof item.a === 'number' ? item.a : def.a,
+              hpp_a: typeof item.hpp_a === 'number' ? item.hpp_a : def.hpp_a,
+              b: typeof item.b === 'number' ? item.b : def.b,
+              hpp_b: typeof item.hpp_b === 'number' ? item.hpp_b : def.hpp_b,
+              c: typeof item.c === 'number' ? item.c : def.c,
+              hpp_c: typeof item.hpp_c === 'number' ? item.hpp_c : def.hpp_c
+            };
+          });
         } catch(e) {
           monthlyRevenueData = JSON.parse(JSON.stringify(defaultMonthlyRevenue));
         }
@@ -879,11 +998,11 @@
     function saveMonthlyToStorage() {
       localStorage.setItem('rugilaba_monthly_revenue', JSON.stringify(monthlyRevenueData));
       localStorage.setItem('rugilaba_monthly_sync', JSON.stringify(syncMonthlyToReport));
-      alert('✅ Data keranjang pemasukan bulanan berhasil disimpan ke memori lokal browser!');
+      alert('✅ Data keranjang pemasukan & HPP bulanan berhasil disimpan ke memori lokal browser!');
     }
 
     function resetMonthlyToDefault() {
-      if (confirm('Apakah Anda yakin ingin mengembalikan data keranjang pemasukan ke nilai default bawaan?')) {
+      if (confirm('Apakah Anda yakin ingin mengembalikan data keranjang pemasukan dan HPP ke nilai default bawaan?')) {
         monthlyRevenueData = JSON.parse(JSON.stringify(defaultMonthlyRevenue));
         localStorage.removeItem('rugilaba_monthly_revenue');
         renderMonthlyTable();
@@ -930,87 +1049,156 @@
 
       const activeMonths = getActiveMonths();
 
-      let yearTotA = 0, yearTotB = 0, yearTotC = 0, yearGrandTot = 0;
-      let activeTotA = 0, activeTotB = 0, activeTotC = 0, activeGrandTot = 0;
+      let yearTotA = 0, yearTotHppA = 0;
+      let yearTotB = 0, yearTotHppB = 0;
+      let yearTotC = 0, yearTotHppC = 0;
 
-      // Hitung total setahun terlebih dahulu untuk persentase kontribusi
+      let activeTotA = 0, activeTotHppA = 0;
+      let activeTotB = 0, activeTotHppB = 0;
+      let activeTotC = 0, activeTotHppC = 0;
+
+      // Hitung akumulasi tahunan
       monthlyRevenueData.forEach(item => {
-        yearTotA += item.a;
-        yearTotB += item.b;
-        yearTotC += item.c;
+        yearTotA += (item.a || 0);
+        yearTotHppA += (item.hpp_a || 0);
+        yearTotB += (item.b || 0);
+        yearTotHppB += (item.hpp_b || 0);
+        yearTotC += (item.c || 0);
+        yearTotHppC += (item.hpp_c || 0);
       });
-      yearGrandTot = yearTotA + yearTotB + yearTotC;
+
+      const yearGrandOmzet = yearTotA + yearTotB + yearTotC;
+      const yearGrandHpp = yearTotHppA + yearTotHppB + yearTotHppC;
+      const yearGrandGross = yearGrandOmzet - yearGrandHpp;
 
       monthlyRevenueData.forEach((item, idx) => {
-        const rowTot = item.a + item.b + item.c;
+        const omzetA = item.a || 0;
+        const hppA = item.hpp_a || 0;
+        const omzetB = item.b || 0;
+        const hppB = item.hpp_b || 0;
+        const omzetC = item.c || 0;
+        const hppC = item.hpp_c || 0;
+
+        const rowOmzet = omzetA + omzetB + omzetC;
+        const rowHpp = hppA + hppB + hppC;
+        const rowGross = rowOmzet - rowHpp;
+        const grossMarginPct = rowOmzet > 0 ? ((rowGross / rowOmzet) * 100).toFixed(1) : 0;
+
         const isActive = activeMonths.includes(item.month);
         if (isActive) {
-          activeTotA += item.a;
-          activeTotB += item.b;
-          activeTotC += item.c;
+          activeTotA += omzetA;
+          activeTotHppA += hppA;
+          activeTotB += omzetB;
+          activeTotHppB += hppB;
+          activeTotC += omzetC;
+          activeTotHppC += hppC;
         }
-
-        const pct = yearGrandTot > 0 ? ((rowTot / yearGrandTot) * 100).toFixed(1) : 0;
 
         const row = document.createElement('tr');
         row.className = isActive 
-          ? 'bg-blue-50/50 hover:bg-blue-50/80 transition-colors' 
-          : 'hover:bg-slate-50/80 transition-colors text-slate-500';
+          ? 'bg-blue-50/40 hover:bg-blue-50/70 transition-colors' 
+          : 'hover:bg-slate-50/80 transition-colors text-slate-500 opacity-80';
 
         row.innerHTML = `
-          <td class="py-2.5 px-4 font-medium ${isActive ? 'text-blue-950 font-bold' : 'text-slate-700'}">
-            <div class="flex items-center gap-2">
-              <span class="w-6 text-center font-mono text-xs ${isActive ? 'text-blue-600 font-bold' : 'text-slate-400'}">${String(item.month).padStart(2, '0')}</span>
-              <span>${item.name}</span>
-              <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-600">${item.quarter}</span>
+          <td class="py-2.5 px-3 font-medium border-r border-slate-200 ${isActive ? 'text-blue-950 font-bold' : 'text-slate-700'}">
+            <div class="flex items-center gap-1.5">
+              <span class="w-5 text-center font-mono text-xs ${isActive ? 'text-blue-600 font-bold' : 'text-slate-400'}">${String(item.month).padStart(2, '0')}</span>
+              <span class="text-xs">${item.name}</span>
+              <span class="px-1 py-0.2 rounded text-[9px] font-semibold bg-slate-100 text-slate-600">${item.quarter}</span>
             </div>
           </td>
-          <td class="py-2.5 px-3 text-center">
+          <td class="py-2.5 px-2 text-center border-r border-slate-200">
             ${isActive 
-              ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800">● Aktif</span>' 
-              : '<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-400">Non-Aktif</span>'}
+              ? '<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800">● Aktif</span>' 
+              : '<span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-400">Non-Aktif</span>'}
           </td>
-          <td class="py-2 px-4 text-right">
-            <input type="number" value="${item.a}" class="w-32 text-right border ${isActive ? 'border-blue-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'a', this.value)">
+          <!-- Unit A -->
+          <td class="py-2 px-2 text-right bg-blue-50/20">
+            <input type="number" value="${omzetA}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-blue-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'a', this.value)" title="Omzet Shop & Drive">
           </td>
-          <td class="py-2 px-4 text-right">
-            <input type="number" value="${item.b}" class="w-32 text-right border ${isActive ? 'border-blue-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'b', this.value)">
+          <td class="py-2 px-2 text-right bg-blue-50/20 border-r border-blue-200">
+            <input type="number" value="${hppA}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-rose-300 bg-white font-medium text-rose-700' : 'border-slate-200 bg-slate-50 text-rose-400'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-rose-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'hpp_a', this.value)" title="HPP Shop & Drive">
           </td>
-          <td class="py-2 px-4 text-right">
-            <input type="number" value="${item.c}" class="w-32 text-right border ${isActive ? 'border-blue-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'c', this.value)">
+          <!-- Unit B -->
+          <td class="py-2 px-2 text-right bg-emerald-50/20">
+            <input type="number" value="${omzetB}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-emerald-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'b', this.value)" title="Omzet Snaprint GW">
           </td>
-          <td class="py-2.5 px-4 text-right font-bold ${isActive ? 'text-blue-900 bg-blue-50/70' : 'text-slate-700 bg-slate-50'}">
-            ${formatRupiah(rowTot)}
+          <td class="py-2 px-2 text-right bg-emerald-50/20 border-r border-emerald-200">
+            <input type="number" value="${hppB}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-rose-300 bg-white font-medium text-rose-700' : 'border-slate-200 bg-slate-50 text-rose-400'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-rose-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'hpp_b', this.value)" title="HPP Snaprint GW">
           </td>
-          <td class="py-2.5 px-3 text-center text-xs font-semibold ${isActive ? 'text-blue-700' : 'text-slate-400'}">
-            ${pct}%
+          <!-- Unit C -->
+          <td class="py-2 px-2 text-right bg-purple-50/20">
+            <input type="number" value="${omzetC}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-purple-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-purple-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'c', this.value)" title="Omzet Snaprint Zamrud">
+          </td>
+          <td class="py-2 px-2 text-right bg-purple-50/20 border-r border-purple-200">
+            <input type="number" value="${hppC}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-rose-300 bg-white font-medium text-rose-700' : 'border-slate-200 bg-slate-50 text-rose-400'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-rose-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'hpp_c', this.value)" title="HPP Snaprint Zamrud">
+          </td>
+          <!-- Konsolidasi Bulanan -->
+          <td class="py-2 px-2 text-right font-bold text-xs ${isActive ? 'text-blue-900 bg-blue-50/50' : 'text-slate-700 bg-slate-50'}">
+            ${formatRupiah(rowOmzet)}
+          </td>
+          <td class="py-2 px-2 text-right font-semibold text-xs text-rose-600 ${isActive ? 'bg-blue-50/50' : 'bg-slate-50'}">
+            (${formatRupiah(rowHpp)})
+          </td>
+          <td class="py-2 px-2 text-right font-bold text-xs bg-emerald-50/50 text-emerald-800">
+            <div>${formatRupiah(rowGross)}</div>
+            <div class="text-[10px] text-emerald-600 font-semibold">${grossMarginPct}%</div>
           </td>
         `;
         tbody.appendChild(row);
       });
 
-      activeGrandTot = activeTotA + activeTotB + activeTotC;
+      const activeGrandOmzet = activeTotA + activeTotB + activeTotC;
+      const activeGrandHpp = activeTotHppA + activeTotHppB + activeTotHppC;
+      const activeGrandGross = activeGrandOmzet - activeGrandHpp;
 
       // Update KPI Cards in Tab 2
+      // Card A
       const elKa = document.getElementById('kpi-monthly-a');
-      const elKb = document.getElementById('kpi-monthly-b');
-      const elKc = document.getElementById('kpi-monthly-c');
-      const elKt = document.getElementById('kpi-monthly-tot');
-
-      if (elKa) elKa.textContent = formatRupiah(yearTotA);
-      if (elKb) elKb.textContent = formatRupiah(yearTotB);
-      if (elKc) elKc.textContent = formatRupiah(yearTotC);
-      if (elKt) elKt.textContent = formatRupiah(yearGrandTot);
-
+      const elHppA = document.getElementById('kpi-monthly-hpp-a');
+      const elGrossA = document.getElementById('kpi-monthly-gross-a');
       const elSubA = document.getElementById('kpi-monthly-sub-a');
-      const elSubB = document.getElementById('kpi-monthly-sub-b');
-      const elSubC = document.getElementById('kpi-monthly-sub-c');
-      const elSubT = document.getElementById('kpi-monthly-sub-tot');
+      const grossA = yearTotA - yearTotHppA;
+      const marginA = yearTotA > 0 ? ((grossA / yearTotA) * 100).toFixed(1) : 0;
+      if (elKa) elKa.textContent = formatRupiah(yearTotA);
+      if (elHppA) elHppA.textContent = formatRupiah(yearTotHppA);
+      if (elGrossA) elGrossA.textContent = `${formatRupiah(grossA)} (${marginA}%)`;
+      if (elSubA) elSubA.innerHTML = `<span>Periode Aktif:</span><span class="font-semibold text-blue-700">Omzet: ${formatRupiah(activeTotA)} | HPP: ${formatRupiah(activeTotHppA)}</span>`;
 
-      if (elSubA) elSubA.textContent = `Periode Aktif: ${formatRupiah(activeTotA)}`;
-      if (elSubB) elSubB.textContent = `Periode Aktif: ${formatRupiah(activeTotB)}`;
-      if (elSubC) elSubC.textContent = `Periode Aktif: ${formatRupiah(activeTotC)}`;
-      if (elSubT) elSubT.textContent = `Periode Aktif: ${formatRupiah(activeGrandTot)}`;
+      // Card B
+      const elKb = document.getElementById('kpi-monthly-b');
+      const elHppB = document.getElementById('kpi-monthly-hpp-b');
+      const elGrossB = document.getElementById('kpi-monthly-gross-b');
+      const elSubB = document.getElementById('kpi-monthly-sub-b');
+      const grossB = yearTotB - yearTotHppB;
+      const marginB = yearTotB > 0 ? ((grossB / yearTotB) * 100).toFixed(1) : 0;
+      if (elKb) elKb.textContent = formatRupiah(yearTotB);
+      if (elHppB) elHppB.textContent = formatRupiah(yearTotHppB);
+      if (elGrossB) elGrossB.textContent = `${formatRupiah(grossB)} (${marginB}%)`;
+      if (elSubB) elSubB.innerHTML = `<span>Periode Aktif:</span><span class="font-semibold text-emerald-700">Omzet: ${formatRupiah(activeTotB)} | HPP: ${formatRupiah(activeTotHppB)}</span>`;
+
+      // Card C
+      const elKc = document.getElementById('kpi-monthly-c');
+      const elHppC = document.getElementById('kpi-monthly-hpp-c');
+      const elGrossC = document.getElementById('kpi-monthly-gross-c');
+      const elSubC = document.getElementById('kpi-monthly-sub-c');
+      const grossC = yearTotC - yearTotHppC;
+      const marginC = yearTotC > 0 ? ((grossC / yearTotC) * 100).toFixed(1) : 0;
+      if (elKc) elKc.textContent = formatRupiah(yearTotC);
+      if (elHppC) elHppC.textContent = formatRupiah(yearTotHppC);
+      if (elGrossC) elGrossC.textContent = `${formatRupiah(grossC)} (${marginC}%)`;
+      if (elSubC) elSubC.innerHTML = `<span>Periode Aktif:</span><span class="font-semibold text-purple-700">Omzet: ${formatRupiah(activeTotC)} | HPP: ${formatRupiah(activeTotHppC)}</span>`;
+
+      // Card Tot
+      const elKt = document.getElementById('kpi-monthly-tot');
+      const elHppT = document.getElementById('kpi-monthly-hpp-tot');
+      const elGrossT = document.getElementById('kpi-monthly-gross-tot');
+      const elSubT = document.getElementById('kpi-monthly-sub-tot');
+      const marginTot = yearGrandOmzet > 0 ? ((yearGrandGross / yearGrandOmzet) * 100).toFixed(1) : 0;
+      if (elKt) elKt.textContent = formatRupiah(yearGrandOmzet);
+      if (elHppT) elHppT.textContent = formatRupiah(yearGrandHpp);
+      if (elGrossT) elGrossT.textContent = `${formatRupiah(yearGrandGross)} (${marginTot}%)`;
+      if (elSubT) elSubT.innerHTML = `<span>Periode Aktif:</span><span class="font-bold text-blue-900">Omzet: ${formatRupiah(activeGrandOmzet)} | HPP: ${formatRupiah(activeGrandHpp)}</span>`;
 
       // Update Badge
       const badgeEl = document.getElementById('monthly-active-badge');
@@ -1026,41 +1214,73 @@
       const countEl = document.getElementById('foot-active-count');
       if (countEl) countEl.textContent = activeMonths.length;
 
+      // 1. Akumulasi Aktif
       const faA = document.getElementById('foot-active-a');
+      const faHppA = document.getElementById('foot-active-hpp-a');
       const faB = document.getElementById('foot-active-b');
+      const faHppB = document.getElementById('foot-active-hpp-b');
       const faC = document.getElementById('foot-active-c');
-      const faT = document.getElementById('foot-active-tot');
-      const faP = document.getElementById('foot-active-pct');
+      const faHppC = document.getElementById('foot-active-hpp-c');
+      const faTotOmzet = document.getElementById('foot-active-tot-omzet');
+      const faTotHpp = document.getElementById('foot-active-tot-hpp');
+      const faTotGross = document.getElementById('foot-active-tot-gross');
 
       if (faA) faA.textContent = formatRupiah(activeTotA);
+      if (faHppA) faHppA.textContent = `(${formatRupiah(activeTotHppA)})`;
       if (faB) faB.textContent = formatRupiah(activeTotB);
+      if (faHppB) faHppB.textContent = `(${formatRupiah(activeTotHppB)})`;
       if (faC) faC.textContent = formatRupiah(activeTotC);
-      if (faT) faT.textContent = formatRupiah(activeGrandTot);
-      const activePct = yearGrandTot > 0 ? ((activeGrandTot / yearGrandTot) * 100).toFixed(1) : 0;
-      if (faP) faP.textContent = `${activePct}%`;
+      if (faHppC) faHppC.textContent = `(${formatRupiah(activeTotHppC)})`;
+      if (faTotOmzet) faTotOmzet.textContent = formatRupiah(activeGrandOmzet);
+      if (faTotHpp) faTotHpp.textContent = `(${formatRupiah(activeGrandHpp)})`;
+      const activeMargin = activeGrandOmzet > 0 ? ((activeGrandGross / activeGrandOmzet) * 100).toFixed(1) : 0;
+      if (faTotGross) faTotGross.innerHTML = `<div>${formatRupiah(activeGrandGross)}</div><div class="text-[10px] text-emerald-700 font-semibold">${activeMargin}%</div>`;
 
+      // 2. Total Tahunan 12 Bulan
       const fyA = document.getElementById('foot-year-a');
+      const fyHppA = document.getElementById('foot-year-hpp-a');
       const fyB = document.getElementById('foot-year-b');
+      const fyHppB = document.getElementById('foot-year-hpp-b');
       const fyC = document.getElementById('foot-year-c');
-      const fyT = document.getElementById('foot-year-tot');
+      const fyHppC = document.getElementById('foot-year-hpp-c');
+      const fyTotOmzet = document.getElementById('foot-year-tot-omzet');
+      const fyTotHpp = document.getElementById('foot-year-tot-hpp');
+      const fyTotGross = document.getElementById('foot-year-tot-gross');
 
       if (fyA) fyA.textContent = formatRupiah(yearTotA);
+      if (fyHppA) fyHppA.textContent = `(${formatRupiah(yearTotHppA)})`;
       if (fyB) fyB.textContent = formatRupiah(yearTotB);
+      if (fyHppB) fyHppB.textContent = `(${formatRupiah(yearTotHppB)})`;
       if (fyC) fyC.textContent = formatRupiah(yearTotC);
-      if (fyT) fyT.textContent = formatRupiah(yearGrandTot);
+      if (fyHppC) fyHppC.textContent = `(${formatRupiah(yearTotHppC)})`;
+      if (fyTotOmzet) fyTotOmzet.textContent = formatRupiah(yearGrandOmzet);
+      if (fyTotHpp) fyTotHpp.textContent = `(${formatRupiah(yearGrandHpp)})`;
+      if (fyTotGross) fyTotGross.innerHTML = `<div>${formatRupiah(yearGrandGross)}</div><div class="text-[10px] text-emerald-300 font-semibold">${marginTot}%</div>`;
 
+      // 3. Rata-Rata per Bulan
       const fvA = document.getElementById('foot-avg-a');
+      const fvHppA = document.getElementById('foot-avg-hpp-a');
       const fvB = document.getElementById('foot-avg-b');
+      const fvHppB = document.getElementById('foot-avg-hpp-b');
       const fvC = document.getElementById('foot-avg-c');
-      const fvT = document.getElementById('foot-avg-tot');
+      const fvHppC = document.getElementById('foot-avg-hpp-c');
+      const fvTotOmzet = document.getElementById('foot-avg-tot-omzet');
+      const fvTotHpp = document.getElementById('foot-avg-tot-hpp');
+      const fvTotGross = document.getElementById('foot-avg-tot-gross');
 
       if (fvA) fvA.textContent = formatRupiah(Math.round(yearTotA / 12));
+      if (fvHppA) fvHppA.textContent = `(${formatRupiah(Math.round(yearTotHppA / 12))})`;
       if (fvB) fvB.textContent = formatRupiah(Math.round(yearTotB / 12));
+      if (fvHppB) fvHppB.textContent = `(${formatRupiah(Math.round(yearTotHppB / 12))})`;
       if (fvC) fvC.textContent = formatRupiah(Math.round(yearTotC / 12));
-      if (fvT) fvT.textContent = formatRupiah(Math.round(yearGrandTot / 12));
+      if (fvHppC) fvHppC.textContent = `(${formatRupiah(Math.round(yearTotHppC / 12))})`;
+      if (fvTotOmzet) fvTotOmzet.textContent = formatRupiah(Math.round(yearGrandOmzet / 12));
+      if (fvTotHpp) fvTotHpp.textContent = `(${formatRupiah(Math.round(yearGrandHpp / 12))})`;
+      if (fvTotGross) fvTotGross.textContent = formatRupiah(Math.round(yearGrandGross / 12));
     }
 
     function updateMonthlyItem(idx, col, val) {
+      if (!monthlyRevenueData[idx]) return;
       monthlyRevenueData[idx][col] = parseFloat(val) || 0;
       renderMonthlyTable();
       if (syncMonthlyToReport) {
@@ -1070,27 +1290,70 @@
 
     function applyMonthlyToReport(showToast = false) {
       const activeMonths = getActiveMonths();
-      let activeA = 0, activeB = 0, activeC = 0;
+      let activeOmzetA = 0, activeOmzetB = 0, activeOmzetC = 0;
+      let activeHppA = 0, activeHppB = 0, activeHppC = 0;
+
       monthlyRevenueData.forEach(item => {
         if (activeMonths.includes(item.month)) {
-          activeA += item.a;
-          activeB += item.b;
-          activeC += item.c;
+          activeOmzetA += (item.a || 0);
+          activeOmzetB += (item.b || 0);
+          activeOmzetC += (item.c || 0);
+          activeHppA += (item.hpp_a || 0);
+          activeHppB += (item.hpp_b || 0);
+          activeHppC += (item.hpp_c || 0);
         }
       });
 
+      // Update Omzet in Tab 1
       const elA = document.getElementById('omzet_a');
       const elB = document.getElementById('omzet_b');
       const elC = document.getElementById('omzet_c');
+      if (elA) elA.value = activeOmzetA;
+      if (elB) elB.value = activeOmzetB;
+      if (elC) elC.value = activeOmzetC;
 
-      if (elA) elA.value = activeA;
-      if (elB) elB.value = activeB;
-      if (elC) elC.value = activeC;
+      // Update HPP in Tab 1 (Bahan Baku & Upah Langsung secara proporsional sesuai rasio baseline)
+      // Unit A: Bahan 550jt / 598jt, Upah 48jt / 598jt
+      const hppBahanA = Math.round(activeHppA * (550 / 598));
+      const hppUpahA = activeHppA - hppBahanA;
+
+      // Unit B: Bahan 310jt / 340jt, Upah 30jt / 340jt
+      const hppBahanB = Math.round(activeHppB * (310 / 340));
+      const hppUpahB = activeHppB - hppBahanB;
+
+      // Unit C: Bahan 192jt / 214jt, Upah 22jt / 214jt
+      const hppBahanC = Math.round(activeHppC * (192 / 214));
+      const hppUpahC = activeHppC - hppBahanC;
+
+      const elHppBahanA = document.getElementById('hpp_bahan_a');
+      const elHppUpahA = document.getElementById('hpp_upah_a');
+      const elHppBahanB = document.getElementById('hpp_bahan_b');
+      const elHppUpahB = document.getElementById('hpp_upah_b');
+      const elHppBahanC = document.getElementById('hpp_bahan_c');
+      const elHppUpahC = document.getElementById('hpp_upah_c');
+
+      if (elHppBahanA) elHppBahanA.value = hppBahanA;
+      if (elHppUpahA) elHppUpahA.value = hppUpahA;
+      if (elHppBahanB) elHppBahanB.value = hppBahanB;
+      if (elHppUpahB) elHppUpahB.value = hppUpahB;
+      if (elHppBahanC) elHppBahanC.value = hppBahanC;
+      if (elHppUpahC) elHppUpahC.value = hppUpahC;
 
       recalculate();
 
       if (showToast) {
-        alert(`✅ Akumulasi pemasukan ${activeMonths.length} bulan periode aktif berhasil diterapkan ke Laporan Konsolidasi:\n- Shop & Drive: ${formatRupiah(activeA)}\n- Snaprint GW: ${formatRupiah(activeB)}\n- Snaprint Zamrud: ${formatRupiah(activeC)}\nTotal Konsolidasi: ${formatRupiah(activeA + activeB + activeC)}`);
+        const totOmzet = activeOmzetA + activeOmzetB + activeOmzetC;
+        const totHpp = activeHppA + activeHppB + activeHppC;
+        const totGross = totOmzet - totHpp;
+        const margin = totOmzet > 0 ? ((totGross / totOmzet) * 100).toFixed(1) : 0;
+        alert(`✅ Sinkronisasi Berhasil!\nAkumulasi ${activeMonths.length} bulan periode aktif berhasil diterapkan ke Laporan Konsolidasi:\n` +
+          `• Total Omzet: ${formatRupiah(totOmzet)}\n` +
+          `• Total HPP: ${formatRupiah(totHpp)}\n` +
+          `• Estimasi Laba Kotor: ${formatRupiah(totGross)} (${margin}%)\n\n` +
+          `Rincian per Unit Usaha:\n` +
+          `- Shop & Drive (A): Omzet ${formatRupiah(activeOmzetA)} | HPP ${formatRupiah(activeHppA)}\n` +
+          `- Snaprint GW (B): Omzet ${formatRupiah(activeOmzetB)} | HPP ${formatRupiah(activeHppB)}\n` +
+          `- Snaprint Zamrud (C): Omzet ${formatRupiah(activeOmzetC)} | HPP ${formatRupiah(activeHppC)}`);
       }
     }
 
@@ -1576,7 +1839,7 @@
 
       // 2. pemasukan_bulanan
       sql += `-- ------------------------------------------------------------------------\n`;
-      sql += `-- 2. TABEL KERANJANG PEMASUKAN BULANAN PER UNIT USAHA\n`;
+      sql += `-- 2. TABEL KERANJANG PEMASUKAN & HPP BULANAN PER UNIT USAHA\n`;
       sql += `-- ------------------------------------------------------------------------\n`;
       sql += `DROP TABLE IF EXISTS \`pemasukan_bulanan\`;\n`;
       sql += `CREATE TABLE \`pemasukan_bulanan\` (\n`;
@@ -1587,13 +1850,15 @@
       sql += `  \`kuartal\` VARCHAR(5) NOT NULL,\n`;
       sql += `  \`id_unit\` VARCHAR(10) NOT NULL,\n`;
       sql += `  \`omzet_kotor\` DECIMAL(15,2) NOT NULL DEFAULT 0.00,\n`;
+      sql += `  \`hpp\` DECIMAL(15,2) NOT NULL DEFAULT 0.00 COMMENT 'Harga Pokok Penjualan Bulanan',\n`;
       sql += `  \`potongan_retur\` DECIMAL(15,2) NOT NULL DEFAULT 0.00,\n`;
       sql += `  \`management_fee\` DECIMAL(15,2) NOT NULL DEFAULT 0.00,\n`;
       sql += `  \`pendapatan_bersih\` DECIMAL(15,2) NOT NULL DEFAULT 0.00,\n`;
+      sql += `  \`laba_kotor\` DECIMAL(15,2) NOT NULL DEFAULT 0.00,\n`;
       sql += `  FOREIGN KEY (\`id_unit\`) REFERENCES \`unit_usaha\`(\`id_unit\`) ON DELETE CASCADE\n`;
       sql += `) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;\n\n`;
 
-      sql += `INSERT INTO \`pemasukan_bulanan\` (\`tahun\`, \`bulan\`, \`nama_bulan\`, \`kuartal\`, \`id_unit\`, \`omzet_kotor\`, \`potongan_retur\`, \`management_fee\`, \`pendapatan_bersih\`) VALUES\n`;
+      sql += `INSERT INTO \`pemasukan_bulanan\` (\`tahun\`, \`bulan\`, \`nama_bulan\`, \`kuartal\`, \`id_unit\`, \`omzet_kotor\`, \`hpp\`, \`potongan_retur\`, \`management_fee\`, \`pendapatan_bersih\`, \`laba_kotor\`) VALUES\n`;
       const totPotA = parseFloat(document.getElementById('potongan_a')?.value || 22000000);
       const totPotB = parseFloat(document.getElementById('potongan_b')?.value || 15000000);
       const totPotC = parseFloat(document.getElementById('potongan_c')?.value || 13000000);
@@ -1603,16 +1868,24 @@
 
       const mRows = [];
       monthlyRevenueData.forEach(row => {
+        const hppA = row.hpp_a || 0;
         const feeA = row.a * 0.03;
         const netA = row.a - potA - feeA;
+        const grossA = netA - hppA;
+
+        const hppB = row.hpp_b || 0;
         const feeB = 0;
         const netB = row.b - potB;
+        const grossB = netB - hppB;
+
+        const hppC = row.hpp_c || 0;
         const feeC = 0;
         const netC = row.c - potC;
+        const grossC = netC - hppC;
 
-        mRows.push(`(2026, ${row.month}, '${row.name}', '${row.quarter}', 'unit_a', ${Number(row.a).toFixed(2)}, ${potA.toFixed(2)}, ${feeA.toFixed(2)}, ${netA.toFixed(2)})`);
-        mRows.push(`(2026, ${row.month}, '${row.name}', '${row.quarter}', 'unit_b', ${Number(row.b).toFixed(2)}, ${potB.toFixed(2)}, ${feeB.toFixed(2)}, ${netB.toFixed(2)})`);
-        mRows.push(`(2026, ${row.month}, '${row.name}', '${row.quarter}', 'unit_c', ${Number(row.c).toFixed(2)}, ${potC.toFixed(2)}, ${feeC.toFixed(2)}, ${netC.toFixed(2)})`);
+        mRows.push(`(2026, ${row.month}, '${row.name}', '${row.quarter}', 'unit_a', ${Number(row.a).toFixed(2)}, ${Number(hppA).toFixed(2)}, ${potA.toFixed(2)}, ${feeA.toFixed(2)}, ${netA.toFixed(2)}, ${grossA.toFixed(2)})`);
+        mRows.push(`(2026, ${row.month}, '${row.name}', '${row.quarter}', 'unit_b', ${Number(row.b).toFixed(2)}, ${Number(hppB).toFixed(2)}, ${potB.toFixed(2)}, ${feeB.toFixed(2)}, ${netB.toFixed(2)}, ${grossB.toFixed(2)})`);
+        mRows.push(`(2026, ${row.month}, '${row.name}', '${row.quarter}', 'unit_c', ${Number(row.c).toFixed(2)}, ${Number(hppC).toFixed(2)}, ${potC.toFixed(2)}, ${feeC.toFixed(2)}, ${netC.toFixed(2)}, ${grossC.toFixed(2)})`);
       });
       sql += mRows.join(',\n') + ';\n\n';
 
@@ -1716,9 +1989,11 @@
       sql += `    u.id_unit,\n`;
       sql += `    u.nama_unit,\n`;
       sql += `    SUM(p.omzet_kotor) AS total_omzet_kotor,\n`;
+      sql += `    SUM(p.hpp) AS total_hpp,\n`;
       sql += `    SUM(p.potongan_retur) AS total_potongan_retur,\n`;
       sql += `    SUM(p.management_fee) AS total_management_fee,\n`;
-      sql += `    SUM(p.pendapatan_bersih) AS total_net_revenue\n`;
+      sql += `    SUM(p.pendapatan_bersih) AS total_net_revenue,\n`;
+      sql += `    SUM(p.laba_kotor) AS total_laba_kotor\n`;
       sql += `FROM unit_usaha u\n`;
       sql += `LEFT JOIN pemasukan_bulanan p ON u.id_unit = p.id_unit\n`;
       sql += `WHERE u.id_unit IN ('unit_a', 'unit_b', 'unit_c')\n`;
@@ -1822,7 +2097,20 @@
           }
 
           if (data.monthlyRevenueData && Array.isArray(data.monthlyRevenueData)) {
-            monthlyRevenueData = data.monthlyRevenueData;
+            monthlyRevenueData = defaultMonthlyRevenue.map((def, idx) => {
+              const item = data.monthlyRevenueData[idx] || {};
+              return {
+                month: def.month,
+                name: def.name,
+                quarter: def.quarter,
+                a: typeof item.a === 'number' ? item.a : def.a,
+                hpp_a: typeof item.hpp_a === 'number' ? item.hpp_a : def.hpp_a,
+                b: typeof item.b === 'number' ? item.b : def.b,
+                hpp_b: typeof item.hpp_b === 'number' ? item.hpp_b : def.hpp_b,
+                c: typeof item.c === 'number' ? item.c : def.c,
+                hpp_c: typeof item.hpp_c === 'number' ? item.hpp_c : def.hpp_c
+              };
+            });
             localStorage.setItem('rugilaba_monthly_revenue', JSON.stringify(monthlyRevenueData));
           }
 

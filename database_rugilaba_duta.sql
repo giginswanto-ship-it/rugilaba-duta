@@ -1,11 +1,7 @@
 -- ========================================================================
--- DATABASE LAPORAN KEUANGAN KONSOLIDASI MULTI-UNIT
--- ENTITAS: 
--- 1. SHOP & DRIVE (Otomotif & Fast Moving Parts)
--- 2. SNAPRINT GRAND WISATA (Digital Printing & Outdoor)
--- 3. SNAPRINT ZAMRUD (Digital Press, Copy Center & Creative Merchandise)
--- TAHUN BUKU: 2025 / 2026
--- STANDAR: SAK EMKM / Ketentuan Perpajakan UU HPP No. 7/2021 & PP 55/2022
+-- DATABASE LAPORAN KEUANGAN KONSOLIDASI MULTI-UNIT (RUGILABA DUTA)
+-- ENTITAS: Shop & Drive | Snaprint Grand Wisata | Snaprint Zamrud
+-- STANDAR AKUNTANSI: SAK EMKM / Ketentuan Perpajakan UU HPP No. 7/2021
 -- ========================================================================
 
 CREATE DATABASE IF NOT EXISTS `db_rugilaba_duta` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -31,7 +27,7 @@ INSERT INTO `unit_usaha` (`id_unit`, `nama_unit`, `bidang_usaha`, `lokasi`, `man
 ('unit_hq', 'Kantor Pusat / Holding', 'Manajemen Bersama, Legal, IT & Server', 'Kantor Pusat Duta', 0.0000, 'Alokasi inventaris bersama dan biaya holding');
 
 -- ------------------------------------------------------------------------
--- 2. TABEL KERANJANG PEMASUKAN BULANAN PER UNIT USAHA
+-- 2. TABEL KERANJANG PEMASUKAN & HPP BULANAN PER UNIT USAHA
 -- ------------------------------------------------------------------------
 DROP TABLE IF EXISTS `pemasukan_bulanan`;
 CREATE TABLE `pemasukan_bulanan` (
@@ -42,77 +38,79 @@ CREATE TABLE `pemasukan_bulanan` (
   `kuartal` VARCHAR(5) NOT NULL,
   `id_unit` VARCHAR(10) NOT NULL,
   `omzet_kotor` DECIMAL(15,2) NOT NULL DEFAULT 0.00,
+  `hpp` DECIMAL(15,2) NOT NULL DEFAULT 0.00 COMMENT 'Harga Pokok Penjualan Bulanan',
   `potongan_retur` DECIMAL(15,2) NOT NULL DEFAULT 0.00,
   `management_fee` DECIMAL(15,2) NOT NULL DEFAULT 0.00,
   `pendapatan_bersih` DECIMAL(15,2) NOT NULL DEFAULT 0.00,
+  `laba_kotor` DECIMAL(15,2) NOT NULL DEFAULT 0.00,
   `tanggal_input` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (`id_unit`) REFERENCES `unit_usaha`(`id_unit`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Seed Data Pemasukan 12 Bulan Tahun Buku 2026 (Shop & Drive, Snaprint GW, Snaprint Zamrud)
-INSERT INTO `pemasukan_bulanan` (`tahun`, `bulan`, `nama_bulan`, `kuartal`, `id_unit`, `omzet_kotor`, `potongan_retur`, `management_fee`, `pendapatan_bersih`) VALUES
+-- Seed Data Pemasukan & HPP 12 Bulan Tahun Buku 2026
+INSERT INTO `pemasukan_bulanan` (`tahun`, `bulan`, `nama_bulan`, `kuartal`, `id_unit`, `omzet_kotor`, `hpp`, `potongan_retur`, `management_fee`, `pendapatan_bersih`, `laba_kotor`) VALUES
 -- Bulan 1 - Januari
-(2026, 1, 'Januari', 'Q1', 'unit_a', 85000000.00, 1833333.33, 2550000.00, 80616666.67),
-(2026, 1, 'Januari', 'Q1', 'unit_b', 55000000.00, 1250000.00, 0.00, 53750000.00),
-(2026, 1, 'Januari', 'Q1', 'unit_c', 45000000.00, 1083333.33, 0.00, 43916666.67),
+(2026, 1, 'Januari', 'Q1', 'unit_a', 85000000.00, 46000000.00, 1833333.33, 2550000.00, 80616666.67, 34616666.67),
+(2026, 1, 'Januari', 'Q1', 'unit_b', 55000000.00, 25000000.00, 1250000.00, 0.00, 53750000.00, 28750000.00),
+(2026, 1, 'Januari', 'Q1', 'unit_c', 45000000.00, 16000000.00, 1083333.33, 0.00, 43916666.67, 27916666.67),
 
 -- Bulan 2 - Februari
-(2026, 2, 'Februari', 'Q1', 'unit_a', 82000000.00, 1833333.33, 2460000.00, 77706666.67),
-(2026, 2, 'Februari', 'Q1', 'unit_b', 50000000.00, 1250000.00, 0.00, 48750000.00),
-(2026, 2, 'Februari', 'Q1', 'unit_c', 42000000.00, 1083333.33, 0.00, 40916666.67),
+(2026, 2, 'Februari', 'Q1', 'unit_a', 82000000.00, 44500000.00, 1833333.33, 2460000.00, 77706666.67, 33206666.67),
+(2026, 2, 'Februari', 'Q1', 'unit_b', 50000000.00, 22500000.00, 1250000.00, 0.00, 48750000.00, 26250000.00),
+(2026, 2, 'Februari', 'Q1', 'unit_c', 42000000.00, 15000000.00, 1083333.33, 0.00, 40916666.67, 25916666.67),
 
 -- Bulan 3 - Maret
-(2026, 3, 'Maret', 'Q1', 'unit_a', 92000000.00, 1833333.33, 2760000.00, 87406666.67),
-(2026, 3, 'Maret', 'Q1', 'unit_b', 60000000.00, 1250000.00, 0.00, 58750000.00),
-(2026, 3, 'Maret', 'Q1', 'unit_c', 48000000.00, 1083333.33, 0.00, 46916666.67),
+(2026, 3, 'Maret', 'Q1', 'unit_a', 92000000.00, 50000000.00, 1833333.33, 2760000.00, 87406666.67, 37406666.67),
+(2026, 3, 'Maret', 'Q1', 'unit_b', 60000000.00, 27000000.00, 1250000.00, 0.00, 58750000.00, 31750000.00),
+(2026, 3, 'Maret', 'Q1', 'unit_c', 48000000.00, 17000000.00, 1083333.33, 0.00, 46916666.67, 29916666.67),
 
 -- Bulan 4 - April
-(2026, 4, 'April', 'Q2', 'unit_a', 105000000.00, 1833333.33, 3150000.00, 100016666.67),
-(2026, 4, 'April', 'Q2', 'unit_b', 65000000.00, 1250000.00, 0.00, 63750000.00),
-(2026, 4, 'April', 'Q2', 'unit_c', 52000000.00, 1083333.33, 0.00, 50916666.67),
+(2026, 4, 'April', 'Q2', 'unit_a', 105000000.00, 57500000.00, 1833333.33, 3150000.00, 100016666.67, 42516666.67),
+(2026, 4, 'April', 'Q2', 'unit_b', 65000000.00, 29500000.00, 1250000.00, 0.00, 63750000.00, 34250000.00),
+(2026, 4, 'April', 'Q2', 'unit_c', 52000000.00, 18500000.00, 1083333.33, 0.00, 50916666.67, 32416666.67),
 
 -- Bulan 5 - Mei
-(2026, 5, 'Mei', 'Q2', 'unit_a', 95000000.00, 1833333.33, 2850000.00, 90316666.67),
-(2026, 5, 'Mei', 'Q2', 'unit_b', 62000000.00, 1250000.00, 0.00, 60750000.00),
-(2026, 5, 'Mei', 'Q2', 'unit_c', 50000000.00, 1083333.33, 0.00, 48916666.67),
+(2026, 5, 'Mei', 'Q2', 'unit_a', 95000000.00, 51500000.00, 1833333.33, 2850000.00, 90316666.67, 38816666.67),
+(2026, 5, 'Mei', 'Q2', 'unit_b', 62000000.00, 28000000.00, 1250000.00, 0.00, 60750000.00, 32750000.00),
+(2026, 5, 'Mei', 'Q2', 'unit_c', 50000000.00, 17500000.00, 1083333.33, 0.00, 48916666.67, 31416666.67),
 
 -- Bulan 6 - Juni
-(2026, 6, 'Juni', 'Q2', 'unit_a', 88000000.00, 1833333.33, 2640000.00, 83526666.67),
-(2026, 6, 'Juni', 'Q2', 'unit_b', 60000000.00, 1250000.00, 0.00, 58750000.00),
-(2026, 6, 'Juni', 'Q2', 'unit_c', 53000000.00, 1083333.33, 0.00, 51916666.67),
+(2026, 6, 'Juni', 'Q2', 'unit_a', 88000000.00, 48000000.00, 1833333.33, 2640000.00, 83526666.67, 35526666.67),
+(2026, 6, 'Juni', 'Q2', 'unit_b', 60000000.00, 27000000.00, 1250000.00, 0.00, 58750000.00, 31750000.00),
+(2026, 6, 'Juni', 'Q2', 'unit_c', 53000000.00, 19000000.00, 1083333.33, 0.00, 51916666.67, 32916666.67),
 
 -- Bulan 7 - Juli
-(2026, 7, 'Juli', 'Q3', 'unit_a', 90000000.00, 1833333.33, 2700000.00, 85466666.67),
-(2026, 7, 'Juli', 'Q3', 'unit_b', 63000000.00, 1250000.00, 0.00, 61750000.00),
-(2026, 7, 'Juli', 'Q3', 'unit_c', 55000000.00, 1083333.33, 0.00, 53916666.67),
+(2026, 7, 'Juli', 'Q3', 'unit_a', 90000000.00, 49000000.00, 1833333.33, 2700000.00, 85466666.67, 36466666.67),
+(2026, 7, 'Juli', 'Q3', 'unit_b', 63000000.00, 28500000.00, 1250000.00, 0.00, 61750000.00, 33250000.00),
+(2026, 7, 'Juli', 'Q3', 'unit_c', 55000000.00, 19500000.00, 1083333.33, 0.00, 53916666.67, 34416666.67),
 
 -- Bulan 8 - Agustus
-(2026, 8, 'Agustus', 'Q3', 'unit_a', 88000000.00, 1833333.33, 2640000.00, 83526666.67),
-(2026, 8, 'Agustus', 'Q3', 'unit_b', 75000000.00, 1250000.00, 0.00, 73750000.00),
-(2026, 8, 'Agustus', 'Q3', 'unit_c', 52000000.00, 1083333.33, 0.00, 50916666.67),
+(2026, 8, 'Agustus', 'Q3', 'unit_a', 88000000.00, 48000000.00, 1833333.33, 2640000.00, 83526666.67, 35526666.67),
+(2026, 8, 'Agustus', 'Q3', 'unit_b', 75000000.00, 34500000.00, 1250000.00, 0.00, 73750000.00, 39250000.00),
+(2026, 8, 'Agustus', 'Q3', 'unit_c', 52000000.00, 18500000.00, 1083333.33, 0.00, 50916666.67, 32416666.67),
 
 -- Bulan 9 - September
-(2026, 9, 'September', 'Q3', 'unit_a', 85000000.00, 1833333.33, 2550000.00, 80616666.67),
-(2026, 9, 'September', 'Q3', 'unit_b', 65000000.00, 1250000.00, 0.00, 63750000.00),
-(2026, 9, 'September', 'Q3', 'unit_c', 48000000.00, 1083333.33, 0.00, 46916666.67),
+(2026, 9, 'September', 'Q3', 'unit_a', 85000000.00, 46000000.00, 1833333.33, 2550000.00, 80616666.67, 34616666.67),
+(2026, 9, 'September', 'Q3', 'unit_b', 65000000.00, 29500000.00, 1250000.00, 0.00, 63750000.00, 34250000.00),
+(2026, 9, 'September', 'Q3', 'unit_c', 48000000.00, 17000000.00, 1083333.33, 0.00, 46916666.67, 29916666.67),
 
 -- Bulan 10 - Oktober
-(2026, 10, 'Oktober', 'Q4', 'unit_a', 90000000.00, 1833333.33, 2700000.00, 85466666.67),
-(2026, 10, 'Oktober', 'Q4', 'unit_b', 65000000.00, 1250000.00, 0.00, 63750000.00),
-(2026, 10, 'Oktober', 'Q4', 'unit_c', 47000000.00, 1083333.33, 0.00, 45916666.67),
+(2026, 10, 'Oktober', 'Q4', 'unit_a', 90000000.00, 49000000.00, 1833333.33, 2700000.00, 85466666.67, 36466666.67),
+(2026, 10, 'Oktober', 'Q4', 'unit_b', 65000000.00, 29500000.00, 1250000.00, 0.00, 63750000.00, 34250000.00),
+(2026, 10, 'Oktober', 'Q4', 'unit_c', 47000000.00, 17000000.00, 1083333.33, 0.00, 45916666.67, 28916666.67),
 
 -- Bulan 11 - November
-(2026, 11, 'November', 'Q4', 'unit_a', 95000000.00, 1833333.33, 2850000.00, 90316666.67),
-(2026, 11, 'November', 'Q4', 'unit_b', 65000000.00, 1250000.00, 0.00, 63750000.00),
-(2026, 11, 'November', 'Q4', 'unit_c', 50000000.00, 1083333.33, 0.00, 48916666.67),
+(2026, 11, 'November', 'Q4', 'unit_a', 95000000.00, 51500000.00, 1833333.33, 2850000.00, 90316666.67, 38816666.67),
+(2026, 11, 'November', 'Q4', 'unit_b', 65000000.00, 29500000.00, 1250000.00, 0.00, 63750000.00, 34250000.00),
+(2026, 11, 'November', 'Q4', 'unit_c', 50000000.00, 18000000.00, 1083333.33, 0.00, 48916666.67, 30916666.67),
 
 -- Bulan 12 - Desember
-(2026, 12, 'Desember', 'Q4', 'unit_a', 105000000.00, 1833333.37, 3150000.00, 100016666.63),
-(2026, 12, 'Desember', 'Q4', 'unit_b', 65000000.00, 1250000.00, 0.00, 63750000.00),
-(2026, 12, 'Desember', 'Q4', 'unit_c', 58000000.00, 1083333.37, 0.00, 56916666.63);
+(2026, 12, 'Desember', 'Q4', 'unit_a', 105000000.00, 57000000.00, 1833333.37, 3150000.00, 100016666.63, 43016666.63),
+(2026, 12, 'Desember', 'Q4', 'unit_b', 65000000.00, 29500000.00, 1250000.00, 0.00, 63750000.00, 34250000.00),
+(2026, 12, 'Desember', 'Q4', 'unit_c', 58000000.00, 21000000.00, 1083333.37, 0.00, 56916666.63, 35916666.63);
 
 -- ------------------------------------------------------------------------
--- 3. TABEL HARGA POKOK PENJUALAN (HPP) / BIAYA LANGSUNG
+-- 3. TABEL HARGA POKOK PENJUALAN (HPP) / BIAYA LANGSUNG TAHUNAN
 -- ------------------------------------------------------------------------
 DROP TABLE IF EXISTS `harga_pokok_penjualan`;
 CREATE TABLE `harga_pokok_penjualan` (
@@ -166,7 +164,6 @@ CREATE TABLE `aset_tetap` (
   `masa_manfaat_tahun` INT NOT NULL,
   `tarif_susut` DECIMAL(5,2) NOT NULL,
   `beban_susut_tahunan` DECIMAL(15,2) NOT NULL DEFAULT 0.00,
-  `tanggal_perolehan` DATE DEFAULT NULL,
   FOREIGN KEY (`id_unit`) REFERENCES `unit_usaha`(`id_unit`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -194,16 +191,18 @@ INSERT INTO `biaya_holding_pendapatan_lain` (`tahun`, `alokasi_holding_overhead`
 (2026, 48000000.00, 4000000.00);
 
 -- ------------------------------------------------------------------------
--- 7. VIEW VIEW REKAPITULASI LAPORAN LABA RUGI KONSOLIDASI (TAHUNAN)
+-- 7. VIEW REKAPITULASI LAPORAN LABA RUGI KONSOLIDASI (TAHUNAN)
 -- ------------------------------------------------------------------------
 CREATE OR REPLACE VIEW `v_rekap_omzet_tahunan` AS
 SELECT 
     u.id_unit,
     u.nama_unit,
     SUM(p.omzet_kotor) AS total_omzet_kotor,
+    SUM(p.hpp) AS total_hpp,
     SUM(p.potongan_retur) AS total_potongan_retur,
     SUM(p.management_fee) AS total_management_fee,
-    SUM(p.pendapatan_bersih) AS total_net_revenue
+    SUM(p.pendapatan_bersih) AS total_net_revenue,
+    SUM(p.laba_kotor) AS total_laba_kotor
 FROM unit_usaha u
 LEFT JOIN pemasukan_bulanan p ON u.id_unit = p.id_unit
 WHERE u.id_unit IN ('unit_a', 'unit_b', 'unit_c')
