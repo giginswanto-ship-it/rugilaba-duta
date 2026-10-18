@@ -197,7 +197,7 @@
               <tr class="bg-slate-50 font-bold text-slate-900">
                 <td colspan="5" class="py-2.5 px-4 text-xs tracking-wider">
                   <div class="flex items-center justify-between">
-                    <span>B. BEBAN POKOK PENJUALAN (HPP) / BIAYA LANGSUNG</span>
+                    <span>B. BEBAN POKOK PENJUALAN (HPP)</span>
                     <button type="button" onclick="switchTab('pemasukan-bulanan')" class="text-[11px] bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 px-2 py-0.5 rounded-md font-medium no-print flex items-center gap-1 transition-all" title="Buka Keranjang Inputan Pemasukan & HPP Bulanan">
                       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                       <span>Keranjang HPP Bulanan</span>
@@ -206,32 +206,17 @@
                 </td>
               </tr>
               <tr>
-                <td class="py-2.5 px-4 pl-6 text-slate-800">Bahan Baku / Suku Cadang & Media Cetak</td>
-                <td class="py-2 px-4 text-right"><input type="number" id="hpp_bahan_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()" onfocus="this.select()"></td>
-                <td class="py-2 px-4 text-right"><input type="number" id="hpp_bahan_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()" onfocus="this.select()"></td>
-                <td class="py-2 px-4 text-right"><input type="number" id="hpp_bahan_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()" onfocus="this.select()"></td>
-                <td id="tot_hpp_bahan" class="py-2.5 px-4 text-right font-medium text-rose-600 bg-blue-50/40">(Rp 0)</td>
-              </tr>
-              <tr>
-                <td class="py-2.5 px-4 pl-6 text-slate-800">Upah Tenaga Kerja Langsung (Mekanik & Operator)</td>
-                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()" onfocus="this.select()"></td>
-                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()" onfocus="this.select()"></td>
-                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()" onfocus="this.select()"></td>
-                <td id="tot_hpp_upah" class="py-2.5 px-4 text-right font-medium text-rose-600 bg-blue-50/40">(Rp 0)</td>
-              </tr>
-              <!-- Subtotal Total HPP -->
-              <tr class="font-bold bg-rose-50/50 text-rose-950 border-t border-slate-200">
-                <td class="py-2.5 px-4 pl-6 flex items-center justify-between">
+                <td class="py-2.5 px-4 pl-6 text-slate-800 flex items-center justify-between">
                   <div class="flex items-center gap-2">
-                    <span>Total Beban Pokok Penjualan (HPP)</span>
+                    <span>Harga Pokok Penjualan (Bahan Baku / Suku Cadang & Media Cetak)</span>
                     <span class="text-[10px] bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded font-semibold no-print">Tersinkron Bulanan</span>
                   </div>
                   <button type="button" onclick="switchTab('pemasukan-bulanan')" class="text-[11px] text-blue-600 hover:text-blue-800 font-semibold underline no-print cursor-pointer">Rincian Bulanan &rarr;</button>
                 </td>
-                <td id="tot_hpp_a" class="py-2.5 px-4 text-right text-rose-700 font-bold">(Rp 0)</td>
-                <td id="tot_hpp_b" class="py-2.5 px-4 text-right text-rose-700 font-bold">(Rp 0)</td>
-                <td id="tot_hpp_c" class="py-2.5 px-4 text-right text-rose-700 font-bold">(Rp 0)</td>
-                <td id="tot_hpp_all" class="py-2.5 px-4 text-right font-extrabold text-rose-800 bg-blue-50/60">(Rp 0)</td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_bahan_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 font-semibold focus:ring-1 focus:ring-rose-500" oninput="recalculate()" onfocus="this.select()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_bahan_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 font-semibold focus:ring-1 focus:ring-rose-500" oninput="recalculate()" onfocus="this.select()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_bahan_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 font-semibold focus:ring-1 focus:ring-rose-500" oninput="recalculate()" onfocus="this.select()"></td>
+                <td id="tot_hpp_bahan" class="py-2.5 px-4 text-right font-extrabold text-rose-800 bg-blue-50/60">(Rp 0)</td>
               </tr>
               <tr class="font-bold bg-emerald-50 text-emerald-900 border-t border-b border-emerald-200">
                 <td class="py-2.5 px-4 pl-6">Laba Kotor (Gross Profit)</td>
@@ -247,7 +232,17 @@
               </tr>
               <tr>
                 <td class="py-2.5 px-4 pl-6 text-slate-800 flex items-center justify-between">
-                  <span id="opex-row-label">Total Beban Operasional Unit (Proporsional Periode Aktif)</span>
+                  <span>Upah Tenaga Kerja Langsung (Mekanik & Operator)</span>
+                  <span class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-medium no-print">Tenaga Kerja Ops</span>
+                </td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-rose-500" oninput="recalculate()" onfocus="this.select()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-rose-500" oninput="recalculate()" onfocus="this.select()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-rose-500" oninput="recalculate()" onfocus="this.select()"></td>
+                <td id="tot_hpp_upah" class="py-2.5 px-4 text-right font-medium text-rose-600 bg-blue-50/40">(Rp 0)</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 pl-6 text-slate-800 flex items-center justify-between">
+                  <span id="opex-row-label">Beban Operasional Toko & Kantor (Sesuai Rincian OPEX)</span>
                   <button type="button" onclick="switchTab('detail-biaya')" class="text-[11px] bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300 px-2 py-0.5 rounded-md font-medium no-print flex items-center gap-1 transition-all cursor-pointer" title="Buka Rincian Biaya Operasional di Tab 3">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
                     <span>Rincian OPEX</span>
@@ -256,7 +251,14 @@
                 <td id="sum_opex_a" class="py-2.5 px-4 text-right font-medium text-rose-600">(Rp 0)</td>
                 <td id="sum_opex_b" class="py-2.5 px-4 text-right font-medium text-rose-600">(Rp 0)</td>
                 <td id="sum_opex_c" class="py-2.5 px-4 text-right font-medium text-rose-600">(Rp 0)</td>
-                <td id="tot_opex" class="py-2.5 px-4 text-right font-bold text-rose-700 bg-blue-50/40">(Rp 0)</td>
+                <td id="tot_opex" class="py-2.5 px-4 text-right font-medium text-rose-700 bg-blue-50/40">(Rp 0)</td>
+              </tr>
+              <tr class="font-bold bg-rose-50/40 text-rose-950 border-t border-slate-200">
+                <td class="py-2.5 px-4 pl-6">Total Beban Operasional Unit (OPEX)</td>
+                <td id="tot_opex_unit_a" class="py-2.5 px-4 text-right text-rose-700 font-bold">(Rp 0)</td>
+                <td id="tot_opex_unit_b" class="py-2.5 px-4 text-right text-rose-700 font-bold">(Rp 0)</td>
+                <td id="tot_opex_unit_c" class="py-2.5 px-4 text-right text-rose-700 font-bold">(Rp 0)</td>
+                <td id="tot_opex_combined" class="py-2.5 px-4 text-right font-extrabold text-rose-800 bg-blue-50/60">(Rp 0)</td>
               </tr>
               <tr class="font-bold bg-slate-100 text-slate-900 border-t border-b border-slate-300">
                 <td class="py-2.5 px-4 pl-6">Laba Operasional Sebelum Penyusutan (EBITDA)</td>
@@ -1685,32 +1687,14 @@
       if (elB) elB.value = activeOmzetB;
       if (elC) elC.value = activeOmzetC;
 
-      // Update HPP in Tab 1 (Bahan Baku & Upah Langsung secara proporsional sesuai rasio baseline)
-      // Unit A: Bahan 550jt / 598jt, Upah 48jt / 598jt
-      const hppBahanA = Math.round(activeHppA * (550 / 598));
-      const hppUpahA = activeHppA - hppBahanA;
-
-      // Unit B: Bahan 310jt / 340jt, Upah 30jt / 340jt
-      const hppBahanB = Math.round(activeHppB * (310 / 340));
-      const hppUpahB = activeHppB - hppBahanB;
-
-      // Unit C: Bahan 192jt / 214jt, Upah 22jt / 214jt
-      const hppBahanC = Math.round(activeHppC * (192 / 214));
-      const hppUpahC = activeHppC - hppBahanC;
-
+      // Update HPP in Tab 1 (Point B murni HPP)
       const elHppBahanA = document.getElementById('hpp_bahan_a');
-      const elHppUpahA = document.getElementById('hpp_upah_a');
       const elHppBahanB = document.getElementById('hpp_bahan_b');
-      const elHppUpahB = document.getElementById('hpp_upah_b');
       const elHppBahanC = document.getElementById('hpp_bahan_c');
-      const elHppUpahC = document.getElementById('hpp_upah_c');
 
-      if (elHppBahanA) elHppBahanA.value = hppBahanA;
-      if (elHppUpahA) elHppUpahA.value = hppUpahA;
-      if (elHppBahanB) elHppBahanB.value = hppBahanB;
-      if (elHppUpahB) elHppUpahB.value = hppUpahB;
-      if (elHppBahanC) elHppBahanC.value = hppBahanC;
-      if (elHppUpahC) elHppUpahC.value = hppUpahC;
+      if (elHppBahanA) elHppBahanA.value = activeHppA;
+      if (elHppBahanB) elHppBahanB.value = activeHppB;
+      if (elHppBahanC) elHppBahanC.value = activeHppC;
 
       recalculate();
 
@@ -1735,9 +1719,9 @@
       const omzetB = parseFloat(document.getElementById('omzet_b')?.value) || 0;
       const omzetC = parseFloat(document.getElementById('omzet_c')?.value) || 0;
 
-      const hppA = (parseFloat(document.getElementById('hpp_bahan_a')?.value) || 0) + (parseFloat(document.getElementById('hpp_upah_a')?.value) || 0);
-      const hppB = (parseFloat(document.getElementById('hpp_bahan_b')?.value) || 0) + (parseFloat(document.getElementById('hpp_upah_b')?.value) || 0);
-      const hppC = (parseFloat(document.getElementById('hpp_bahan_c')?.value) || 0) + (parseFloat(document.getElementById('hpp_upah_c')?.value) || 0);
+      const hppA = parseFloat(document.getElementById('hpp_bahan_a')?.value) || 0;
+      const hppB = parseFloat(document.getElementById('hpp_bahan_b')?.value) || 0;
+      const hppC = parseFloat(document.getElementById('hpp_bahan_c')?.value) || 0;
 
       const activeMonths = getActiveMonths();
       const numActive = activeMonths.length || 1;
@@ -2051,10 +2035,11 @@
       const hpp_lab_c = parseFloat(document.getElementById('hpp_upah_c').value) || 0;
       const tot_hpp_lab = hpp_lab_a + hpp_lab_b + hpp_lab_c;
 
-      const tot_hpp_a = hpp_mat_a + hpp_lab_a;
-      const tot_hpp_b = hpp_mat_b + hpp_lab_b;
-      const tot_hpp_c = hpp_mat_c + hpp_lab_c;
-      const tot_hpp_all = tot_hpp_mat + tot_hpp_lab;
+      // Point B: HANYA HPP (Bahan Baku / Suku Cadang)
+      const tot_hpp_a = hpp_mat_a;
+      const tot_hpp_b = hpp_mat_b;
+      const tot_hpp_c = hpp_mat_c;
+      const tot_hpp_all = tot_hpp_mat;
 
       const gross_a = net_rev_a - tot_hpp_a;
       const gross_b = net_rev_b - tot_hpp_b;
@@ -2072,9 +2057,15 @@
       const period_opex_c = Math.round(annual_opex_c * currentPeriodRatio);
       const tot_period_opex = period_opex_a + period_opex_b + period_opex_c;
 
-      const ebitda_a = gross_a - period_opex_a;
-      const ebitda_b = gross_b - period_opex_b;
-      const ebitda_c = gross_c - period_opex_c;
+      // Point C: Beban Operasional Unit (OPEX Toko/Kantor + Upah Mekanik & Operator)
+      const tot_opex_unit_a = period_opex_a + hpp_lab_a;
+      const tot_opex_unit_b = period_opex_b + hpp_lab_b;
+      const tot_opex_unit_c = period_opex_c + hpp_lab_c;
+      const tot_combined_opex = tot_period_opex + tot_hpp_lab;
+
+      const ebitda_a = gross_a - tot_opex_unit_a;
+      const ebitda_b = gross_b - tot_opex_unit_b;
+      const ebitda_c = gross_c - tot_opex_unit_c;
       const tot_ebitda = ebitda_a + ebitda_b + ebitda_c;
 
       // Depreciations
@@ -2107,15 +2098,6 @@
       document.getElementById('tot_hpp_bahan').textContent = `(${formatRupiah(tot_hpp_mat)})`;
       document.getElementById('tot_hpp_upah').textContent = `(${formatRupiah(tot_hpp_lab)})`;
 
-      const elTotHppA = document.getElementById('tot_hpp_a');
-      const elTotHppB = document.getElementById('tot_hpp_b');
-      const elTotHppC = document.getElementById('tot_hpp_c');
-      const elTotHppAll = document.getElementById('tot_hpp_all');
-      if (elTotHppA) elTotHppA.textContent = `(${formatRupiah(tot_hpp_a)})`;
-      if (elTotHppB) elTotHppB.textContent = `(${formatRupiah(tot_hpp_b)})`;
-      if (elTotHppC) elTotHppC.textContent = `(${formatRupiah(tot_hpp_c)})`;
-      if (elTotHppAll) elTotHppAll.textContent = `(${formatRupiah(tot_hpp_all)})`;
-
       document.getElementById('gross_a').textContent = formatRupiah(gross_a);
       document.getElementById('gross_b').textContent = formatRupiah(gross_b);
       document.getElementById('gross_c').textContent = formatRupiah(gross_c);
@@ -2126,15 +2108,24 @@
       const opexLabelEl = document.getElementById('opex-row-label');
       if (opexLabelEl) {
         if (activeMonths.length === 12) {
-          opexLabelEl.textContent = 'Total Beban Operasional Unit (Tahunan Penuh)';
+          opexLabelEl.textContent = 'Beban Operasional Toko & Kantor (Tahunan Penuh)';
         } else {
-          opexLabelEl.textContent = `Total Beban Operasional Unit (Proporsional ${activeMonths.length} Bulan)`;
+          opexLabelEl.textContent = `Beban Operasional Toko & Kantor (Proporsional ${activeMonths.length} Bulan)`;
         }
       }
       document.getElementById('sum_opex_a').textContent = `(${formatRupiah(period_opex_a)})`;
       document.getElementById('sum_opex_b').textContent = `(${formatRupiah(period_opex_b)})`;
       document.getElementById('sum_opex_c').textContent = `(${formatRupiah(period_opex_c)})`;
       document.getElementById('tot_opex').textContent = `(${formatRupiah(tot_period_opex)})`;
+
+      const elTotOpA = document.getElementById('tot_opex_unit_a');
+      const elTotOpB = document.getElementById('tot_opex_unit_b');
+      const elTotOpC = document.getElementById('tot_opex_unit_c');
+      const elTotOpComb = document.getElementById('tot_opex_combined');
+      if (elTotOpA) elTotOpA.textContent = `(${formatRupiah(tot_opex_unit_a)})`;
+      if (elTotOpB) elTotOpB.textContent = `(${formatRupiah(tot_opex_unit_b)})`;
+      if (elTotOpC) elTotOpC.textContent = `(${formatRupiah(tot_opex_unit_c)})`;
+      if (elTotOpComb) elTotOpComb.textContent = `(${formatRupiah(tot_combined_opex)})`;
 
       document.getElementById('ebitda_a').textContent = formatRupiah(ebitda_a);
       document.getElementById('ebitda_b').textContent = formatRupiah(ebitda_b);
