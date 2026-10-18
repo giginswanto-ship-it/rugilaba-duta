@@ -28,6 +28,10 @@
       </div>
 
       <div class="flex flex-wrap items-center gap-2 no-print">
+        <button onclick="openDatabaseModal()" class="px-3.5 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-lg shadow-sm transition-all flex items-center gap-1.5" title="Sematkan / Unduh File SQL Database & Sinkronkan ke Perangkat Lain">
+          <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+          <span>Database SQL & Multi-Device</span>
+        </button>
         <button onclick="resetDefaults()" class="px-3.5 py-2 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-all">
           Reset Data
         </button>
@@ -664,6 +668,95 @@
           </button>
           <button onclick="saveAssetModal()" class="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all">
             Simpan Aset
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Database SQL & Multi-Device Sync -->
+    <div id="database-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 hidden">
+      <div class="bg-white rounded-2xl max-w-3xl w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] flex flex-col space-y-4">
+        <div class="flex justify-between items-center pb-3 border-b border-slate-200">
+          <div class="flex items-center gap-2">
+            <div class="p-2 bg-emerald-50 text-emerald-600 rounded-lg">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-slate-800">Database SQL & Sinkronisasi Multi-Device</h3>
+              <p class="text-xs text-slate-500">Kelola berkas database relasional (.sql) dan sinkronisasi data antar perangkat (HP/Laptop)</p>
+            </div>
+          </div>
+          <button onclick="closeDatabaseModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
+
+        <!-- Quick Action Bar -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <button onclick="downloadSQLFile()" class="p-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-sm text-left flex items-center gap-3 transition-all cursor-pointer">
+            <div class="p-2 bg-emerald-700/50 rounded-lg">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+            </div>
+            <div>
+              <div class="text-xs font-bold">Unduh Database .SQL</div>
+              <div class="text-[10px] text-emerald-100">Format standar MySQL/MariaDB</div>
+            </div>
+          </button>
+
+          <button onclick="exportJSONBackup()" class="p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-sm text-left flex items-center gap-3 transition-all cursor-pointer">
+            <div class="p-2 bg-blue-700/50 rounded-lg">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+            </div>
+            <div>
+              <div class="text-xs font-bold">Ekspor Backup Data (.JSON)</div>
+              <div class="text-[10px] text-blue-100">Bisa dipindah & dibuka di HP</div>
+            </div>
+          </button>
+
+          <label class="p-3 bg-amber-500 hover:bg-amber-600 text-white rounded-xl shadow-sm text-left flex items-center gap-3 transition-all cursor-pointer">
+            <div class="p-2 bg-amber-600/50 rounded-lg">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+            </div>
+            <div>
+              <div class="text-xs font-bold">Impor Data Perangkat Lain</div>
+              <div class="text-[10px] text-amber-100">Muat berkas backup .json</div>
+            </div>
+            <input type="file" id="json-import-input" accept=".json" onchange="importJSONBackup(event)" class="hidden">
+          </label>
+        </div>
+
+        <!-- Multi-device info banner -->
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-blue-900 flex items-start gap-2.5">
+          <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <div>
+            <span class="font-bold">Panduan Akses di Perangkat Lain (HP / Tablet / Laptop):</span>
+            <ul class="list-disc list-inside mt-1 space-y-0.5 text-[11px] text-blue-800">
+              <li><strong>Akses Online (GitHub Pages / Web):</strong> Buka repositori ini di browser HP. Semua formulir dan kalkulasi siap digunakan tanpa instalasi.</li>
+              <li><strong>Sinkronisasi Antar Device:</strong> Tekan tombol <em>Ekspor Backup Data (.JSON)</em>, kirim berkas via WA/Drive ke HP, lalu tekan <em>Impor Data Perangkat Lain</em> di browser HP.</li>
+              <li><strong>Integrasi Database Server:</strong> Unduh berkas <code class="bg-blue-100 px-1 py-0.5 rounded text-blue-900 font-semibold">.sql</code> dan eksekusi pada phpMyAdmin / MySQL Workbench server Anda.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SQL Code Live Preview Box -->
+        <div class="flex-1 min-h-[180px] flex flex-col space-y-1.5">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-semibold text-slate-700">Skrip SQL Terkini (DDL & Data Teraktual):</span>
+            <button onclick="copySQLToClipboard()" id="copy-sql-btn" class="text-xs px-2.5 py-1 font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 rounded flex items-center gap-1 transition-all cursor-pointer">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+              <span>Salin Skrip SQL</span>
+            </button>
+          </div>
+          <div class="relative flex-1 bg-slate-900 rounded-xl overflow-hidden border border-slate-800">
+            <textarea id="sql-preview-text" readonly class="w-full h-44 sm:h-52 bg-transparent text-emerald-400 font-mono text-[11px] p-3 resize-none focus:outline-none overflow-y-auto leading-relaxed"></textarea>
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="flex justify-between items-center pt-3 border-t border-slate-100">
+          <div class="text-[11px] text-slate-400">Tersedia juga file offline: <code class="bg-slate-100 px-1 py-0.5 rounded text-slate-600 font-semibold">database_rugilaba_duta.sql</code></div>
+          <button onclick="closeDatabaseModal()" class="px-4 py-2 text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-all cursor-pointer">
+            Tutup
           </button>
         </div>
       </div>
@@ -1425,6 +1518,357 @@
       if (syncMonthlyToReport) {
         applyMonthlyToReport(false);
       }
+    }
+
+    // ==========================================
+    // DATABASE SQL & MULTI-DEVICE SYNC FUNCTIONS
+    // ==========================================
+    function openDatabaseModal() {
+      const modal = document.getElementById('database-modal');
+      if (modal) {
+        const sqlText = generateSQLScript();
+        const previewEl = document.getElementById('sql-preview-text');
+        if (previewEl) previewEl.value = sqlText;
+        modal.classList.remove('hidden');
+      }
+    }
+
+    function closeDatabaseModal() {
+      const modal = document.getElementById('database-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+      }
+    }
+
+    function generateSQLScript() {
+      const dateStart = document.getElementById('date-start')?.value || '2026-01-01';
+      const dateEnd = document.getElementById('date-end')?.value || '2026-12-31';
+      const nowStr = new Date().toISOString().replace('T', ' ').substring(0, 19);
+
+      let sql = `-- ========================================================================\n`;
+      sql += `-- DATABASE LAPORAN KEUANGAN KONSOLIDASI MULTI-UNIT (RUGILABA DUTA)\n`;
+      sql += `-- WAKTU GENERATE: ${nowStr}\n`;
+      sql += `-- RENTANG PERIODE: ${dateStart} s/d ${dateEnd}\n`;
+      sql += `-- ENTITAS: Shop & Drive | Snaprint Grand Wisata | Snaprint Zamrud\n`;
+      sql += `-- STANDAR AKUNTANSI: SAK EMKM / Ketentuan Perpajakan UU HPP No. 7/2021\n`;
+      sql += `-- ========================================================================\n\n`;
+      sql += `CREATE DATABASE IF NOT EXISTS \`db_rugilaba_duta\` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;\n`;
+      sql += `USE \`db_rugilaba_duta\`;\n\n`;
+
+      // 1. unit_usaha
+      sql += `-- ------------------------------------------------------------------------\n`;
+      sql += `-- 1. TABEL UNIT USAHA\n`;
+      sql += `-- ------------------------------------------------------------------------\n`;
+      sql += `DROP TABLE IF EXISTS \`unit_usaha\`;\n`;
+      sql += `CREATE TABLE \`unit_usaha\` (\n`;
+      sql += `  \`id_unit\` VARCHAR(10) NOT NULL PRIMARY KEY,\n`;
+      sql += `  \`nama_unit\` VARCHAR(100) NOT NULL,\n`;
+      sql += `  \`bidang_usaha\` VARCHAR(100) NOT NULL,\n`;
+      sql += `  \`lokasi\` VARCHAR(150) DEFAULT NULL,\n`;
+      sql += `  \`management_fee_rate\` DECIMAL(5,4) DEFAULT 0.0000 COMMENT 'Tarif Management Fee (contoh: 0.0300 untuk S&D)',\n`;
+      sql += `  \`keterangan\` TEXT DEFAULT NULL\n`;
+      sql += `) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;\n\n`;
+      sql += `INSERT INTO \`unit_usaha\` (\`id_unit\`, \`nama_unit\`, \`bidang_usaha\`, \`lokasi\`, \`management_fee_rate\`, \`keterangan\`) VALUES\n`;
+      sql += `('unit_a', 'Shop & Drive', 'Otomotif, Aki, Oli & Servis Cepat', 'Outlet Shop & Drive', 0.0300, 'Dikenakan Management Fee 3% dari Penjualan Kotor'),\n`;
+      sql += `('unit_b', 'Snaprint Grand Wisata', 'Digital Printing Large Format & Outdoor', 'Grand Wisata Bekasi', 0.0000, 'Spesialis cetak outdoor, billboard, banner & UV roll'),\n`;
+      sql += `('unit_c', 'Snaprint Zamrud', 'Production Press A3+, Copy Center & Retail', 'Zamrud Bekasi', 0.0000, 'Spesialis kartu nama, brosur, merchandise & finishing'),\n`;
+      sql += `('unit_hq', 'Kantor Pusat / Holding', 'Manajemen Bersama, Legal, IT & Server', 'Kantor Pusat Duta', 0.0000, 'Alokasi inventaris bersama dan biaya holding');\n\n`;
+
+      // 2. pemasukan_bulanan
+      sql += `-- ------------------------------------------------------------------------\n`;
+      sql += `-- 2. TABEL KERANJANG PEMASUKAN BULANAN PER UNIT USAHA\n`;
+      sql += `-- ------------------------------------------------------------------------\n`;
+      sql += `DROP TABLE IF EXISTS \`pemasukan_bulanan\`;\n`;
+      sql += `CREATE TABLE \`pemasukan_bulanan\` (\n`;
+      sql += `  \`id\` INT AUTO_INCREMENT PRIMARY KEY,\n`;
+      sql += `  \`tahun\` INT NOT NULL,\n`;
+      sql += `  \`bulan\` INT NOT NULL COMMENT '1 sampai 12',\n`;
+      sql += `  \`nama_bulan\` VARCHAR(20) NOT NULL,\n`;
+      sql += `  \`kuartal\` VARCHAR(5) NOT NULL,\n`;
+      sql += `  \`id_unit\` VARCHAR(10) NOT NULL,\n`;
+      sql += `  \`omzet_kotor\` DECIMAL(15,2) NOT NULL DEFAULT 0.00,\n`;
+      sql += `  \`potongan_retur\` DECIMAL(15,2) NOT NULL DEFAULT 0.00,\n`;
+      sql += `  \`management_fee\` DECIMAL(15,2) NOT NULL DEFAULT 0.00,\n`;
+      sql += `  \`pendapatan_bersih\` DECIMAL(15,2) NOT NULL DEFAULT 0.00,\n`;
+      sql += `  FOREIGN KEY (\`id_unit\`) REFERENCES \`unit_usaha\`(\`id_unit\`) ON DELETE CASCADE\n`;
+      sql += `) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;\n\n`;
+
+      sql += `INSERT INTO \`pemasukan_bulanan\` (\`tahun\`, \`bulan\`, \`nama_bulan\`, \`kuartal\`, \`id_unit\`, \`omzet_kotor\`, \`potongan_retur\`, \`management_fee\`, \`pendapatan_bersih\`) VALUES\n`;
+      const totPotA = parseFloat(document.getElementById('potongan_a')?.value || 22000000);
+      const totPotB = parseFloat(document.getElementById('potongan_b')?.value || 15000000);
+      const totPotC = parseFloat(document.getElementById('potongan_c')?.value || 13000000);
+      const potA = totPotA / 12;
+      const potB = totPotB / 12;
+      const potC = totPotC / 12;
+
+      const mRows = [];
+      monthlyRevenueData.forEach(row => {
+        const feeA = row.a * 0.03;
+        const netA = row.a - potA - feeA;
+        const feeB = 0;
+        const netB = row.b - potB;
+        const feeC = 0;
+        const netC = row.c - potC;
+
+        mRows.push(`(2026, ${row.month}, '${row.name}', '${row.quarter}', 'unit_a', ${Number(row.a).toFixed(2)}, ${potA.toFixed(2)}, ${feeA.toFixed(2)}, ${netA.toFixed(2)})`);
+        mRows.push(`(2026, ${row.month}, '${row.name}', '${row.quarter}', 'unit_b', ${Number(row.b).toFixed(2)}, ${potB.toFixed(2)}, ${feeB.toFixed(2)}, ${netB.toFixed(2)})`);
+        mRows.push(`(2026, ${row.month}, '${row.name}', '${row.quarter}', 'unit_c', ${Number(row.c).toFixed(2)}, ${potC.toFixed(2)}, ${feeC.toFixed(2)}, ${netC.toFixed(2)})`);
+      });
+      sql += mRows.join(',\n') + ';\n\n';
+
+      // 3. harga_pokok_penjualan
+      sql += `-- ------------------------------------------------------------------------\n`;
+      sql += `-- 3. TABEL HARGA POKOK PENJUALAN (HPP) / BIAYA LANGSUNG\n`;
+      sql += `-- ------------------------------------------------------------------------\n`;
+      sql += `DROP TABLE IF EXISTS \`harga_pokok_penjualan\`;\n`;
+      sql += `CREATE TABLE \`harga_pokok_penjualan\` (\n`;
+      sql += `  \`id_hpp\` INT AUTO_INCREMENT PRIMARY KEY,\n`;
+      sql += `  \`tahun\` INT NOT NULL,\n`;
+      sql += `  \`id_unit\` VARCHAR(10) NOT NULL,\n`;
+      sql += `  \`bahan_baku_sukucadang\` DECIMAL(15,2) NOT NULL DEFAULT 0.00,\n`;
+      sql += `  \`upah_tenaga_kerja_langsung\` DECIMAL(15,2) NOT NULL DEFAULT 0.00,\n`;
+      sql += `  FOREIGN KEY (\`id_unit\`) REFERENCES \`unit_usaha\`(\`id_unit\`) ON DELETE CASCADE\n`;
+      sql += `) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;\n\n`;
+
+      const hppBahanA = parseFloat(document.getElementById('hpp_bahan_a')?.value || 550000000);
+      const hppBahanB = parseFloat(document.getElementById('hpp_bahan_b')?.value || 310000000);
+      const hppBahanC = parseFloat(document.getElementById('hpp_bahan_c')?.value || 192000000);
+      const hppUpahA = parseFloat(document.getElementById('hpp_upah_a')?.value || 48000000);
+      const hppUpahB = parseFloat(document.getElementById('hpp_upah_b')?.value || 30000000);
+      const hppUpahC = parseFloat(document.getElementById('hpp_upah_c')?.value || 22000000);
+
+      sql += `INSERT INTO \`harga_pokok_penjualan\` (\`tahun\`, \`id_unit\`, \`bahan_baku_sukucadang\`, \`upah_tenaga_kerja_langsung\`) VALUES\n`;
+      sql += `(2026, 'unit_a', ${hppBahanA.toFixed(2)}, ${hppUpahA.toFixed(2)}),\n`;
+      sql += `(2026, 'unit_b', ${hppBahanB.toFixed(2)}, ${hppUpahB.toFixed(2)}),\n`;
+      sql += `(2026, 'unit_c', ${hppBahanC.toFixed(2)}, ${hppUpahC.toFixed(2)});\n\n`;
+
+      // 4. biaya_operasional
+      sql += `-- ------------------------------------------------------------------------\n`;
+      sql += `-- 4. TABEL RINCIAN BIAYA OPERASIONAL (OPEX)\n`;
+      sql += `-- ------------------------------------------------------------------------\n`;
+      sql += `DROP TABLE IF EXISTS \`biaya_operasional\`;\n`;
+      sql += `CREATE TABLE \`biaya_operasional\` (\n`;
+      sql += `  \`id_biaya\` INT AUTO_INCREMENT PRIMARY KEY,\n`;
+      sql += `  \`kode_kategori\` VARCHAR(50) NOT NULL,\n`;
+      sql += `  \`nama_kategori\` VARCHAR(150) NOT NULL,\n`;
+      sql += `  \`tahun\` INT NOT NULL,\n`;
+      sql += `  \`nominal_a\` DECIMAL(15,2) NOT NULL DEFAULT 0.00 COMMENT 'Shop & Drive',\n`;
+      sql += `  \`nominal_b\` DECIMAL(15,2) NOT NULL DEFAULT 0.00 COMMENT 'Snaprint Grand Wisata',\n`;
+      sql += `  \`nominal_c\` DECIMAL(15,2) NOT NULL DEFAULT 0.00 COMMENT 'Snaprint Zamrud'\n`;
+      sql += `) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;\n\n`;
+
+      const opexRows = opexItems.map(item => {
+        const escName = (item.name || '').replace(/'/g, "\\'");
+        return `('${item.id}', '${escName}', 2026, ${Number(item.a).toFixed(2)}, ${Number(item.b).toFixed(2)}, ${Number(item.c).toFixed(2)})`;
+      });
+      sql += `INSERT INTO \`biaya_operasional\` (\`kode_kategori\`, \`nama_kategori\`, \`tahun\`, \`nominal_a\`, \`nominal_b\`, \`nominal_c\`) VALUES\n`;
+      sql += opexRows.join(',\n') + ';\n\n';
+
+      // 5. aset_tetap
+      sql += `-- ------------------------------------------------------------------------\n`;
+      sql += `-- 5. TABEL JADWAL PENYUSUTAN ASET TETAP (DEPRESIASI FISKAL)\n`;
+      sql += `-- ------------------------------------------------------------------------\n`;
+      sql += `DROP TABLE IF EXISTS \`aset_tetap\`;\n`;
+      sql += `CREATE TABLE \`aset_tetap\` (\n`;
+      sql += `  \`kode_aset\` VARCHAR(20) NOT NULL PRIMARY KEY,\n`;
+      sql += `  \`nama_aset\` VARCHAR(150) NOT NULL,\n`;
+      sql += `  \`id_unit\` VARCHAR(10) NOT NULL,\n`;
+      sql += `  \`harga_perolehan\` DECIMAL(15,2) NOT NULL DEFAULT 0.00,\n`;
+      sql += `  \`kelompok_fiskal\` VARCHAR(30) NOT NULL,\n`;
+      sql += `  \`masa_manfaat_tahun\` INT NOT NULL,\n`;
+      sql += `  \`tarif_susut\` DECIMAL(5,2) NOT NULL,\n`;
+      sql += `  \`beban_susut_tahunan\` DECIMAL(15,2) NOT NULL DEFAULT 0.00,\n`;
+      sql += `  FOREIGN KEY (\`id_unit\`) REFERENCES \`unit_usaha\`(\`id_unit\`) ON DELETE CASCADE\n`;
+      sql += `) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;\n\n`;
+
+      const assetRows = assetsData.map(a => {
+        const uCode = a.unitCode === 'hq' ? 'unit_hq' : `unit_${a.unitCode}`;
+        const years = (a.group || '').includes('1') ? 4 : 8;
+        const escName = (a.name || '').replace(/'/g, "\\'");
+        return `('${a.code}', '${escName}', '${uCode}', ${Number(a.cost).toFixed(2)}, '${a.group}', ${years}, ${Number(a.rate).toFixed(2)}, ${Number(a.annualDepr).toFixed(2)})`;
+      });
+      sql += `INSERT INTO \`aset_tetap\` (\`kode_aset\`, \`nama_aset\`, \`id_unit\`, \`harga_perolehan\`, \`kelompok_fiskal\`, \`masa_manfaat_tahun\`, \`tarif_susut\`, \`beban_susut_tahunan\`) VALUES\n`;
+      sql += assetRows.join(',\n') + ';\n\n';
+
+      // 6. holding & other income
+      const overheadVal = parseFloat(document.getElementById('overhead_holding')?.value || 48000000);
+      const incomeOtherVal = parseFloat(document.getElementById('income_other')?.value || 4000000);
+
+      sql += `-- ------------------------------------------------------------------------\n`;
+      sql += `-- 6. TABEL BIAYA HOLDING & PENDAPATAN LAIN\n`;
+      sql += `-- ------------------------------------------------------------------------\n`;
+      sql += `DROP TABLE IF EXISTS \`biaya_holding_pendapatan_lain\`;\n`;
+      sql += `CREATE TABLE \`biaya_holding_pendapatan_lain\` (\n`;
+      sql += `  \`id\` INT AUTO_INCREMENT PRIMARY KEY,\n`;
+      sql += `  \`tahun\` INT NOT NULL,\n`;
+      sql += `  \`alokasi_holding_overhead\` DECIMAL(15,2) NOT NULL DEFAULT 48000000.00,\n`;
+      sql += `  \`pendapatan_jasa_giro_bunga\` DECIMAL(15,2) NOT NULL DEFAULT 4000000.00\n`;
+      sql += `) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;\n\n`;
+      sql += `INSERT INTO \`biaya_holding_pendapatan_lain\` (\`tahun\`, \`alokasi_holding_overhead\`, \`pendapatan_jasa_giro_bunga\`) VALUES\n`;
+      sql += `(2026, ${overheadVal.toFixed(2)}, ${incomeOtherVal.toFixed(2)});\n\n`;
+
+      // 7. views
+      sql += `-- ------------------------------------------------------------------------\n`;
+      sql += `-- 7. VIEW REKAPITULASI LAPORAN LABA RUGI KONSOLIDASI (TAHUNAN)\n`;
+      sql += `-- ------------------------------------------------------------------------\n`;
+      sql += `CREATE OR REPLACE VIEW \`v_rekap_omzet_tahunan\` AS\n`;
+      sql += `SELECT \n`;
+      sql += `    u.id_unit,\n`;
+      sql += `    u.nama_unit,\n`;
+      sql += `    SUM(p.omzet_kotor) AS total_omzet_kotor,\n`;
+      sql += `    SUM(p.potongan_retur) AS total_potongan_retur,\n`;
+      sql += `    SUM(p.management_fee) AS total_management_fee,\n`;
+      sql += `    SUM(p.pendapatan_bersih) AS total_net_revenue\n`;
+      sql += `FROM unit_usaha u\n`;
+      sql += `LEFT JOIN pemasukan_bulanan p ON u.id_unit = p.id_unit\n`;
+      sql += `WHERE u.id_unit IN ('unit_a', 'unit_b', 'unit_c')\n`;
+      sql += `GROUP BY u.id_unit, u.nama_unit;\n`;
+
+      return sql;
+    }
+
+    function downloadSQLFile() {
+      const sqlContent = generateSQLScript();
+      const blob = new Blob([sqlContent], { type: 'text/sql;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'database_rugilaba_duta.sql');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    function copySQLToClipboard() {
+      const sqlContent = generateSQLScript();
+      const btn = document.getElementById('copy-sql-btn');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(sqlContent).then(() => {
+          if (btn) {
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<span>✅ Tersalin ke Clipboard!</span>';
+            setTimeout(() => { btn.innerHTML = orig; }, 2000);
+          }
+        }).catch(() => {
+          copyFallback(sqlContent, btn);
+        });
+      } else {
+        copyFallback(sqlContent, btn);
+      }
+    }
+
+    function copyFallback(text, btn) {
+      const previewEl = document.getElementById('sql-preview-text');
+      if (previewEl) {
+        previewEl.select();
+        document.execCommand('copy');
+        if (btn) {
+          const orig = btn.innerHTML;
+          btn.innerHTML = '<span>✅ Tersalin ke Clipboard!</span>';
+          setTimeout(() => { btn.innerHTML = orig; }, 2000);
+        }
+      }
+    }
+
+    function exportJSONBackup() {
+      const formData = {};
+      ['omzet_a','omzet_b','omzet_c','potongan_a','potongan_b','potongan_c','hpp_bahan_a','hpp_bahan_b','hpp_bahan_c','hpp_upah_a','hpp_upah_b','hpp_upah_c','overhead_holding','income_other'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) formData[id] = parseFloat(el.value) || 0;
+      });
+
+      const backupPayload = {
+        app: "RUGILABA DUTA - Konsolidasi Multi-Unit",
+        exportDate: new Date().toISOString(),
+        periodPreset: document.getElementById('period-preset')?.value || 'year_2026',
+        dateStart: document.getElementById('date-start')?.value || '2026-01-01',
+        dateEnd: document.getElementById('date-end')?.value || '2026-12-31',
+        formData: formData,
+        opexItems: opexItems,
+        assetsData: assetsData,
+        monthlyRevenueData: monthlyRevenueData,
+        syncMonthlyToReport: syncMonthlyToReport
+      };
+
+      const jsonStr = JSON.stringify(backupPayload, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      const dateTag = new Date().toISOString().substring(0, 10);
+      link.setAttribute('download', `backup_rugilaba_duta_${dateTag}.json`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    function importJSONBackup(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (!data.monthlyRevenueData && !data.assetsData && !data.formData) {
+            throw new Error("Struktur file backup JSON tidak dikenali.");
+          }
+
+          if (data.assetsData && Array.isArray(data.assetsData)) {
+            assetsData = data.assetsData;
+            localStorage.setItem('rugilaba_assets', JSON.stringify(assetsData));
+          }
+
+          if (data.monthlyRevenueData && Array.isArray(data.monthlyRevenueData)) {
+            monthlyRevenueData = data.monthlyRevenueData;
+            localStorage.setItem('rugilaba_monthly_revenue', JSON.stringify(monthlyRevenueData));
+          }
+
+          if (typeof data.syncMonthlyToReport === 'boolean') {
+            syncMonthlyToReport = data.syncMonthlyToReport;
+            localStorage.setItem('rugilaba_monthly_sync', JSON.stringify(syncMonthlyToReport));
+            const syncCheckEl = document.getElementById('sync-monthly-check');
+            if (syncCheckEl) syncCheckEl.checked = syncMonthlyToReport;
+          }
+
+          if (data.opexItems && Array.isArray(data.opexItems)) {
+            opexItems = data.opexItems;
+          }
+
+          if (data.formData) {
+            Object.keys(data.formData).forEach(key => {
+              const el = document.getElementById(key);
+              if (el) el.value = data.formData[key];
+            });
+          }
+
+          if (data.periodPreset && document.getElementById('period-preset')) {
+            document.getElementById('period-preset').value = data.periodPreset;
+          }
+          if (data.dateStart && document.getElementById('date-start')) {
+            document.getElementById('date-start').value = data.dateStart;
+          }
+          if (data.dateEnd && document.getElementById('date-end')) {
+            document.getElementById('date-end').value = data.dateEnd;
+          }
+
+          renderOpexTable();
+          renderMonthlyTable();
+          updatePeriodDisplay();
+          if (syncMonthlyToReport) {
+            applyMonthlyToReport(false);
+          }
+
+          alert('✅ Sukses! Data berhasil diimpor dan disinkronkan ke perangkat ini.');
+          closeDatabaseModal();
+        } catch(err) {
+          alert('❌ Gagal mengimpor file: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
     }
 
     // Init
