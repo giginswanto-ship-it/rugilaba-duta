@@ -163,16 +163,16 @@
                     <span>Keranjang Bulanan</span>
                   </button>
                 </td>
-                <td class="py-2 px-4 text-right"><input type="number" id="omzet_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500" oninput="recalculate()"></td>
-                <td class="py-2 px-4 text-right"><input type="number" id="omzet_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500" oninput="recalculate()"></td>
-                <td class="py-2 px-4 text-right"><input type="number" id="omzet_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500" oninput="recalculate()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="omzet_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500" oninput="recalculate()" onfocus="this.select()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="omzet_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500" oninput="recalculate()" onfocus="this.select()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="omzet_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500" oninput="recalculate()" onfocus="this.select()"></td>
                 <td id="tot_omzet" class="py-2.5 px-4 text-right font-bold text-slate-900 bg-blue-50/40">Rp 0</td>
               </tr>
               <tr>
                 <td class="py-2.5 px-4 pl-6 text-slate-800">Potongan Penjualan, Retur & Garansi</td>
-                <td class="py-2 px-4 text-right"><input type="number" id="potongan_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-blue-500" oninput="recalculate()"></td>
-                <td class="py-2 px-4 text-right"><input type="number" id="potongan_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-blue-500" oninput="recalculate()"></td>
-                <td class="py-2 px-4 text-right"><input type="number" id="potongan_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-blue-500" oninput="recalculate()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="potongan_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-blue-500" oninput="recalculate()" onfocus="this.select()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="potongan_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-blue-500" oninput="recalculate()" onfocus="this.select()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="potongan_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-blue-500" oninput="recalculate()" onfocus="this.select()"></td>
                 <td id="tot_potongan" class="py-2.5 px-4 text-right font-medium text-rose-600 bg-blue-50/40">(Rp 0)</td>
               </tr>
               <tr>
@@ -207,16 +207,16 @@
               </tr>
               <tr>
                 <td class="py-2.5 px-4 pl-6 text-slate-800">Bahan Baku / Suku Cadang & Media Cetak</td>
-                <td class="py-2 px-4 text-right"><input type="number" id="hpp_bahan_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()"></td>
-                <td class="py-2 px-4 text-right"><input type="number" id="hpp_bahan_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()"></td>
-                <td class="py-2 px-4 text-right"><input type="number" id="hpp_bahan_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_bahan_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()" onfocus="this.select()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_bahan_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()" onfocus="this.select()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_bahan_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()" onfocus="this.select()"></td>
                 <td id="tot_hpp_bahan" class="py-2.5 px-4 text-right font-medium text-rose-600 bg-blue-50/40">(Rp 0)</td>
               </tr>
               <tr>
                 <td class="py-2.5 px-4 pl-6 text-slate-800">Upah Tenaga Kerja Langsung (Mekanik & Operator)</td>
-                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()"></td>
-                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()"></td>
-                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_a" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()" onfocus="this.select()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_b" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()" onfocus="this.select()"></td>
+                <td class="py-2 px-4 text-right"><input type="number" id="hpp_upah_c" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()" onfocus="this.select()"></td>
                 <td id="tot_hpp_upah" class="py-2.5 px-4 text-right font-medium text-rose-600 bg-blue-50/40">(Rp 0)</td>
               </tr>
               <!-- Subtotal Total HPP -->
@@ -302,7 +302,7 @@
                 <td class="py-2.5 px-4 text-right text-slate-400">—</td>
                 <td class="py-2.5 px-4 text-right text-slate-400">—</td>
                 <td class="py-2 px-4 text-right bg-blue-50/40">
-                  <input type="number" id="overhead_holding" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()">
+                  <input type="number" id="overhead_holding" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" oninput="recalculate()" onfocus="this.select()">
                 </td>
               </tr>
               <tr>
@@ -311,7 +311,7 @@
                 <td class="py-2.5 px-4 text-right text-slate-400">—</td>
                 <td class="py-2.5 px-4 text-right text-slate-400">—</td>
                 <td class="py-2 px-4 text-right bg-blue-50/40">
-                  <input type="number" id="income_other" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-emerald-600" oninput="recalculate()">
+                  <input type="number" id="income_other" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-emerald-600" oninput="recalculate()" onfocus="this.select()">
                 </td>
               </tr>
               <tr class="font-extrabold bg-blue-600 text-white text-base">
@@ -1354,13 +1354,13 @@
         if (showOmzet) {
           cellsHtml += `
             <td class="py-2 px-2 text-right bg-blue-50/20">
-              <input type="number" value="${omzetA}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-blue-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'a', this.value)" title="Omzet Shop & Drive">
+              <input type="number" id="monthly-in-a-${idx}" value="${omzetA}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-blue-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'a', this.value)" onfocus="this.select()" title="Omzet Shop & Drive">
             </td>`;
         }
         if (showHpp) {
           cellsHtml += `
             <td class="py-2 px-2 text-right bg-blue-50/20 border-r border-blue-200">
-              <input type="number" value="${hppA}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-rose-300 bg-white font-medium text-rose-700' : 'border-slate-200 bg-slate-50 text-rose-400'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-rose-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'hpp_a', this.value)" title="HPP Shop & Drive">
+              <input type="number" id="monthly-in-hpp_a-${idx}" value="${hppA}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-rose-300 bg-white font-medium text-rose-700' : 'border-slate-200 bg-slate-50 text-rose-400'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-rose-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'hpp_a', this.value)" onfocus="this.select()" title="HPP Shop & Drive">
             </td>`;
         }
 
@@ -1368,13 +1368,13 @@
         if (showOmzet) {
           cellsHtml += `
             <td class="py-2 px-2 text-right bg-emerald-50/20">
-              <input type="number" value="${omzetB}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-emerald-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'b', this.value)" title="Omzet Snaprint GW">
+              <input type="number" id="monthly-in-b-${idx}" value="${omzetB}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-emerald-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'b', this.value)" onfocus="this.select()" title="Omzet Snaprint GW">
             </td>`;
         }
         if (showHpp) {
           cellsHtml += `
             <td class="py-2 px-2 text-right bg-emerald-50/20 border-r border-emerald-200">
-              <input type="number" value="${hppB}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-rose-300 bg-white font-medium text-rose-700' : 'border-slate-200 bg-slate-50 text-rose-400'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-rose-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'hpp_b', this.value)" title="HPP Snaprint GW">
+              <input type="number" id="monthly-in-hpp_b-${idx}" value="${hppB}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-rose-300 bg-white font-medium text-rose-700' : 'border-slate-200 bg-slate-50 text-rose-400'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-rose-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'hpp_b', this.value)" onfocus="this.select()" title="HPP Snaprint GW">
             </td>`;
         }
 
@@ -1382,31 +1382,31 @@
         if (showOmzet) {
           cellsHtml += `
             <td class="py-2 px-2 text-right bg-purple-50/20">
-              <input type="number" value="${omzetC}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-purple-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-purple-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'c', this.value)" title="Omzet Snaprint Zamrud">
+              <input type="number" id="monthly-in-c-${idx}" value="${omzetC}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-purple-300 bg-white font-medium text-slate-900' : 'border-slate-200 bg-slate-50 text-slate-600'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-purple-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'c', this.value)" onfocus="this.select()" title="Omzet Snaprint Zamrud">
             </td>`;
         }
         if (showHpp) {
           cellsHtml += `
             <td class="py-2 px-2 text-right bg-purple-50/20 border-r border-purple-200">
-              <input type="number" value="${hppC}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-rose-300 bg-white font-medium text-rose-700' : 'border-slate-200 bg-slate-50 text-rose-400'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-rose-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'hpp_c', this.value)" title="HPP Snaprint Zamrud">
+              <input type="number" id="monthly-in-hpp_c-${idx}" value="${hppC}" class="w-24 sm:w-28 text-right border ${isActive ? 'border-rose-300 bg-white font-medium text-rose-700' : 'border-slate-200 bg-slate-50 text-rose-400'} rounded px-2 py-1 text-xs focus:ring-1 focus:ring-rose-500 focus:outline-none" oninput="updateMonthlyItem(${idx}, 'hpp_c', this.value)" onfocus="this.select()" title="HPP Snaprint Zamrud">
             </td>`;
         }
 
         // Konsolidasi
         if (showOmzet) {
           cellsHtml += `
-            <td class="py-2 px-2 text-right font-bold text-xs ${isActive ? 'text-blue-900 bg-blue-50/50' : 'text-slate-700 bg-slate-50'}">
+            <td id="monthly-row-omzet-${idx}" class="py-2 px-2 text-right font-bold text-xs ${isActive ? 'text-blue-900 bg-blue-50/50' : 'text-slate-700 bg-slate-50'}">
               ${formatRupiah(rowOmzet)}
             </td>`;
         }
         if (showHpp) {
           cellsHtml += `
-            <td class="py-2 px-2 text-right font-semibold text-xs text-rose-600 ${isActive ? 'bg-blue-50/50' : 'bg-slate-50'}">
+            <td id="monthly-row-hpp-${idx}" class="py-2 px-2 text-right font-semibold text-xs text-rose-600 ${isActive ? 'bg-blue-50/50' : 'bg-slate-50'}">
               (${formatRupiah(rowHpp)})
             </td>`;
         }
         cellsHtml += `
-          <td class="py-2 px-2 text-right font-bold text-xs bg-emerald-50/50 text-emerald-800">
+          <td id="monthly-row-gross-${idx}" class="py-2 px-2 text-right font-bold text-xs bg-emerald-50/50 text-emerald-800">
             <div>${formatRupiah(rowGross)}</div>
             <div class="text-[10px] text-emerald-600 font-semibold">${grossMarginPct}%</div>
           </td>`;
@@ -1414,6 +1414,42 @@
         row.innerHTML = cellsHtml;
         tbody.appendChild(row);
       });
+
+      updateMonthlySummaries();
+    }
+
+    function updateMonthlySummaries() {
+      const activeMonths = getActiveMonths();
+      const showOmzet = currentBasketView === 'all' || currentBasketView === 'omzet';
+      const showHpp = currentBasketView === 'all' || currentBasketView === 'hpp';
+
+      let yearTotA = 0, yearTotHppA = 0;
+      let yearTotB = 0, yearTotHppB = 0;
+      let yearTotC = 0, yearTotHppC = 0;
+
+      let activeTotA = 0, activeTotHppA = 0;
+      let activeTotB = 0, activeTotHppB = 0;
+      let activeTotC = 0, activeTotHppC = 0;
+
+      monthlyRevenueData.forEach(item => {
+        const a = item.a || 0, ha = item.hpp_a || 0;
+        const b = item.b || 0, hb = item.hpp_b || 0;
+        const c = item.c || 0, hc = item.hpp_c || 0;
+
+        yearTotA += a; yearTotHppA += ha;
+        yearTotB += b; yearTotHppB += hb;
+        yearTotC += c; yearTotHppC += hc;
+
+        if (activeMonths.includes(item.month)) {
+          activeTotA += a; activeTotHppA += ha;
+          activeTotB += b; activeTotHppB += hb;
+          activeTotC += c; activeTotHppC += hc;
+        }
+      });
+
+      const yearGrandOmzet = yearTotA + yearTotB + yearTotC;
+      const yearGrandHpp = yearTotHppA + yearTotHppB + yearTotHppC;
+      const yearGrandGross = yearGrandOmzet - yearGrandHpp;
 
       const activeGrandOmzet = activeTotA + activeTotB + activeTotC;
       const activeGrandHpp = activeTotHppA + activeTotHppB + activeTotHppC;
@@ -1577,14 +1613,52 @@
       setDisplay(fvTotHpp, showHpp);
     }
 
+    let saveStorageTimeout = null;
+    function queueSave() {
+      clearTimeout(saveStorageTimeout);
+      saveStorageTimeout = setTimeout(() => {
+        saveAllToStorage(false);
+      }, 400);
+    }
+
     function updateMonthlyItem(idx, col, val) {
       if (!monthlyRevenueData[idx]) return;
       monthlyRevenueData[idx][col] = parseFloat(val) || 0;
-      renderMonthlyTable();
-      saveAllToStorage(false);
+
+      // Update row calculations in real-time WITHOUT DOM reconstruction
+      const item = monthlyRevenueData[idx];
+      const omzetA = item.a || 0;
+      const hppA = item.hpp_a || 0;
+      const omzetB = item.b || 0;
+      const hppB = item.hpp_b || 0;
+      const omzetC = item.c || 0;
+      const hppC = item.hpp_c || 0;
+      const rowOmzet = omzetA + omzetB + omzetC;
+      const rowHpp = hppA + hppB + hppC;
+      const rowGross = rowOmzet - rowHpp;
+      const grossMarginPct = rowOmzet > 0 ? ((rowGross / rowOmzet) * 100).toFixed(1) : 0;
+
+      const elRowOmzet = document.getElementById(`monthly-row-omzet-${idx}`);
+      if (elRowOmzet) elRowOmzet.textContent = formatRupiah(rowOmzet);
+
+      const elRowHpp = document.getElementById(`monthly-row-hpp-${idx}`);
+      if (elRowHpp) elRowHpp.textContent = `(${formatRupiah(rowHpp)})`;
+
+      const elRowGross = document.getElementById(`monthly-row-gross-${idx}`);
+      if (elRowGross) {
+        elRowGross.innerHTML = `<div>${formatRupiah(rowGross)}</div><div class="text-[10px] text-emerald-600 font-semibold">${grossMarginPct}%</div>`;
+      }
+
+      // Update footers & KPI cards
+      updateMonthlySummaries();
+
+      // If sync to report is enabled, apply to Tab 1
       if (syncMonthlyToReport) {
         applyMonthlyToReport(false);
       }
+
+      // Save in background smoothly
+      queueSave();
     }
 
     function applyMonthlyToReport(showToast = false) {
@@ -1610,20 +1684,6 @@
       if (elA) elA.value = activeOmzetA;
       if (elB) elB.value = activeOmzetB;
       if (elC) elC.value = activeOmzetC;
-
-      // Update Potongan Penjualan proporsional periode aktif
-      const elPotA = document.getElementById('potongan_a');
-      const elPotB = document.getElementById('potongan_b');
-      const elPotC = document.getElementById('potongan_c');
-      if (elPotA) elPotA.value = Math.round(defaultData.potongan_a * currentPeriodRatio);
-      if (elPotB) elPotB.value = Math.round(defaultData.potongan_b * currentPeriodRatio);
-      if (elPotC) elPotC.value = Math.round(defaultData.potongan_c * currentPeriodRatio);
-
-      // Update Overhead Holding & Income Other proporsional periode aktif
-      const elOverhead = document.getElementById('overhead_holding');
-      const elIncomeOther = document.getElementById('income_other');
-      if (elOverhead) elOverhead.value = Math.round(defaultData.overhead_holding * currentPeriodRatio);
-      if (elIncomeOther) elIncomeOther.value = Math.round(defaultData.income_other * currentPeriodRatio);
 
       // Update HPP in Tab 1 (Bahan Baku & Upah Langsung secara proporsional sesuai rasio baseline)
       // Unit A: Bahan 550jt / 598jt, Upah 48jt / 598jt
@@ -1680,36 +1740,37 @@
       const hppC = (parseFloat(document.getElementById('hpp_bahan_c')?.value) || 0) + (parseFloat(document.getElementById('hpp_upah_c')?.value) || 0);
 
       const activeMonths = getActiveMonths();
+      const numActive = activeMonths.length || 1;
       const isFullYear = activeMonths.length === 12;
 
       const promptMsg = isFullYear
-        ? `Apakah Anda ingin mendistribusikan total Omzet & HPP dari Laporan Konsolidasi ke 12 Bulan di Keranjang Bulanan secara proporsional?\n\n` +
+        ? `Apakah Anda ingin mendistribusikan total Omzet & HPP dari Laporan Konsolidasi ke 12 Bulan di Keranjang Bulanan secara merata / proporsional?\n\n` +
           `• Shop & Drive: Omzet ${formatRupiah(omzetA)} | HPP ${formatRupiah(hppA)}\n` +
           `• Snaprint GW: Omzet ${formatRupiah(omzetB)} | HPP ${formatRupiah(hppB)}\n` +
           `• Snaprint Zamrud: Omzet ${formatRupiah(omzetC)} | HPP ${formatRupiah(hppC)}`
-        : `Apakah Anda ingin mendistribusikan nilai dari Laporan Konsolidasi ke ${activeMonths.length} bulan periode aktif di Keranjang Bulanan secara proporsional?`;
+        : `Apakah Anda ingin mendistribusikan nilai dari Laporan Konsolidasi ke ${activeMonths.length} bulan periode aktif di Keranjang Bulanan secara merata / proporsional?`;
 
       if (!confirm(promptMsg)) return;
 
-      const baseTotOmzetA = defaultMonthlyRevenue.reduce((s, m) => s + (activeMonths.includes(m.month) ? m.a : 0), 0) || 1;
-      const baseTotOmzetB = defaultMonthlyRevenue.reduce((s, m) => s + (activeMonths.includes(m.month) ? m.b : 0), 0) || 1;
-      const baseTotOmzetC = defaultMonthlyRevenue.reduce((s, m) => s + (activeMonths.includes(m.month) ? m.c : 0), 0) || 1;
+      const baseTotOmzetA = defaultMonthlyRevenue.reduce((s, m) => s + (activeMonths.includes(m.month) ? (m.a || 0) : 0), 0);
+      const baseTotOmzetB = defaultMonthlyRevenue.reduce((s, m) => s + (activeMonths.includes(m.month) ? (m.b || 0) : 0), 0);
+      const baseTotOmzetC = defaultMonthlyRevenue.reduce((s, m) => s + (activeMonths.includes(m.month) ? (m.c || 0) : 0), 0);
 
-      const baseTotHppA = defaultMonthlyRevenue.reduce((s, m) => s + (activeMonths.includes(m.month) ? m.hpp_a : 0), 0) || 1;
-      const baseTotHppB = defaultMonthlyRevenue.reduce((s, m) => s + (activeMonths.includes(m.month) ? m.hpp_b : 0), 0) || 1;
-      const baseTotHppC = defaultMonthlyRevenue.reduce((s, m) => s + (activeMonths.includes(m.month) ? m.hpp_c : 0), 0) || 1;
+      const baseTotHppA = defaultMonthlyRevenue.reduce((s, m) => s + (activeMonths.includes(m.month) ? (m.hpp_a || 0) : 0), 0);
+      const baseTotHppB = defaultMonthlyRevenue.reduce((s, m) => s + (activeMonths.includes(m.month) ? (m.hpp_b || 0) : 0), 0);
+      const baseTotHppC = defaultMonthlyRevenue.reduce((s, m) => s + (activeMonths.includes(m.month) ? (m.hpp_c || 0) : 0), 0);
 
       monthlyRevenueData.forEach((row, i) => {
         if (activeMonths.includes(row.month)) {
           const def = defaultMonthlyRevenue[i] || row;
-          row.a = Math.round(omzetA * (def.a / baseTotOmzetA));
-          row.hpp_a = Math.round(hppA * (def.hpp_a / baseTotHppA));
+          row.a = baseTotOmzetA > 0 ? Math.round(omzetA * (def.a / baseTotOmzetA)) : Math.round(omzetA / numActive);
+          row.hpp_a = baseTotHppA > 0 ? Math.round(hppA * (def.hpp_a / baseTotHppA)) : Math.round(hppA / numActive);
 
-          row.b = Math.round(omzetB * (def.b / baseTotOmzetB));
-          row.hpp_b = Math.round(hppB * (def.hpp_b / baseTotHppB));
+          row.b = baseTotOmzetB > 0 ? Math.round(omzetB * (def.b / baseTotOmzetB)) : Math.round(omzetB / numActive);
+          row.hpp_b = baseTotHppB > 0 ? Math.round(hppB * (def.hpp_b / baseTotHppB)) : Math.round(hppB / numActive);
 
-          row.c = Math.round(omzetC * (def.c / baseTotOmzetC));
-          row.hpp_c = Math.round(hppC * (def.hpp_c / baseTotHppC));
+          row.c = baseTotOmzetC > 0 ? Math.round(omzetC * (def.c / baseTotOmzetC)) : Math.round(omzetC / numActive);
+          row.hpp_c = baseTotHppC > 0 ? Math.round(hppC * (def.hpp_c / baseTotHppC)) : Math.round(hppC / numActive);
         }
       });
 
@@ -1799,19 +1860,20 @@
       tbody.innerHTML = '';
       opexItems.forEach((item, idx) => {
         const row = document.createElement('tr');
+        row.className = 'hover:bg-slate-50/50 transition-colors';
         row.innerHTML = `
           <td class="py-2.5 px-4 font-medium text-slate-800">${item.name}</td>
           <td class="py-2 px-4 text-right">
-            <input type="number" value="${item.a}" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" onchange="updateOpex(${idx}, 'a', this.value)">
+            <input type="number" id="opex-in-a-${idx}" value="${item.a}" onfocus="this.select()" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-rose-500 focus:outline-none" oninput="updateOpex(${idx}, 'a', this.value)">
           </td>
           <td class="py-2 px-4 text-right">
-            <input type="number" value="${item.b}" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" onchange="updateOpex(${idx}, 'b', this.value)">
+            <input type="number" id="opex-in-b-${idx}" value="${item.b}" onfocus="this.select()" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-rose-500 focus:outline-none" oninput="updateOpex(${idx}, 'b', this.value)">
           </td>
           <td class="py-2 px-4 text-right">
-            <input type="number" value="${item.c}" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600" onchange="updateOpex(${idx}, 'c', this.value)">
+            <input type="number" id="opex-in-c-${idx}" value="${item.c}" onfocus="this.select()" class="w-32 text-right border border-slate-300 rounded px-2 py-1 text-sm text-rose-600 focus:ring-1 focus:ring-rose-500 focus:outline-none" oninput="updateOpex(${idx}, 'c', this.value)">
           </td>
-          <td class="py-2.5 px-4 text-right font-semibold text-rose-700 bg-slate-50">
-            ${formatRupiah(item.a + item.b + item.c)}
+          <td id="opex-row-total-${idx}" class="py-2.5 px-4 text-right font-semibold text-rose-700 bg-slate-50">
+            ${formatRupiah((item.a || 0) + (item.b || 0) + (item.c || 0))}
           </td>
         `;
         tbody.appendChild(row);
@@ -1819,9 +1881,14 @@
     }
 
     function updateOpex(idx, col, val) {
+      if (!opexItems[idx]) return;
       opexItems[idx][col] = parseFloat(val) || 0;
-      renderOpexTable();
+      const rowTotalEl = document.getElementById(`opex-row-total-${idx}`);
+      if (rowTotalEl) {
+        rowTotalEl.textContent = formatRupiah((opexItems[idx].a || 0) + (opexItems[idx].b || 0) + (opexItems[idx].c || 0));
+      }
       recalculate();
+      queueSave();
     }
 
     function renderDeprTable() {
@@ -2153,6 +2220,8 @@
       const npm_s2 = tot_omzet > 0 ? ((eat_s2 / tot_omzet) * 100).toFixed(2) : 0;
       document.getElementById('btm_npm_s1').textContent = `${npm_s1}%`;
       document.getElementById('btm_npm_s2').textContent = `${npm_s2}%`;
+
+      queueSave();
     }
 
     // ==========================================
@@ -2659,11 +2728,11 @@
 
     // Init
     window.addEventListener('DOMContentLoaded', () => {
-      loadSavedData();
       Object.keys(defaultData).forEach(key => {
         const el = document.getElementById(key);
         if (el) el.value = defaultData[key];
       });
+      loadSavedData();
       renderOpexTable();
       renderMonthlyTable();
       updatePeriodDisplay();
