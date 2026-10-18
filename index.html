@@ -988,61 +988,53 @@
     // PIN Otorisasi Pengamanan Reset Data
     const SYSTEM_RESET_PIN = '2209';
 
-    // Initial Dataset (Tahunan)
+    // Initial Dataset (Tahunan) - Kosong / Bersih
     const defaultData = {
-      omzet_a: 1100000000,
-      omzet_b: 750000000,
-      omzet_c: 600000000,
-      potongan_a: 22000000,
-      potongan_b: 15000000,
-      potongan_c: 13000000,
-      hpp_bahan_a: 550000000,
-      hpp_bahan_b: 310000000,
-      hpp_bahan_c: 192000000,
-      hpp_upah_a: 48000000,
-      hpp_upah_b: 30000000,
-      hpp_upah_c: 22000000,
-      overhead_holding: 48000000,
-      income_other: 4000000
+      omzet_a: 0,
+      omzet_b: 0,
+      omzet_c: 0,
+      potongan_a: 0,
+      potongan_b: 0,
+      potongan_c: 0,
+      hpp_bahan_a: 0,
+      hpp_bahan_b: 0,
+      hpp_bahan_c: 0,
+      hpp_upah_a: 0,
+      hpp_upah_b: 0,
+      hpp_upah_c: 0,
+      overhead_holding: 0,
+      income_other: 0
     };
 
     let opexItems = [
-      { id: 'gaji', name: '1. Gaji & Tunjangan Staf Toko / Kasir / Frontline', a: 72000000, b: 60000000, c: 54000000 },
-      { id: 'sewa', name: '2. Sewa Tempat / Lokasi Outlet & IPL', a: 65000000, b: 55000000, c: 45000000 },
-      { id: 'utilitas', name: '3. Listrik Daya Tinggi, Air & Internet', a: 28000000, b: 42000000, c: 26000000 },
-      { id: 'marketing', name: '4. Pemasaran, Iklan Digital & Promosi', a: 18000000, b: 16000000, c: 14000000 },
-      { id: 'perawatan', name: '5. Servis Mesin, Kalibrasi & Tooling Khusus', a: 15000000, b: 24000000, c: 16000000 },
-      { id: 'perlengkapan', name: '6. Perlengkapan Kerja, Packaging & ATK', a: 12000000, b: 10000000, c: 8000000 },
-      { id: 'limbah_k3', name: '7. Pengelolaan Limbah B3/Sampah & K3', a: 8000000, b: 5000000, c: 4000000 },
-      { id: 'software', name: '8. Lisensi POS, Adobe CC, RIP & Merchant Fee', a: 6000000, b: 8000000, c: 7000000 }
+      { id: 'gaji', name: '1. Gaji & Tunjangan Staf Toko / Kasir / Frontline', a: 0, b: 0, c: 0 },
+      { id: 'sewa', name: '2. Sewa Tempat / Lokasi Outlet & IPL', a: 0, b: 0, c: 0 },
+      { id: 'utilitas', name: '3. Listrik Daya Tinggi, Air & Internet', a: 0, b: 0, c: 0 },
+      { id: 'marketing', name: '4. Pemasaran, Iklan Digital & Promosi', a: 0, b: 0, c: 0 },
+      { id: 'perawatan', name: '5. Servis Mesin, Kalibrasi & Tooling Khusus', a: 0, b: 0, c: 0 },
+      { id: 'perlengkapan', name: '6. Perlengkapan Kerja, Packaging & ATK', a: 0, b: 0, c: 0 },
+      { id: 'limbah_k3', name: '7. Pengelolaan Limbah B3/Sampah & K3', a: 0, b: 0, c: 0 },
+      { id: 'software', name: '8. Lisensi POS, Adobe CC, RIP & Merchant Fee', a: 0, b: 0, c: 0 }
     ];
 
-    const defaultAssets = [
-      { code: 'AST-SD01', name: 'Tyre Changer, Balancer & Battery Tester', unit: 'Shop & Drive', cost: 160000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, annualDepr: 20000000, unitCode: 'a' },
-      { code: 'AST-SD02', name: 'Hydraulic Scissor Lift & Oil Extractor', unit: 'Shop & Drive', cost: 100000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, annualDepr: 12500000, unitCode: 'a' },
-      { code: 'AST-GW01', name: 'Large Format Outdoor 3.2m & Roll UV', unit: 'Snaprint GW', cost: 240000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, annualDepr: 30000000, unitCode: 'b' },
-      { code: 'AST-GW02', name: 'Mesin Cutting & Banner Seaming Fast', unit: 'Snaprint GW', cost: 40000000, group: 'Kel. 1 (4 Thn)', rate: 25.0, annualDepr: 10000000, unitCode: 'b' },
-      { code: 'AST-ZM01', name: 'Production Digital Press A3+ & Mesin Potong DQ', unit: 'Snaprint Zamrud', cost: 120000000, group: 'Kel. 2 (8 Thn)', rate: 12.5, annualDepr: 15000000, unitCode: 'c' },
-      { code: 'AST-ZM02', name: 'PC Workstation Desain, Laminator & Heat Press', unit: 'Snaprint Zamrud', cost: 20000000, group: 'Kel. 1 (4 Thn)', rate: 25.0, annualDepr: 5000000, unitCode: 'c' },
-      { code: 'AST-HQ01', name: 'Server Kantor Bersama & Laptop Manajemen', unit: 'Holding / Pusat', cost: 40000000, group: 'Kel. 1 (4 Thn)', rate: 25.0, annualDepr: 10000000, unitCode: 'hq' }
-    ];
+    const defaultAssets = [];
 
     let assetsData = [];
 
-    // Dataset Pemasukan & HPP Bulanan Default (12 Bulan)
+    // Dataset Pemasukan & HPP Bulanan Default (12 Bulan) - Kosong / Bersih
     const defaultMonthlyRevenue = [
-      { month: 1, name: 'Januari', quarter: 'Q1', a: 85000000, hpp_a: 46000000, b: 55000000, hpp_b: 25000000, c: 45000000, hpp_c: 16000000 },
-      { month: 2, name: 'Februari', quarter: 'Q1', a: 82000000, hpp_a: 44500000, b: 50000000, hpp_b: 22500000, c: 42000000, hpp_c: 15000000 },
-      { month: 3, name: 'Maret', quarter: 'Q1', a: 92000000, hpp_a: 50000000, b: 60000000, hpp_b: 27000000, c: 48000000, hpp_c: 17000000 },
-      { month: 4, name: 'April', quarter: 'Q2', a: 105000000, hpp_a: 57500000, b: 65000000, hpp_b: 29500000, c: 52000000, hpp_c: 18500000 },
-      { month: 5, name: 'Mei', quarter: 'Q2', a: 95000000, hpp_a: 51500000, b: 62000000, hpp_b: 28000000, c: 50000000, hpp_c: 17500000 },
-      { month: 6, name: 'Juni', quarter: 'Q2', a: 88000000, hpp_a: 48000000, b: 60000000, hpp_b: 27000000, c: 53000000, hpp_c: 19000000 },
-      { month: 7, name: 'Juli', quarter: 'Q3', a: 90000000, hpp_a: 49000000, b: 63000000, hpp_b: 28500000, c: 55000000, hpp_c: 19500000 },
-      { month: 8, name: 'Agustus', quarter: 'Q3', a: 88000000, hpp_a: 48000000, b: 75000000, hpp_b: 34500000, c: 52000000, hpp_c: 18500000 },
-      { month: 9, name: 'September', quarter: 'Q3', a: 85000000, hpp_a: 46000000, b: 65000000, hpp_b: 29500000, c: 48000000, hpp_c: 17000000 },
-      { month: 10, name: 'Oktober', quarter: 'Q4', a: 90000000, hpp_a: 49000000, b: 65000000, hpp_b: 29500000, c: 47000000, hpp_c: 17000000 },
-      { month: 11, name: 'November', quarter: 'Q4', a: 95000000, hpp_a: 51500000, b: 65000000, hpp_b: 29500000, c: 50000000, hpp_c: 18000000 },
-      { month: 12, name: 'Desember', quarter: 'Q4', a: 105000000, hpp_a: 57000000, b: 65000000, hpp_b: 29500000, c: 58000000, hpp_c: 21000000 }
+      { month: 1, name: 'Januari', quarter: 'Q1', a: 0, hpp_a: 0, b: 0, hpp_b: 0, c: 0, hpp_c: 0 },
+      { month: 2, name: 'Februari', quarter: 'Q1', a: 0, hpp_a: 0, b: 0, hpp_b: 0, c: 0, hpp_c: 0 },
+      { month: 3, name: 'Maret', quarter: 'Q1', a: 0, hpp_a: 0, b: 0, hpp_b: 0, c: 0, hpp_c: 0 },
+      { month: 4, name: 'April', quarter: 'Q2', a: 0, hpp_a: 0, b: 0, hpp_b: 0, c: 0, hpp_c: 0 },
+      { month: 5, name: 'Mei', quarter: 'Q2', a: 0, hpp_a: 0, b: 0, hpp_b: 0, c: 0, hpp_c: 0 },
+      { month: 6, name: 'Juni', quarter: 'Q2', a: 0, hpp_a: 0, b: 0, hpp_b: 0, c: 0, hpp_c: 0 },
+      { month: 7, name: 'Juli', quarter: 'Q3', a: 0, hpp_a: 0, b: 0, hpp_b: 0, c: 0, hpp_c: 0 },
+      { month: 8, name: 'Agustus', quarter: 'Q3', a: 0, hpp_a: 0, b: 0, hpp_b: 0, c: 0, hpp_c: 0 },
+      { month: 9, name: 'September', quarter: 'Q3', a: 0, hpp_a: 0, b: 0, hpp_b: 0, c: 0, hpp_c: 0 },
+      { month: 10, name: 'Oktober', quarter: 'Q4', a: 0, hpp_a: 0, b: 0, hpp_b: 0, c: 0, hpp_c: 0 },
+      { month: 11, name: 'November', quarter: 'Q4', a: 0, hpp_a: 0, b: 0, hpp_b: 0, c: 0, hpp_c: 0 },
+      { month: 12, name: 'Desember', quarter: 'Q4', a: 0, hpp_a: 0, b: 0, hpp_b: 0, c: 0, hpp_c: 0 }
     ];
 
     let monthlyRevenueData = [];
@@ -1050,16 +1042,26 @@
 
     // Load from LocalStorage if available
     function loadSavedData() {
+      // Pembersihan otomatis data dummy lama dari cache browser
+      const STORAGE_VERSION = 'v2_clean_zero';
+      if (localStorage.getItem('rugilaba_data_version') !== STORAGE_VERSION) {
+        localStorage.removeItem('rugilaba_assets');
+        localStorage.removeItem('rugilaba_monthly_revenue');
+        localStorage.removeItem('rugilaba_opex');
+        localStorage.removeItem('rugilaba_form_data');
+        localStorage.setItem('rugilaba_data_version', STORAGE_VERSION);
+      }
+
       // 1. Assets Data
       const savedAssets = localStorage.getItem('rugilaba_assets');
       if (savedAssets) {
         try {
           assetsData = JSON.parse(savedAssets);
         } catch(e) {
-          assetsData = JSON.parse(JSON.stringify(defaultAssets));
+          assetsData = [];
         }
       } else {
-        assetsData = JSON.parse(JSON.stringify(defaultAssets));
+        assetsData = [];
       }
 
       // 2. Monthly Revenue & HPP Data
@@ -1828,6 +1830,13 @@
       let totCost = 0;
       let totDepr = 0;
 
+      if (!assetsData || assetsData.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="py-8 text-center text-slate-400 text-xs italic">Belum ada data aset tetap. Silakan klik tombol <strong>+ Tambah Aset Baru</strong> di atas untuk menambahkan mesin atau peralatan operasional.</td></tr>`;
+        document.getElementById('tot_asset_value').textContent = 'Rp 0';
+        document.getElementById('tot_depr_value').textContent = 'Rp 0';
+        return;
+      }
+
       assetsData.forEach((ast, idx) => {
         const periodDepr = Math.round(ast.annualDepr * currentPeriodRatio);
         totCost += ast.cost;
@@ -2237,14 +2246,14 @@
       });
 
       opexItems = [
-        { id: 'gaji', name: '1. Gaji & Tunjangan Staf Toko / Kasir / Frontline', a: 72000000, b: 60000000, c: 54000000 },
-        { id: 'sewa', name: '2. Sewa Tempat / Lokasi Outlet & IPL', a: 65000000, b: 55000000, c: 45000000 },
-        { id: 'utilitas', name: '3. Listrik Daya Tinggi, Air & Internet', a: 28000000, b: 42000000, c: 26000000 },
-        { id: 'marketing', name: '4. Pemasaran, Iklan Digital & Promosi', a: 18000000, b: 16000000, c: 14000000 },
-        { id: 'perawatan', name: '5. Servis Mesin, Kalibrasi & Tooling Khusus', a: 15000000, b: 24000000, c: 16000000 },
-        { id: 'perlengkapan', name: '6. Perlengkapan Kerja, Packaging & ATK', a: 12000000, b: 10000000, c: 8000000 },
-        { id: 'limbah_k3', name: '7. Pengelolaan Limbah B3/Sampah & K3', a: 8000000, b: 5000000, c: 4000000 },
-        { id: 'software', name: '8. Lisensi POS, Adobe CC, RIP & Merchant Fee', a: 6000000, b: 8000000, c: 7000000 }
+        { id: 'gaji', name: '1. Gaji & Tunjangan Staf Toko / Kasir / Frontline', a: 0, b: 0, c: 0 },
+        { id: 'sewa', name: '2. Sewa Tempat / Lokasi Outlet & IPL', a: 0, b: 0, c: 0 },
+        { id: 'utilitas', name: '3. Listrik Daya Tinggi, Air & Internet', a: 0, b: 0, c: 0 },
+        { id: 'marketing', name: '4. Pemasaran, Iklan Digital & Promosi', a: 0, b: 0, c: 0 },
+        { id: 'perawatan', name: '5. Servis Mesin, Kalibrasi & Tooling Khusus', a: 0, b: 0, c: 0 },
+        { id: 'perlengkapan', name: '6. Perlengkapan Kerja, Packaging & ATK', a: 0, b: 0, c: 0 },
+        { id: 'limbah_k3', name: '7. Pengelolaan Limbah B3/Sampah & K3', a: 0, b: 0, c: 0 },
+        { id: 'software', name: '8. Lisensi POS, Adobe CC, RIP & Merchant Fee', a: 0, b: 0, c: 0 }
       ];
 
       const presetEl = document.getElementById('period-preset');
